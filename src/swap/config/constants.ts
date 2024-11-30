@@ -1,0 +1,1 @@
+export const SWAP_DEFAULT_DEADLINE = 1800n
