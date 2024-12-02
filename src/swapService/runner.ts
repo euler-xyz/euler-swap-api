@@ -42,7 +42,7 @@ export async function runPipeline(
     if (result.response) break
   }
 
-  // console.log(allResults)
+  console.log(allResults)
 
   const finalResult = allResults.pop()
   if (!finalResult)

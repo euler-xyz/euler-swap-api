@@ -146,7 +146,7 @@
     "name": "Renzo Restaked ETH",
     "symbol": "EZETH",
     "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496StatusCodes.NOT_FOUND",
+    "logoURI": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
     "meta": {}
   },
   {
@@ -948,7 +948,7 @@
     "meta": {}
   },
   {
-    "addressInfo": "0x6StatusCodes.NOT_FOUND7dd3288276d70a4f8b5df54668c8403f877f",
+    "addressInfo": "0x64047dd3288276d70a4f8b5df54668c8403f877f",
     "chainId": 1,
     "name": "Amphor Restaked BTC",
     "symbol": "amphrBTC",

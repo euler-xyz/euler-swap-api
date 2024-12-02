@@ -693,12 +693,8 @@ export async function encodeMTBILLDepositInstant(
     amountOut = (depositAmount * MTBILL_USD_PRICE_ONE) / mTBILLPriceUSD
   } else {
     amountIn = amount
-    console.log("amountIn: ", amountIn)
     depositAmount = amountIn * scale
-    console.log("depositAmount: ", depositAmount)
     amountOut = (depositAmount * MTBILL_USD_PRICE_ONE) / mTBILLPriceUSD
-    console.log("mTBILLPriceUSD: ", mTBILLPriceUSD)
-    console.log("amountOut: ", amountOut)
   }
 
   const depositInstantData = encodeFunctionData({
