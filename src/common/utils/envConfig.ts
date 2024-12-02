@@ -9,8 +9,9 @@ export const env = cleanEnv(process.env, {
     choices: ["development", "production", "test"],
   }),
   HOST: host({ devDefault: testOnly("localhost") }),
-  PORT: port({ devDefault: testOnly(3000) }),
-  CORS_ORIGIN: str({ devDefault: testOnly("http://localhost:3000") }),
+  PORT: port({ devDefault: testOnly(3001) }),
+  CORS_ORIGIN: str({ devDefault: testOnly("http://localhost:3001") }),
   COMMON_RATE_LIMIT_MAX_REQUESTS: num({ devDefault: testOnly(1000) }),
   COMMON_RATE_LIMIT_WINDOW_MS: num({ devDefault: testOnly(1000) }),
+  // TODO
 })

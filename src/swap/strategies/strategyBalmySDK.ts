@@ -62,7 +62,7 @@ export class StrategyBalmySDK {
           },
           custom: {
             "1inch": {
-              apiKey: String(process.env.ONEINCH_KEY),
+              apiKey: String(process.env.ONEINCH_API_KEY),
             },
             "li-fi": {
               apiKey: String(process.env.LIFI_API_KEY),

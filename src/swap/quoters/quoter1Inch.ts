@@ -21,7 +21,7 @@ export async function fetch1InchQuote(
 
   const url = `https://api.1inch.dev/swap/v6.0/${swapParams.chainId}/swap?${params.toString()}`
   const requestHeaders = new Headers()
-  requestHeaders.set("Authorization", `Bearer ${process.env.ONEINCH_KEY}`)
+  requestHeaders.set("Authorization", `Bearer ${process.env.ONEINCH_API_KEY}`)
   const response = await fetch(url, { headers: requestHeaders })
 
   if (!response.ok) {

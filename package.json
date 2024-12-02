@@ -1,7 +1,7 @@
 {
   "name": "euler-swap-api",
   "version": "1.0.0",
-  "description": "API for fetching swap quotes and building swap TXs for Euler V2",
+  "description": "API for fetching swap quotes and building swap txs for Euler V2",
   "author": "Euler labs",
   "repository": "euler-xyz/euler-swap-api",
   "license": "MIT",
