@@ -1,5 +1,6 @@
 import contractBook from "@/common/utils/contractBook"
 import getTokenList, { type TokenListItem } from "@/common/utils/tokenList"
+import type { StatusCodes } from "http-status-codes"
 import {
   type Address,
   type ContractFunctionArgs,
@@ -90,6 +91,16 @@ export function buildApiResponseVerifySkimMin(
     account,
     amount: String(amountMin),
     deadline,
+  }
+}
+
+export class ApiError extends Error {
+  readonly statusCode: StatusCodes
+  readonly data: any
+  constructor(statusCode: StatusCodes, message: string, data?: any) {
+    super(message)
+    this.statusCode = statusCode
+    this.data = data
   }
 }
 
@@ -370,7 +381,7 @@ export async function binarySearchQuote(
     }))
 
     if (amountTo === 0n || targetAmountTo === 0n)
-      throw new Error("quote not found")
+      throw new Error("Quote not found")
 
     percentageChange =
       amountTo > targetAmountTo
@@ -383,7 +394,7 @@ export async function binarySearchQuote(
       percentageChange < 0n ? percentageChange * -1n : percentageChange
 
     if (cnt++ === 15)
-      throw new Error("Exact in route not found in 15 iterations")
+      throw new Error("Binary search not completed in 15 iterations")
   } while (shouldContinue(amountTo))
 
   return quote

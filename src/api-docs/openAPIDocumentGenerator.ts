@@ -3,8 +3,8 @@ import {
   OpenApiGeneratorV3,
 } from "@asteasolutions/zod-to-openapi"
 
-import { healthCheckRegistry } from "@/api/healthCheck/healthCheckRouter"
-import { swapRegistry } from "@/api/swap/swapRouter"
+import { healthCheckRegistry } from "@/api/routes/healthCheck/healthCheckRouter"
+import { swapRegistry } from "@/api/routes/swap/swapRouter"
 
 export function generateOpenAPIDocument() {
   const registry = new OpenAPIRegistry([healthCheckRegistry, swapRegistry])

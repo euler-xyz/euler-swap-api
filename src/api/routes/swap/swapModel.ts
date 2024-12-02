@@ -1,4 +1,4 @@
-import { SwapVerificationType, SwapperMode } from "@/swap/interface"
+import { SwapVerificationType, SwapperMode } from "@/swapService/interface"
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi"
 import { InvalidAddressError, getAddress, isHex } from "viem"
 import { z } from "zod"
@@ -150,7 +150,7 @@ const getSwapSchema = z.object({
       .string()
       .transform((s) => JSON.parse(s))
       .pipe(chainRoutingConfigSchema)
-      .optional(), // TODO handle routing config
+      .optional(),
   }),
 })
 

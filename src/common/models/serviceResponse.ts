@@ -23,10 +23,10 @@ export class ServiceResponse<T = null> {
     return new ServiceResponse(true, data, statusCode)
   }
 
-  static failure<T>(
+  static failure(
     message: string,
-    data: T,
     statusCode: number = StatusCodes.BAD_REQUEST,
+    data?: any,
   ) {
     return new ServiceResponse(false, data, statusCode, message)
   }

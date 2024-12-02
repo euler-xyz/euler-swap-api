@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes"
 import routingConfig from "./config"
 import type {
   ChainRoutingConfig,
@@ -6,15 +7,19 @@ import type {
 } from "./interface"
 import { strategies } from "./strategies/index"
 import type { StrategyResult, SwapParams } from "./types"
+import { ApiError } from "./utils"
 
-// TODO cache
 function loadPipeline(swapParams: SwapParams) {
   let routing: ChainRoutingConfig
   if (swapParams.routingOverride) {
     routing = swapParams.routingOverride
   } else {
     routing = routingConfig[String(swapParams.chainId)]
-    if (!routing) throw new Error("Routing config not found for chainId")
+    if (!routing)
+      throw new ApiError(
+        StatusCodes.NOT_FOUND,
+        "Routing config not found for chainId",
+      )
   }
 
   return routing.map((routingItem: RoutingItem) => {
@@ -37,16 +42,27 @@ export async function runPipeline(
     if (result.response) break
   }
 
-  console.log(allResults)
+  // console.log(allResults)
 
   const finalResult = allResults.pop()
-  if (!finalResult) throw new Error("Pipeline empty or result not found")
+  if (!finalResult)
+    throw new ApiError(
+      StatusCodes.NOT_FOUND,
+      "Pipeline empty or result not found",
+    )
   if (!finalResult.response) {
-    throw new Error("Swap quote not found") // TODO 404
+    throw new ApiError(
+      StatusCodes.NOT_FOUND,
+      "Swap quote not found",
+      allResults,
+    )
   }
 
   return finalResult.response
 }
 
 // TODO error handling
-// TODO npm interfaces
+// TODO npm interfaces, supported chains
+// TODO cache pipeline
+// TODO env validation
+// TODO logging
