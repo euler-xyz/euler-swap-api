@@ -1,8 +1,15 @@
 # Instalation
-Copy `.env.template` to `.env` and set configuration
 
+Install npm packages
 ```
 npm i
+```
+
+Copy `.env.template` to `.env` and set configuration. Alternatively use:
+```
+npm run doppler:syncdev # local development
+npm run doppler:syncstg # staging
+npm run doppler:syncprd # production
 ```
 
 # Running
