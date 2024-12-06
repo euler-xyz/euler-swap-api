@@ -31,11 +31,13 @@
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "7.2.0",
     "@balmy/sdk": "^0.4.8",
+    "@uniswap/router-sdk": "1.15.0",
     "@uniswap/sdk-core": "5.3.1",
     "@uniswap/smart-order-router": "3.44.0",
     "@uniswap/v3-sdk": "3.13.1",
     "cors": "2.8.5",
     "dotenv": "16.4.5",
+    "ethers": "5.7.2",
     "express": "4.21.1",
     "express-rate-limit": "7.4.1",
     "helmet": "8.0.0",

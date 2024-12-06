@@ -16,6 +16,9 @@ dependencies:
   '@balmy/sdk':
     specifier: ^0.4.8
     version: 0.4.8(typescript@5.7.2)(zod@3.23.8)
+  '@uniswap/router-sdk':
+    specifier: ^1.15.0
+    version: 1.15.0(hardhat@2.22.17)
   '@uniswap/sdk-core':
     specifier: 5.3.1
     version: 5.3.1
@@ -31,6 +34,9 @@ dependencies:
   dotenv:
     specifier: 16.4.5
     version: 16.4.5
+  ethers:
+    specifier: 5.7.2
+    version: 5.7.2
   express:
     specifier: 4.21.1
     version: 4.21.1
@@ -1511,7 +1517,7 @@ packages:
   /@scure/bip32@1.4.0:
     resolution: {integrity: sha512-sVUpc0Vq3tXCkDGYVWGIZTRfnvu8LoTDaev7vbwh0omSvVORONr960MQWdKqJDCReIEmTj3PAr73O3aoxz7OPg==}
     dependencies:
-      '@noble/curves': 1.4.0
+      '@noble/curves': 1.4.2
       '@noble/hashes': 1.4.0
       '@scure/base': 1.1.9
     dev: false
@@ -5554,8 +5560,8 @@ packages:
   /webauthn-p256@0.0.5:
     resolution: {integrity: sha512-drMGNWKdaixZNobeORVIqq7k5DsRC9FnG201K2QjeOoQLmtSDaSsVZdkg6n5jUALJKcAG++zBPJXmv6hy0nWFg==}
     dependencies:
-      '@noble/curves': 1.4.0
-      '@noble/hashes': 1.4.0
+      '@noble/curves': 1.7.0
+      '@noble/hashes': 1.6.1
     dev: false
 
   /webidl-conversions@3.0.1:
