@@ -2,33 +2,33 @@
 
 Install npm packages
 ```
-npm i
+pnpm i
 ```
 
 Copy `.env.template` to `.env` and set configuration. Alternatively use:
 ```
-npm run doppler:syncdev # local development
-npm run doppler:syncstg # staging
-npm run doppler:syncprd # production
+pnpm run doppler:syncdev # local development
+pnpm run doppler:syncstg # staging
+pnpm run doppler:syncprd # production
 ```
 
 # Running
 
 Dev server
 ```
-npm run dev
+pnpm run dev
 ```
 
 Prod
 ```
-npm run build
-npm run start
+pnpm run build
+pnpm run start
 ```
 
 # Lint
 ```
-npm run lint       # check
-npm run lint:fix   # fix
+pnpm run lint       # check
+pnpm run lint:fix   # fix
 ```
 
 DOC
