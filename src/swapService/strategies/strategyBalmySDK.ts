@@ -25,13 +25,14 @@ import {
 import { CustomSourceList } from "./balmySDK/customSourceList"
 
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
+const BINARY_SEARCH_EXCLUDE_SOURCES = ["paraswap"] // paraswap is rate limited and fails if selected as best source for binary search
 
 export const defaultConfig = {
   referrer: {
     address: DAO_MULTISIG,
     name: "euler",
   },
-  sourcesFilter: { excludeSources: ["balmy"] },
+  sourcesFilter: {},
   tryExactOut: false, // tries buy order search through balmy before falling back to binary search.
   // Use only if exact out behavior is known for source
   onlyExactOut: false, // don't try overswapping when exact out not available
@@ -126,7 +127,7 @@ export class StrategyBalmySDK {
   async targetDebt(swapParams: SwapParams) {
     let quote: SwapQuote | undefined = undefined
     let innerSwapParams: SwapParams
-    if (this.config.tryExactOut) {
+    if (this.config.tryExactOut && !swapParams.onlyFixedInputExactOut) {
       try {
         // into the swapper
         innerSwapParams = {
@@ -209,7 +210,9 @@ export class StrategyBalmySDK {
       swapperMode: SwapperMode.EXACT_IN,
     }
 
-    const reverseQuote = await fetchQuote(reverseSwapParams)
+    const reverseQuote = await fetchQuote(reverseSwapParams, {
+      excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES,
+    }) // TODO config
     const estimatedAmountIn = reverseQuote.amountTo
     if (estimatedAmountIn === 0n) throw new Error("quote not found")
 

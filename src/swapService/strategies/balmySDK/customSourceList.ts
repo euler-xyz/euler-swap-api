@@ -20,5 +20,6 @@ export class CustomSourceList extends LocalSourceList {
       ...mutableThis.sources,
       ...customSources,
     }
+    delete mutableThis.sources.balmy
   }
 }

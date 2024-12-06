@@ -48,7 +48,8 @@ export class StrategyCombinedUniswap {
   async supports(swapParams: SwapParams) {
     return (
       this.config.chainsSupported.includes(swapParams.chainId) &&
-      swapParams.swapperMode === SwapperMode.TARGET_DEBT
+      swapParams.swapperMode === SwapperMode.TARGET_DEBT &&
+      !swapParams.onlyFixedInputExactOut
     )
   }
 

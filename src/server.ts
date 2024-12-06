@@ -9,7 +9,6 @@ import { swapRouter } from "@/api/routes/swap/swapRouter"
 import errorHandler from "@/common/middleware/errorHandler"
 import rateLimiter from "@/common/middleware/rateLimiter"
 import requestLogger from "@/common/middleware/requestLogger"
-import { env } from "@/common/utils/envConfig"
 
 const logger = pino({ name: "server start" })
 const app: Express = express()
@@ -20,7 +19,7 @@ const app: Express = express()
 // Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }))
+app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }))
 app.use(helmet())
 app.use(rateLimiter)
 

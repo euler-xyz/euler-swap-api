@@ -24,6 +24,7 @@ export interface SwapParams {
   deadline: number
   isRepay: boolean
   routingOverride?: ChainRoutingConfig
+  onlyFixedInputExactOut?: boolean // only fetch quotes where amountIn is fixed and not subject to slippage
 }
 
 export interface SwapQuote {

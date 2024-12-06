@@ -285,6 +285,22 @@ export const encodeDepositMulticallItem = (
   }
 }
 
+export const encodeSweepMulticallItem = (
+  token: Address,
+  amountMin: bigint,
+  to: Address,
+): SwapApiResponseMulticallItem => {
+  return {
+    functionName: "sweep",
+    args: [token, String(amountMin), to],
+    data: encodeFunctionData({
+      abi: contractBook.swapper.abi,
+      functionName: "sweep",
+      args: [token, amountMin, to],
+    }),
+  }
+}
+
 export const encodeRepayAndDepositMulticallItem = (
   token: Address,
   vault: Address,

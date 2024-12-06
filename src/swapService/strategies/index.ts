@@ -1,6 +1,7 @@
 import { Strategy1Inch } from "./strategy1Inch"
 import { StrategyBalmySDK } from "./strategyBalmySDK"
 import { StrategyCombinedUniswap } from "./strategyCombinedUniswap"
+import { StrategyERC4626Wrapper } from "./strategyERC4626Wrapper"
 import { StrategyLifi } from "./strategyLifi"
 import { StrategyMTBILL } from "./strategyMTBILL"
 import { StrategyPendle } from "./strategyPendle"
@@ -14,6 +15,7 @@ export {
   StrategyLifi,
   StrategyRepayWrapper,
   StrategyBalmySDK,
+  StrategyERC4626Wrapper,
 }
 
 export const strategies = {
@@ -24,4 +26,5 @@ export const strategies = {
   [StrategyRepayWrapper.name()]: StrategyRepayWrapper,
   [StrategyBalmySDK.name()]: StrategyBalmySDK,
   [StrategyLifi.name()]: StrategyLifi,
+  [StrategyERC4626Wrapper.name()]: StrategyERC4626Wrapper,
 }

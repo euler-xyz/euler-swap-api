@@ -3,6 +3,7 @@ import {
   Strategy1Inch,
   StrategyBalmySDK,
   StrategyCombinedUniswap,
+  StrategyERC4626Wrapper,
   StrategyLifi,
   StrategyMTBILL,
   StrategyPendle,
@@ -15,9 +16,14 @@ const EBTC_MAINNET = "0x657e8c867d8b37dcc18fa4caead9c45eb088c642"
 const SCRVUSD_MAINNET = "0x0655977feb2f289a4ab78af67bab0d17aab84367"
 const USD3_MAINNET = "0x0d86883faf4ffd7aeb116390af37746f45b6f378"
 const EUSD_MAINNET = "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
+const WSTUSR_MAINNET = "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
+  {
+    strategy: StrategyERC4626Wrapper.name(),
+    match: {},
+  },
   {
     strategy: StrategyRepayWrapper.name(),
     match: {
@@ -56,6 +62,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         USD3_MAINNET,
         EUSD_MAINNET,
         SCRVUSD_MAINNET,
+        WSTUSR_MAINNET,
       ],
     },
   },
@@ -109,6 +116,20 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   // then anything available through balmy. Overswap exact out
   {
     strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: [
+          "kyberswap",
+          "paraswap",
+          "odos",
+          "1inch",
+          "li-fi",
+          "open-ocean",
+          "conveyor",
+          "uniswap",
+        ],
+      },
+    },
     match: {},
   },
 ]
