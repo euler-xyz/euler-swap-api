@@ -138,8 +138,7 @@ export class StrategyERC4626Wrapper {
               result.response =
                 await this.targetDebtFromUnderlyingToVault(swapParams)
             } else {
-              result.response =
-                await this.targetDebtToFromAnyToVault(swapParams)
+              result.response = await this.targetDebtFromAnyToVault(swapParams)
             }
           }
           break
@@ -438,7 +437,7 @@ export class StrategyERC4626Wrapper {
     }
     const {
       swapMulticallItem: withdrawMulticallItem,
-      amountIn: redeemInstantAmountIn,
+      amountIn: withdrawAmountIn,
     } = await encodeWithdraw(
       withdrawSwapParams,
       vaultData.vault,
@@ -463,8 +462,8 @@ export class StrategyERC4626Wrapper {
     )
 
     return {
-      amountIn: String(redeemInstantAmountIn),
-      amountInMax: String(redeemInstantAmountIn),
+      amountIn: String(withdrawAmountIn),
+      amountInMax: String(withdrawAmountIn),
       amountOut: String(innerQuote.amountOut),
       amountOutMin: String(innerQuote.amountOutMin),
       vaultIn: swapParams.vaultIn,
@@ -529,7 +528,7 @@ export class StrategyERC4626Wrapper {
     }
   }
 
-  async targetDebtToFromAnyToVault(
+  async targetDebtFromAnyToVault(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)

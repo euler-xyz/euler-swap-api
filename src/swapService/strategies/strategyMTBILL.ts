@@ -11,7 +11,6 @@ import {
 } from "viem"
 import { SwapperMode } from "../interface"
 import type { SwapApiResponse } from "../interface"
-import { fetchLiFiExactOutQuote } from "../quoters"
 import { runPipeline } from "../runner"
 import type { StrategyResult, SwapParams } from "../types"
 import {
@@ -26,7 +25,6 @@ import {
   findToken,
   isExactInRepay,
   matchParams,
-  quoteToRoute,
 } from "../utils"
 
 export const MTBILL_MAINNET = "0xdd629e5241cbc5919847783e6c96b2de4754e438"
@@ -87,9 +85,9 @@ export class StrategyMTBILL {
             }
           } else {
             if (isAddressEqual(swapParams.tokenIn.addressInfo, USDC_MAINNET)) {
-              result.response = await this.exactInToMTokenFromUSDC(swapParams)
+              result.response = await this.exactInFromUSDCToMToken(swapParams)
             } else {
-              result.response = await this.exactInToMTokenFromAny(swapParams)
+              result.response = await this.exactInFromAnyToMToken(swapParams)
             }
           }
           break
@@ -105,9 +103,9 @@ export class StrategyMTBILL {
           } else {
             if (isAddressEqual(swapParams.tokenIn.addressInfo, USDC_MAINNET)) {
               result.response =
-                await this.targetDebtToMTokenFromUSDC(swapParams)
+                await this.targetDebtFromUSDCToMToken(swapParams)
             } else {
-              result.response = await this.targetDebtToMTokenFromAny(swapParams)
+              result.response = await this.targetDebtFromAnyToMToken(swapParams)
             }
           }
           break
@@ -224,7 +222,7 @@ export class StrategyMTBILL {
     }
   }
 
-  async exactInToMTokenFromUSDC(
+  async exactInFromUSDCToMToken(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const {
@@ -273,7 +271,7 @@ export class StrategyMTBILL {
     }
   }
 
-  async exactInToMTokenFromAny(
+  async exactInFromAnyToMToken(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const innerSwapParams = {
@@ -392,25 +390,13 @@ export class StrategyMTBILL {
   async targetDebtFromMTokenToAny(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
-    const lifiSwapParams = {
+    const innerSwapParams = {
       ...swapParams,
       tokenIn: findToken(swapParams.chainId, USDC_MAINNET),
-      receiver: swapParams.from,
+      vaultIn: USDC_ESCROW_VAULT_MAINNET,
+      onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
-    const lifiQuote = await fetchLiFiExactOutQuote(lifiSwapParams)
-
-    const lifiSwapMulticallItem = encodeSwapMulticallItem({
-      handler: SWAPPER_HANDLER_GENERIC,
-      mode: BigInt(SwapperMode.TARGET_DEBT), // will deposit overswap from lifi, and also USDC although it shouldn't be necessary
-      account: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn.addressInfo,
-      tokenOut: swapParams.tokenOut.addressInfo,
-      vaultIn: swapParams.vaultIn,
-      accountIn: swapParams.accountIn,
-      receiver: swapParams.receiver,
-      amountOut: swapParams.targetDebt,
-      data: lifiQuote.data,
-    })
+    const innerQuote = await runPipeline(innerSwapParams)
 
     const redeemSwapParams = {
       ...swapParams,
@@ -421,12 +407,15 @@ export class StrategyMTBILL {
       amountIn: redeemInstantAmountIn,
     } = await encodeMTBILLRedeemInstant(
       redeemSwapParams,
-      lifiQuote.amountIn,
+      BigInt(innerQuote.amountIn),
       false,
       USDC_MAINNET,
     )
 
-    const multicallItems = [redeemInstantMulticallItem, lifiSwapMulticallItem]
+    const multicallItems = [
+      redeemInstantMulticallItem,
+      ...innerQuote.swap.multicallItems,
+    ]
 
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -441,8 +430,8 @@ export class StrategyMTBILL {
     return {
       amountIn: String(redeemInstantAmountIn),
       amountInMax: String(redeemInstantAmountIn),
-      amountOut: String(lifiQuote.amountOut),
-      amountOutMin: String(lifiQuote.amountOutMin),
+      amountOut: String(innerQuote.amountOut),
+      amountOutMin: String(innerQuote.amountOutMin),
       vaultIn: swapParams.vaultIn,
       receiver: swapParams.receiver,
       accountIn: swapParams.accountIn,
@@ -450,13 +439,13 @@ export class StrategyMTBILL {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [MTBILL_ROUTE, ...quoteToRoute(lifiQuote)],
+      route: [MTBILL_ROUTE, ...innerQuote.route],
       swap,
       verify,
     }
   }
 
-  async targetDebtToMTokenFromUSDC(
+  async targetDebtFromUSDCToMToken(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const depositInstantAmount = adjustForInterest(swapParams.amount) // TODO move to config, helper
@@ -503,12 +492,12 @@ export class StrategyMTBILL {
     }
   }
 
-  async targetDebtToMTokenFromAny(
+  async targetDebtFromAnyToMToken(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const targetDeposit = adjustForInterest(swapParams.amount) // TODO move to config, helper
 
-    const swapParamsDeposit = {
+    const depositSwapParams = {
       ...swapParams,
       tokenIn: findToken(swapParams.chainId, USDC_MAINNET),
       vaultIn: USDC_ESCROW_VAULT_MAINNET,
@@ -518,34 +507,36 @@ export class StrategyMTBILL {
       amountIn: depositInstantAmountIn,
       amountOut,
     } = await encodeMTBILLDepositInstant(
-      swapParamsDeposit,
+      depositSwapParams,
       targetDeposit,
       true,
       USDC_MAINNET,
     )
 
-    const lifiSwapParams = {
+    const innerSwapParams = {
       ...swapParams,
       amount: depositInstantAmountIn,
       tokenOut: findToken(swapParams.chainId, USDC_MAINNET),
-      swapperMode: SwapperMode.EXACT_IN,
       receiver: swapParams.from,
+      onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
     }
-    const lifiQuote = await fetchLiFiExactOutQuote(lifiSwapParams)
-    const lifiSwapMulticallItem = encodeSwapMulticallItem({
-      handler: SWAPPER_HANDLER_GENERIC,
-      mode: BigInt(SwapperMode.EXACT_IN),
-      account: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn.addressInfo,
-      tokenOut: swapParams.tokenOut.addressInfo,
-      vaultIn: swapParams.vaultIn,
-      accountIn: swapParams.accountIn,
-      receiver: lifiSwapParams.receiver,
-      amountOut: 0n, // ignored
-      data: lifiQuote.data,
+
+    const innerQuote = await runPipeline(innerSwapParams)
+
+    // re-encode inner swap from target debt to exact out so that repay is not executed before mint TODO fix with exact out support in all strategies
+    const innerSwapItems = innerQuote.swap.multicallItems.map((item) => {
+      if (item.functionName !== "swap") return item
+
+      const newItem = encodeSwapMulticallItem({
+        ...item.args[0],
+        mode: BigInt(SwapperMode.EXACT_OUT),
+      })
+
+      return newItem
     })
-    // deposit instant is encoded in target debt mode, so repay will happen automatically
-    const multicallItems = [lifiSwapMulticallItem, depositInstantMulticallItem]
+
+    // repay is done through deposit item, which will return unused input, which is the intermediate asset
+    const multicallItems = [...innerSwapItems, depositInstantMulticallItem]
 
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -558,8 +549,8 @@ export class StrategyMTBILL {
     )
 
     return {
-      amountIn: String(lifiQuote.amountIn),
-      amountInMax: String(lifiQuote.amountIn),
+      amountIn: String(innerQuote.amountIn),
+      amountInMax: String(innerQuote.amountInMax),
       amountOut: String(amountOut),
       amountOutMin: String(amountOut),
       vaultIn: swapParams.vaultIn,
@@ -569,7 +560,7 @@ export class StrategyMTBILL {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [...quoteToRoute(lifiQuote), MTBILL_ROUTE],
+      route: [...innerQuote.route, MTBILL_ROUTE],
       swap,
       verify,
     }

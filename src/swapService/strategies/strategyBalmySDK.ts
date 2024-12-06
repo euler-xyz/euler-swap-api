@@ -3,10 +3,12 @@ import {
   type QuoteRequest,
   type QuoteResponse,
   type QuoteResponseWithTx,
+  type SourceId,
   buildSDK,
 } from "@balmy/sdk"
 import { buildFetchService } from "@balmy/sdk/dist/sdk/builders/fetch-builder"
 import { buildProviderService } from "@balmy/sdk/dist/sdk/builders/provider-builder"
+import type { Either } from "@balmy/sdk/dist/utility-types"
 import { type Hex, encodeAbiParameters, parseAbiParameters } from "viem"
 import { SwapperMode } from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
@@ -27,12 +29,23 @@ import { CustomSourceList } from "./balmySDK/customSourceList"
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
 const BINARY_SEARCH_EXCLUDE_SOURCES = ["paraswap"] // paraswap is rate limited and fails if selected as best source for binary search
 
+type SourcesFilter =
+  | Either<
+      {
+        includeSources: SourceId[]
+      },
+      {
+        excludeSources: SourceId[]
+      }
+    >
+  | undefined
+
 export const defaultConfig = {
   referrer: {
     address: DAO_MULTISIG,
     name: "euler",
   },
-  sourcesFilter: {},
+  sourcesFilter: undefined,
   tryExactOut: false, // tries buy order search through balmy before falling back to binary search.
   // Use only if exact out behavior is known for source
   onlyExactOut: false, // don't try overswapping when exact out not available
@@ -195,7 +208,10 @@ export class StrategyBalmySDK {
   }
 
   async #binarySearchOverswapQuote(swapParams: SwapParams) {
-    const fetchQuote = async (sp: SwapParams, sourcesFilter?: any) => {
+    const fetchQuote = async (
+      sp: SwapParams,
+      sourcesFilter?: SourcesFilter,
+    ) => {
       const quote = await this.#getBestSDKQuote(sp, sourcesFilter)
       return {
         quote,
@@ -210,9 +226,12 @@ export class StrategyBalmySDK {
       swapperMode: SwapperMode.EXACT_IN,
     }
 
-    const reverseQuote = await fetchQuote(reverseSwapParams, {
-      excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES,
-    }) // TODO config
+    const reverseQuote = await fetchQuote(
+      reverseSwapParams,
+      this.config.sourcesFilter || {
+        excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES,
+      },
+    ) // TODO config
     const estimatedAmountIn = reverseQuote.amountTo
     if (estimatedAmountIn === 0n) throw new Error("quote not found")
 
@@ -241,7 +260,10 @@ export class StrategyBalmySDK {
     return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
   }
 
-  async #getBestSDKQuote(swapParams: SwapParams, sourcesFilter?: any) {
+  async #getBestSDKQuote(
+    swapParams: SwapParams,
+    sourcesFilter?: SourcesFilter,
+  ) {
     // TODO type
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
@@ -255,7 +277,10 @@ export class StrategyBalmySDK {
     return bestQuote
   }
 
-  async #getBestSDKQuoteWithTx(swapParams: SwapParams, sourcesFilter?: any) {
+  async #getBestSDKQuoteWithTx(
+    swapParams: SwapParams,
+    sourcesFilter?: SourcesFilter,
+  ) {
     const bestQuote = await this.#getBestSDKQuote(swapParams, sourcesFilter)
 
     const bestQuoteWithTx = {

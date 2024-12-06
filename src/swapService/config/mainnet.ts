@@ -100,20 +100,20 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   },
   // FALLBACKS
 
-  // first try lifi and their exact out
+  // fallback for target debt - 1inch binary search
   {
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["li-fi"],
+        includeSources: ["1inch"],
       },
-      tryExactOut: true,
-      onlyExactOut: true,
     },
-    match: {},
+    match: {
+      swapperModes: [SwapperMode.TARGET_DEBT],
+    },
   },
 
-  // then anything available through balmy. Overswap exact out
+  // then anything available through balmy, binary search overswap exact out
   {
     strategy: StrategyBalmySDK.name(),
     config: {
