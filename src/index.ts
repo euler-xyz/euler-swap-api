@@ -1,7 +1,4 @@
 import { app, logger } from "@/server"
-import dotenv from "dotenv"
-
-dotenv.config()
 
 const server = app.listen(process.env.PORT, () => {
   const { NODE_ENV, PORT } = process.env

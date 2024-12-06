@@ -18,7 +18,7 @@ const cache: Record<number, TokenListItem[]> = {}
 
 export default function getTokenList(chainId: number): TokenListItem[] {
   if (!cache[chainId]) {
-    cache[chainId] = require(`./tokenList_${chainId}.json`)
+    cache[chainId] = require(`../../tokenLists/tokenList_${chainId}.json`)
   }
 
   return cache[chainId]

@@ -307,7 +307,8 @@
     "name": "Ethena Staked USDe",
     "symbol": "SUSDE",
     "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680"
+    "logoURI": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+    "meta": {}
   },
   {
     "addressInfo": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
@@ -878,11 +879,13 @@
   {
     "addressInfo": "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0",
     "chainId": 1,
-    "name": "USD0 Liquid Bond",
+    "name": "Staked USD0",
     "symbol": "USD0++",
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/39169/large/0x35d8949372d46b7a3d5a56006ae77b215fc69bc0.png?1720798057",
-    "meta": {}
+    "meta": {
+      "poolId": "55b0893b-1dbb-47fd-9912-5e439cd3d511"
+    }
   },
   {
     "addressInfo": "0x9c7beba8f6ef6643abd725e45a4e8387ef260649",
@@ -912,6 +915,42 @@
     "meta": {}
   },
   {
+    "addressInfo": "0xf469fbd2abcd6b9de8e169d128226c0fc90a012e",
+    "chainId": 1,
+    "name": "pumpBTC",
+    "symbol": "PUMPBTC",
+    "decimals": 8,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0xbdc7c08592ee4aa51d06c27ee23d5087d65adbcd",
+    "chainId": 1,
+    "name": "Lift Dollar",
+    "symbol": "USDL",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/38484/large/USDL-Token-200px.png?1725022887",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x007115416ab6c266329a03b09a8aa39ac2ef7d9d",
+    "chainId": 1,
+    "name": "Midas BTC Yield Token",
+    "symbol": "MBTC",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/51055/large/mbtc.png?1729875716",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x66a1e37c9b0eaddca17d3662d6c05f4decf3e110",
+    "chainId": 1,
+    "name": "Resolv USR",
+    "symbol": "USR",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    "meta": {}
+  },
+  {
     "addressInfo": "0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce",
     "chainId": 1,
     "name": "Beam",
@@ -919,6 +958,17 @@
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/32417/large/chain-logo.png?1698114384",
     "meta": {}
+  },
+  {
+    "addressInfo": "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055",
+    "chainId": 1,
+    "name": "Resolv wstUSR",
+    "symbol": "WSTUSR",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
+    "meta": {
+      "poolId": "0aedb3f6-9298-49de-8bb0-2f611a4df784"
+    }
   },
   {
     "addressInfo": "0x4342B77fE3417Bcb09d0A4383301b0DC733C755B",
@@ -934,6 +984,24 @@
     "chainId": 1,
     "name": "Swaap WETH-USDT Safeguard",
     "symbol": "s-WETH-USDT-Sa",
+    "decimals": 18,
+    "logoURI": "/tokens/1/swaap.jpg",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0xf5Ca5a74c6F9fc23880865D8702EaEda6e1f38b1",
+    "chainId": 1,
+    "name": "Swaap wstETH-WETH Safeguard",
+    "symbol": "s-wstETH-WETH-Sa",
+    "decimals": 18,
+    "logoURI": "/tokens/1/swaap.jpg",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0xaC4E8D8B3a48C3451d4d0E4a84e6E5Ac52579D05",
+    "chainId": 1,
+    "name": "Swaap USDC-USDT Safeguard",
+    "symbol": "s-USDC-USDT-Sa",
     "decimals": 18,
     "logoURI": "/tokens/1/swaap.jpg",
     "meta": {}
@@ -1010,6 +1078,32 @@
     }
   },
   {
+    "addressInfo": "0xEe9085fC268F6727d5D4293dBABccF901ffDCC29",
+    "chainId": 1,
+    "name": "PT Ethena sUSDE 26DEC2024",
+    "symbol": "PT-sUSDE-26DEC2024",
+    "decimals": 18,
+    "logoURI": "https://assets.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xa0ab94debb3cc9a7ea77f3205ba4ab23276fed08",
+      "poolId": "9be76d1d-734c-435d-bcbf-f0d2704e84d0"
+    }
+  },
+  {
+    "addressInfo": "0xAE5099C39f023C91d3dd55244CAFB36225B0850E",
+    "chainId": 1,
+    "name": "PT Ethena sUSDE 24OCT2024",
+    "symbol": "PT-sUSDE-24OCT2024",
+    "decimals": 18,
+    "logoURI": "https://assets.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xbbf399db59a845066aafce9ae55e68c505fa97b7",
+      "poolId": "d4dfc52a-fcfb-46e0-856a-3c7006ee8821"
+    }
+  },
+  {
     "addressInfo": "0xec5a52c685cc3ad79a6a347abace330d69e0b1ed",
     "chainId": 1,
     "name": "PT Lombard LBTC 27MAR2025",
@@ -1023,16 +1117,146 @@
     }
   },
   {
-    "addressInfo": "0xb997b3418935a1df0f914ee901ec83927c1509a0",
+    "addressInfo": "0xB997B3418935A1Df0F914Ee901ec83927c1509A0",
     "chainId": 1,
     "name": "PT ether.fi eBTC 26DEC2024",
     "symbol": "PT-EBTC-26DEC2024",
     "decimals": 8,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/50411/large/eBTC.png?1727664788",
+    "logoURI": "/tokens/1/0xB997B3418935A1Df0F914Ee901ec83927c1509A0.svg",
     "meta": {
       "isPendlePT": true,
       "pendleMarket": "0x36d3ca43ae7939645c306e26603ce16e39a89192",
       "poolId": "e093fa52-1f6a-4256-9e3e-a58490468c0e"
+    }
+  },
+  {
+    "addressInfo": "0x332A8ee60EdFf0a11CF3994b1b846BBC27d3DcD6",
+    "chainId": 1,
+    "name": "PT Corn Lombard LBTC 26DEC2024",
+    "symbol": "PT-cornLBTC-26DEC2024",
+    "decimals": 8,
+    "logoURI": "/tokens/1/0x332A8ee60EdFf0a11CF3994b1b846BBC27d3DcD6.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xCaE62858DB831272A03768f5844cbe1B40bB381f",
+      "poolId": "f7826423-8043-4799-b12a-83a68adc992d"
+    }
+  },
+  {
+    "addressInfo": "0x44A7876cA99460ef3218bf08b5f52E2dbE199566",
+    "chainId": 1,
+    "name": "PT Corn ether.fi eBTC 27MAR2025",
+    "symbol": "PT-corn-eBTC-27MAR2025",
+    "decimals": 8,
+    "logoURI": "/tokens/1/0x44A7876cA99460ef3218bf08b5f52E2dbE199566.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x2C71Ead7ac9AE53D05F8664e77031d4F9ebA064B",
+      "poolId": "eb7de368-b460-4638-bde1-50a129109b7b"
+    }
+  },
+  {
+    "addressInfo": "0x997Ec6Bf18a30Ef01ed8D9c90718C7726a213527",
+    "chainId": 1,
+    "name": "PT pumpBTC 27MAR2025",
+    "symbol": "PT-pumpBTC-27MAR2025",
+    "decimals": 8,
+    "logoURI": "/tokens/1/0x997Ec6Bf18a30Ef01ed8D9c90718C7726a213527.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xf8208fb52ba80075af09840a683143c22dc5b4dd",
+      "poolId": "100c958b-ff1e-4218-a820-45333746a7e0"
+    }
+  },
+  {
+    "addressInfo": "0xa76f0C6e5f286bFF151b891d2A0245077F1Ad74c",
+    "chainId": 1,
+    "name": "PT Corn pumpBTC 26DEC2024",
+    "symbol": "PT-corn-pumpBTC-26DEC2024",
+    "decimals": 8,
+    "logoURI": "/tokens/1/0xa76f0C6e5f286bFF151b891d2A0245077F1Ad74c.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xf8208fb52ba80075af09840a683143c22dc5b4dd",
+      "poolId": "a23e2b97-ff92-4ebf-8c7d-171cad8431ad"
+    }
+  },
+  {
+    "addressInfo": "0x23e479ddcda990E8523494895759bD98cD2fDBF6",
+    "chainId": 1,
+    "name": "PT Corn SolvBTC Babylon 26DEC2024",
+    "symbol": "PT-corn-SolvBTC.BBN-26DEC2024",
+    "decimals": 8,
+    "logoURI": "/tokens/1/0x23e479ddcda990E8523494895759bD98cD2fDBF6.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xeb4d3057738b9ed930f451be473c1ccc42988384",
+      "poolId": "cd887bf9-7fc3-49e8-9cf7-6fc1098ed311"
+    }
+  },
+  {
+    "addressInfo": "0x61439b9575278054D69c9176d88FaFaf8319E4b7",
+    "chainId": 1,
+    "name": "PT USD0++ 30JAN2025",
+    "symbol": "PT-USD0++-30JAN2025",
+    "decimals": 18,
+    "logoURI": "/tokens/1/0x61439b9575278054D69c9176d88FaFaf8319E4b7.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x64506968e80c9ed07bff60c8d9d57474effff2c9",
+      "poolId": "b7d643b7-285d-4a76-9cbb-c51c5d9b6664"
+    }
+  },
+  {
+    "addressInfo": "0x5BaE9a5D67d1CA5b09B14c91935f635CFBF3b685",
+    "chainId": 1,
+    "name": "PT USD0++ 27MAR2025",
+    "symbol": "PT-USD0++-27MAR2025",
+    "decimals": 18,
+    "logoURI": "/tokens/1/0x5BaE9a5D67d1CA5b09B14c91935f635CFBF3b685.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xafdc922d0059147486cc1f0f32e3a2354b0d35cc",
+      "poolId": "74f696d4-1a0e-4a1a-8392-14b714ec3ce6"
+    }
+  },
+  {
+    "addressInfo": "0xf696FE29Ef85E892b5926313897D178288faA07e",
+    "chainId": 1,
+    "name": "PT USD0++ 26JUN2025",
+    "symbol": "PT-USD0++-26JUN2025",
+    "decimals": 18,
+    "logoURI": "/tokens/1/0xf696FE29Ef85E892b5926313897D178288faA07e.svg",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x048680f64d6dff1748ba6d9a01f578433787e24b",
+      "poolId": "6c33c8f1-3c7f-4d1a-b554-76b4b575ae31"
+    }
+  },
+  {
+    "addressInfo": "0x7aa68E84bCD8d1B4C9e10B1e565DB993f68a3E09",
+    "chainId": 1,
+    "name": "PT Kelp Gain 26DEC2024",
+    "symbol": "PT-agETH-26DEC2024",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/39677/large/Icon___Dark.png?1723610897",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x6010676bc2534652ad1ef5fa8073dcf9ad7ebfbe",
+      "poolId": ""
+    }
+  },
+  {
+    "addressInfo": "0xB07b9fDd62DC478E521E8bDe3630a777725B0eB4",
+    "chainId": 1,
+    "name": "PT Kelp rsETH 26DEC2024",
+    "symbol": "PT-rsETH-26DEC2024",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x84a50177a84dad50fdbf665dfbfb39914b52dff2",
+      "poolId": ""
     }
   }
 ]

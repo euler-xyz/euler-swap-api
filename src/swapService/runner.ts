@@ -42,7 +42,7 @@ export async function runPipeline(
     if (result.response) break
   }
 
-  console.log(allResults)
+  // console.log(allResults)
 
   const finalResult = allResults.pop()
   if (!finalResult)
@@ -62,9 +62,9 @@ export async function runPipeline(
 }
 
 // TODO tokenlist, interfaces
+// TODO price impact
 // TODO error handling
 // TODO npm interfaces, supported chains
 // TODO cache pipeline
-// TODO env validation
 // TODO logging
 // TODO pendle rollover
