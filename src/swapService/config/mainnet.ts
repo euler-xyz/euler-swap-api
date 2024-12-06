@@ -21,10 +21,6 @@ const WSTUSR_MAINNET = "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055"
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
-    strategy: StrategyERC4626Wrapper.name(),
-    match: {},
-  },
-  {
     strategy: StrategyRepayWrapper.name(),
     match: {
       isRepay: true,
@@ -40,6 +36,12 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyMTBILL.name(),
     match: {
       tokensInOrOut: [MTBILL_MAINNET],
+    },
+  },
+  {
+    strategy: StrategyERC4626Wrapper.name(),
+    match: {
+      tokensInOrOut: [WSTUSR_MAINNET],
     },
   },
   {
@@ -67,17 +69,11 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
   },
   {
-    strategy: StrategyLifi.name(),
-    match: {
-      tokensInOrOut: [SUSDS_MAINNET],
-    },
-  },
-  {
-    // sUSDS fallback
+    // sUSDS
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["paraswap", "open-ocean"],
+        includeSources: ["paraswap", "open-ocean", "li-fi", "odos", "1inch"],
       },
       tryExactOut: true,
     },
@@ -87,7 +83,12 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   },
   // DEFAULTS
   {
-    strategy: Strategy1Inch.name(),
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["1inch"],
+      },
+    },
     match: {
       swapperModes: [SwapperMode.EXACT_IN],
     },

@@ -9,7 +9,12 @@ import {
 import { buildFetchService } from "@balmy/sdk/dist/sdk/builders/fetch-builder"
 import { buildProviderService } from "@balmy/sdk/dist/sdk/builders/provider-builder"
 import type { Either } from "@balmy/sdk/dist/utility-types"
-import { type Hex, encodeAbiParameters, parseAbiParameters } from "viem"
+import {
+  type Address,
+  type Hex,
+  encodeAbiParameters,
+  parseAbiParameters,
+} from "viem"
 import { SwapperMode } from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
 import {
@@ -27,6 +32,7 @@ import {
 import { CustomSourceList } from "./balmySDK/customSourceList"
 
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
+// TODO config
 const BINARY_SEARCH_EXCLUDE_SOURCES = ["paraswap"] // paraswap is rate limited and fails if selected as best source for binary search
 
 type SourcesFilter =
@@ -40,7 +46,15 @@ type SourcesFilter =
     >
   | undefined
 
-export const defaultConfig = {
+export const defaultConfig: {
+  referrer: {
+    address: Address
+    name: string
+  }
+  sourcesFilter: SourcesFilter
+  tryExactOut?: boolean
+  onlyExactOut?: boolean
+} = {
   referrer: {
     address: DAO_MULTISIG,
     name: "euler",
@@ -226,12 +240,25 @@ export class StrategyBalmySDK {
       swapperMode: SwapperMode.EXACT_IN,
     }
 
-    const reverseQuote = await fetchQuote(
-      reverseSwapParams,
-      this.config.sourcesFilter || {
-        excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES,
-      },
-    ) // TODO config
+    let sourcesFilter
+    if (this.config.sourcesFilter?.includeSources) {
+      sourcesFilter = {
+        includeSources: this.config.sourcesFilter.includeSources.filter(
+          (s) => !BINARY_SEARCH_EXCLUDE_SOURCES.includes(s),
+        ),
+      }
+    } else if (this.config.sourcesFilter?.excludeSources) {
+      sourcesFilter = {
+        excludeSources: [
+          ...this.config.sourcesFilter.excludeSources,
+          ...BINARY_SEARCH_EXCLUDE_SOURCES,
+        ],
+      }
+    } else {
+      sourcesFilter = { excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES }
+    }
+
+    const reverseQuote = await fetchQuote(reverseSwapParams, sourcesFilter)
     const estimatedAmountIn = reverseQuote.amountTo
     if (estimatedAmountIn === 0n) throw new Error("quote not found")
 

@@ -61,10 +61,9 @@ export async function runPipeline(
   return finalResult.response
 }
 
+// TODO timeouts on balmy
 // TODO tokenlist, interfaces
 // TODO price impact
-// TODO error handling
-// TODO npm interfaces, supported chains
-// TODO cache pipeline
+// TODO cache pipeline, tokenlists
 // TODO logging
 // TODO pendle rollover
