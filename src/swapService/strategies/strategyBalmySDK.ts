@@ -95,10 +95,13 @@ export class StrategyBalmySDK {
             "li-fi": {
               apiKey: String(process.env.LIFI_API_KEY),
             },
+            pendle: {
+              apiKey: String(process.env.PENDLE_API_KEY),
+            },
           },
         },
       },
-    }
+    } as BuildParams
     this.sdk = buildSDK(buildParams)
     this.match = match
     this.config = config
@@ -292,6 +295,7 @@ export class StrategyBalmySDK {
     sourcesFilter?: SourcesFilter,
   ) {
     // TODO type
+    // console.log('this.sdk.quoteService: ', this.sdk.quoteService);
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {

@@ -65,6 +65,13 @@ export function matchParams(
   if (match.isRepay) {
     if (swapParams.isRepay !== match.isRepay) return false
   }
+  if (match.isPendlePT) {
+    if (
+      !swapParams.tokenIn.meta?.isPendlePT &&
+      !swapParams.tokenOut.meta?.isPendlePT
+    )
+      return false
+  }
 
   return true
 }

@@ -29,8 +29,13 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   },
   // SPECIAL CASE TOKENS
   {
-    strategy: StrategyPendle.name(),
-    match: {}, // strategy supports() will match pendle PT tokens on input/output
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["pendle", "li-fi", "open-ocean"],
+      },
+    },
+    match: { isPendlePT: true },
   },
   {
     strategy: StrategyMTBILL.name(),
@@ -130,6 +135,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "uniswap",
         ],
       },
+      tryExactOut: true,
     },
     match: {},
   },
