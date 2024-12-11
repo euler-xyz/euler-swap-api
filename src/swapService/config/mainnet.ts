@@ -135,7 +135,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "uniswap",
         ],
       },
-      tryExactOut: true,
     },
     match: {},
   },

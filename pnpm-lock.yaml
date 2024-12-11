@@ -17,7 +17,7 @@ dependencies:
     specifier: ^0.4.8
     version: 0.4.8(typescript@5.7.2)(zod@3.23.8)
   '@uniswap/router-sdk':
-    specifier: ^1.15.0
+    specifier: 1.15.0
     version: 1.15.0(hardhat@2.22.17)
   '@uniswap/sdk-core':
     specifier: 5.3.1
@@ -55,6 +55,9 @@ dependencies:
   pino-http:
     specifier: 10.3.0
     version: 10.3.0
+  qs:
+    specifier: ^6.13.1
+    version: 6.13.1
   swagger-ui-express:
     specifier: 5.0.1
     version: 5.0.1(express@4.21.1)
@@ -4546,7 +4549,6 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.6
-    dev: true
 
   /quick-format-unescaped@4.0.4:
     resolution: {integrity: sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==}
