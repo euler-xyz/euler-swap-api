@@ -18,7 +18,7 @@ RUN pnpm i
 RUN pnpm run build
 
 # Expose the application port
-EXPOSE 8000
+EXPOSE 3002
 
 # Start the application
-CMD ["pnpm", "run", "doppler:syncdev"]
+CMD ["pnpm run start"]
