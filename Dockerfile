@@ -21,4 +21,4 @@ RUN pnpm run build
 EXPOSE 3002
 
 # Start the application
-CMD ["pnpm run start"]
+CMD ["pnpm", "start"]
