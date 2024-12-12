@@ -1,4 +1,5 @@
 import type { Address } from "viem"
+import tokenList1 from "../../tokenLists/tokenList_1"
 
 export type TokenListItem = {
   addressInfo: Address
@@ -14,12 +15,10 @@ export type TokenListItem = {
   }
 }
 
-const cache: Record<number, TokenListItem[]> = {}
+const cache: Record<number, TokenListItem[]> = {
+  1: tokenList1 as TokenListItem[],
+}
 
 export default function getTokenList(chainId: number): TokenListItem[] {
-  if (!cache[chainId]) {
-    cache[chainId] = require(`../../tokenLists/tokenList_${chainId}.json`)
-  }
-
   return cache[chainId]
 }
