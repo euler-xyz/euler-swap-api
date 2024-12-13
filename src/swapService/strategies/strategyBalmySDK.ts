@@ -98,6 +98,9 @@ export class StrategyBalmySDK {
             pendle: {
               apiKey: String(process.env.PENDLE_API_KEY),
             },
+            "open-ocean": {
+              apiKey: String(process.env.OPENOCEAN_API_KEY),
+            },
           },
         },
       },
@@ -295,7 +298,6 @@ export class StrategyBalmySDK {
     sourcesFilter?: SourcesFilter,
   ) {
     // TODO type
-    // console.log('this.sdk.quoteService: ', this.sdk.quoteService);
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {

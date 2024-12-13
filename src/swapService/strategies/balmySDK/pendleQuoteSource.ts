@@ -1,6 +1,5 @@
 import { findToken } from "@/swapService/utils"
 import { Chains } from "@balmy/sdk"
-import { isSameAddress } from "@balmy/sdk"
 import type {
   BuildTxParams,
   IQuoteSource,
@@ -15,7 +14,7 @@ import {
   failed,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/utils"
 import qs from "qs"
-import { Address, getAddress } from "viem"
+import { getAddress } from "viem"
 
 // https://api-v2.pendle.finance/core/docs#/Chains/ChainsController_getSupportedChainIds
 export const PENDLE_METADATA: QuoteSourceMetadata<PendleSupport> = {
@@ -51,6 +50,7 @@ export class CustomPendleQuoteSource
     params: QuoteParams<PendleSupport, PendleConfig>,
   ): Promise<SourceQuoteResponse<PendleData>> {
     const { dstAmount, to, data } = await this.getQuote(params)
+    console.log("pendle: ", dstAmount)
 
     const quote = {
       sellAmount: params.request.order.sellAmount,
