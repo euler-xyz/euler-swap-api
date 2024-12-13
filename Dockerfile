@@ -1,22 +1,24 @@
-FROM node:22.11.0-slim
+# Base image with corepack and pnpm enabled
+FROM 310118226683.dkr.ecr.eu-west-1.amazonaws.com/node:23.3.0-slim
 
-# Create app directory
-WORKDIR /usr/src/app
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Setup doppler
+RUN (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh ) | sh
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Set up pnpm environment
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-# Install app dependencies
-RUN npm ci
-
-# Bundle app source
+# Set working directory
+WORKDIR /app
 COPY . .
 
-# Build the TypeScript files
-RUN npm run build
+RUN pnpm i
+RUN pnpm run build
 
-# Expose port 8080
-EXPOSE 8080
+# Expose the application port
+EXPOSE 3002
 
-# Start the app
-CMD npm run start
+# Start the application
+CMD ["pnpm", "start"]
