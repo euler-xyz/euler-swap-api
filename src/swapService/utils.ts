@@ -39,7 +39,6 @@ export const findToken = (chainId: number, tokenAddress: Address) => {
   const token = getTokenList(chainId).find((t: TokenListItem) =>
     isAddressEqual(t.addressInfo, tokenAddress),
   )
-  if (!token) throw new Error("Token not found")
   return token
 }
 
