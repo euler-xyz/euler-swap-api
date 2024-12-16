@@ -1,8 +1,14 @@
+import { base, mainnet } from "viem/chains"
 import type { RoutingConfig } from "../interface"
+import baseRoutingConfig from "./base"
+import defaultRoutingConfig from "./default"
 import mainnetRoutingConfig from "./mainnet"
 
 const routingConfig: RoutingConfig = {
-  "1": mainnetRoutingConfig,
+  [mainnet.id]: mainnetRoutingConfig,
+  [base.id]: baseRoutingConfig,
 }
 
-export default routingConfig
+export const getRoutingConfig = (chainId: number) => {
+  return routingConfig[chainId] || defaultRoutingConfig
+}

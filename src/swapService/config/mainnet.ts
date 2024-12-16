@@ -1,12 +1,9 @@
 import { type ChainRoutingConfig, SwapperMode } from "../interface"
 import {
-  Strategy1Inch,
   StrategyBalmySDK,
   StrategyCombinedUniswap,
   StrategyERC4626Wrapper,
-  StrategyLifi,
   StrategyMTBILL,
-  StrategyPendle,
   StrategyRepayWrapper,
 } from "../strategies"
 import { MTBILL_MAINNET } from "../strategies/strategyMTBILL"

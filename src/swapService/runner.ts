@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes"
-import routingConfig from "./config"
+import { getRoutingConfig } from "./config"
 import type {
   ChainRoutingConfig,
   RoutingItem,
@@ -14,7 +14,7 @@ function loadPipeline(swapParams: SwapParams) {
   if (swapParams.routingOverride) {
     routing = swapParams.routingOverride
   } else {
-    routing = routingConfig[String(swapParams.chainId)]
+    routing = getRoutingConfig(swapParams.chainId)
     if (!routing)
       throw new ApiError(
         StatusCodes.NOT_FOUND,
