@@ -42,6 +42,7 @@ swapRouter.get(
   validateRequest(getSwapSchema),
   async (req: Request, res: Response) => {
     const serviceResponse = await findSwap(req)
+    console.log("===== END =====")
     return handleServiceResponse(serviceResponse, res)
   },
 )
