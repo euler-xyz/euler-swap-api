@@ -13,6 +13,12 @@ const SCRVUSD_MAINNET = "0x0655977feb2f289a4ab78af67bab0d17aab84367"
 const USD3_MAINNET = "0x0d86883faf4ffd7aeb116390af37746f45b6f378"
 const EUSD_MAINNET = "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f"
 const WSTUSR_MAINNET = "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055"
+const FDUSD_MAINNET = "0xc5f0f7b66764f6ec8c8dff7ba683102295e16409" //TEST
+const WUSDM_MAINNET = "0x57f5e098cad7a3d1eed53991d4d66c45c9af7812" //TEST
+const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559" // TEST
+const WM_MAINNET = "0x437cc33344a0B27A429f795ff6B469C72698B291" // TEST
+const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0" //TEST
+// TEST mBASIS
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -40,7 +46,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   {
     strategy: StrategyERC4626Wrapper.name(),
     match: {
-      tokensInOrOut: [WSTUSR_MAINNET],
+      tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET],
     },
   },
   {
@@ -64,6 +70,10 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         EUSD_MAINNET,
         SCRVUSD_MAINNET,
         WSTUSR_MAINNET,
+        FDUSD_MAINNET,
+        WUSDM_MAINNET,
+        WM_MAINNET,
+        USD0PLUSPLUS_MAINNET,
       ],
     },
   },

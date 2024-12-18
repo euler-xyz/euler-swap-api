@@ -72,16 +72,16 @@ const defaultConfig: Config = {
         paymentTokenSweepVault: "0x598513C77236Bd5821CCC7bc3E3a585F3FeC9fb1", // WBTC-1 escrow
         priceOne: 100000000n,
       },
-      // mBASIS: {
-      //   tokenContract: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
-      //   redemptionInstantFeeBps: 50n,
-      //   depositorContract: "0xa8a5c4FF4c86a459EBbDC39c5BE77833B3A15d88",
-      //   redeemerContract: "0x0D89C1C4799353F3805A3E6C4e1Cbbb83217D123",
-      //   oracleContract: "0xE4f2AE539442e1D3Fb40F03ceEbF4A372a390d24",
-      //   paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
-      //   paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // USDC-1 escrow
-      //   priceOne: 100000000n,
-      // },
+      mBASIS: {
+        tokenContract: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
+        redemptionInstantFeeBps: 50n,
+        depositorContract: "0xa8a5c4FF4c86a459EBbDC39c5BE77833B3A15d88",
+        redeemerContract: "0x0D89C1C4799353F3805A3E6C4e1Cbbb83217D123",
+        oracleContract: "0xE4f2AE539442e1D3Fb40F03ceEbF4A372a390d24",
+        paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // USDC-1 escrow
+        priceOne: 100000000n,
+      },
     },
 
     [base.id]: {
@@ -235,7 +235,6 @@ export class StrategyMidas {
       swapParams,
       swapParams.amount,
       true,
-      getAddress(mToken.paymentToken),
       getAddress(mToken.paymentToken),
     )
 
@@ -722,7 +721,8 @@ export class StrategyMidas {
     if (isAmountMToken) {
       const fee = (amount * mToken.redemptionInstantFeeBps) / 10_000n
       amountIn = amount
-      amountOutMin = ((amount - fee) * mTBILLPriceUSD) / mToken.priceOne
+      amountOutMin =
+        (((amount - fee) * mTBILLPriceUSD) / mToken.priceOne / scale) * scale // truncate above payment token decimals
       amountOut = amountOutMin / scale
     } else {
       amountIn =
