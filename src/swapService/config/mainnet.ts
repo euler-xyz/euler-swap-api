@@ -3,10 +3,9 @@ import {
   StrategyBalmySDK,
   StrategyCombinedUniswap,
   StrategyERC4626Wrapper,
-  StrategyMTBILL,
+  StrategyMidas,
   StrategyRepayWrapper,
 } from "../strategies"
-import { MTBILL_MAINNET } from "../strategies/strategyMTBILL"
 
 const SUSDS_MAINNET = "0xa3931d71877c0e7a3148cb7eb4463524fec27fbd"
 const EBTC_MAINNET = "0x657e8c867d8b37dcc18fa4caead9c45eb088c642"
@@ -35,10 +34,8 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     match: { isPendlePT: true },
   },
   {
-    strategy: StrategyMTBILL.name(),
-    match: {
-      tokensInOrOut: [MTBILL_MAINNET],
-    },
+    strategy: StrategyMidas.name(),
+    match: {}, // supports function will match mTokens
   },
   {
     strategy: StrategyERC4626Wrapper.name(),

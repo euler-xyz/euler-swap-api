@@ -3,14 +3,14 @@ import { StrategyBalmySDK } from "./strategyBalmySDK"
 import { StrategyCombinedUniswap } from "./strategyCombinedUniswap"
 import { StrategyERC4626Wrapper } from "./strategyERC4626Wrapper"
 import { StrategyLifi } from "./strategyLifi"
-import { StrategyMTBILL } from "./strategyMTBILL"
+import { StrategyMidas } from "./strategyMidas"
 import { StrategyPendle } from "./strategyPendle"
 import { StrategyRepayWrapper } from "./strategyRepayWrapper"
 
 export {
   Strategy1Inch,
   StrategyCombinedUniswap,
-  StrategyMTBILL,
+  StrategyMidas,
   StrategyPendle,
   StrategyLifi,
   StrategyRepayWrapper,
@@ -21,7 +21,7 @@ export {
 export const strategies = {
   [Strategy1Inch.name()]: Strategy1Inch,
   [StrategyPendle.name()]: StrategyPendle,
-  [StrategyMTBILL.name()]: StrategyMTBILL,
+  [StrategyMidas.name()]: StrategyMidas,
   [StrategyCombinedUniswap.name()]: StrategyCombinedUniswap,
   [StrategyRepayWrapper.name()]: StrategyRepayWrapper,
   [StrategyBalmySDK.name()]: StrategyBalmySDK,

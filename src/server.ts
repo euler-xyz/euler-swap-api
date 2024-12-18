@@ -9,9 +9,6 @@ import { swapRouter } from "@/api/routes/swap/swapRouter"
 import errorHandler from "@/common/middleware/errorHandler"
 import rateLimiter from "@/common/middleware/rateLimiter"
 import requestLogger from "@/common/middleware/requestLogger"
-import dotenv from "dotenv"
-
-dotenv.config()
 
 const logger = pino({ name: "server start" })
 const app: Express = express()
