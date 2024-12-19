@@ -402,7 +402,7 @@ export default [
     symbol: "USDE",
     decimals: 18,
     logoURI:
-      "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "https://coin-images.coingecko.com/coins/images/33613/large/usde.png?1733810059",
     meta: {},
   },
   {
@@ -868,6 +868,16 @@ export default [
     meta: {},
   },
   {
+    addressInfo: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+    chainId: 1,
+    name: "sUSDS",
+    symbol: "sUSDS",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/marsfoundation/spark-docs/9b2ece7f8d6d1575549a88bb78654fe68707156f/.gitbook/assets/sUSDS-Coin.svg",
+    meta: {},
+  },
+  {
     addressInfo: "0x0d86883faf4ffd7aeb116390af37746f45b6f378",
     chainId: 1,
     name: "Web 3 Dollar",
@@ -1034,7 +1044,7 @@ export default [
   {
     addressInfo: "0x007115416ab6c266329a03b09a8aa39ac2ef7d9d",
     chainId: 1,
-    name: "Midas BTC Yield Token",
+    name: "Midas mBTC",
     symbol: "MBTC",
     decimals: 18,
     logoURI:
@@ -1049,6 +1059,36 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {},
+  },
+  {
+    addressInfo: "0x15700b564ca08d9439c58ca5053166e8317aa138",
+    chainId: 1,
+    name: "Elixir deUSD",
+    symbol: "DEUSD",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/39494/large/deUSD_Logo_%281%29.png?1723689002",
+    meta: {},
+  },
+  {
+    addressInfo: "0x8a60e489004ca22d775c5f2c657598278d17d9c2",
+    chainId: 1,
+    name: "USDa",
+    symbol: "USDA",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/51599/large/SUSDA.png?1731604761",
+    meta: {},
+  },
+  {
+    addressInfo: "0x5c5b196abe0d54485975d1ec29617d42d9198326",
+    chainId: 1,
+    name: "Elixir Staked deUSD",
+    symbol: "SDEUSD",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/52847/large/Staked_deUSD_%28sdeUSD%29_Logo.png?1734473339",
     meta: {},
   },
   {
@@ -1153,22 +1193,39 @@ export default [
     },
   },
   {
-    addressInfo: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-    chainId: 1,
-    name: "sUSDS",
-    symbol: "sUSDS",
-    decimals: 18,
-    logoURI:
-      "https://raw.githubusercontent.com/marsfoundation/spark-docs/9b2ece7f8d6d1575549a88bb78654fe68707156f/.gitbook/assets/sUSDS-Coin.svg",
-    meta: {},
-  },
-  {
     addressInfo: "0x437cc33344a0B27A429f795ff6B469C72698B291",
     chainId: 1,
     name: "wM",
     symbol: "wM",
     decimals: 6,
     logoURI: "/tokens/1/0x437cc33344a0B27A429f795ff6B469C72698B291.png",
+    meta: {},
+  },
+  {
+    addressInfo: "0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+    chainId: 1,
+    name: "RLUSD",
+    symbol: "RLUSD",
+    decimals: 18,
+    logoURI: "/tokens/1/0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD.png",
+    meta: {},
+  },
+  {
+    addressInfo: "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559",
+    chainId: 1,
+    name: "Wrapped USDL",
+    symbol: "wUSDL",
+    decimals: 18,
+    logoURI: "/tokens/1/0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559.png",
+    meta: {},
+  },
+  {
+    addressInfo: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
+    chainId: 1,
+    name: "Midas mBASIS",
+    symbol: "mBASIS",
+    decimals: 18,
+    logoURI: "/tokens/1/0x2a8c22E3b10036f3AEF5875d04f8441d4188b656.png",
     meta: {},
   },
   {
@@ -1370,6 +1427,34 @@ export default [
       isPendlePT: true,
       pendleMarket: "0x84a50177a84dad50fdbf665dfbfb39914b52dff2",
       poolId: "",
+    },
+  },
+  {
+    addressInfo: "0xb7de5dFCb74d25c2f21841fbd6230355C50d9308",
+    chainId: 1,
+    name: "PT Ethena sUSDE 29MAY2025",
+    symbol: "PT-sUSDE-29MAY2025",
+    decimals: 18,
+    logoURI:
+      "https://assets.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+    meta: {
+      isPendlePT: true,
+      pendleMarket: "0xb162b764044697cf03617c2efbcb1f42e31e4766",
+      poolId: "606e53bf-ea88-4d4e-92b8-fcd6e97e4106",
+    },
+  },
+  {
+    addressInfo: "0x8A47b431A7D947c6a3ED6E42d501803615a97EAa",
+    chainId: 1,
+    name: "PT Ethena USDe 27MAR2025",
+    symbol: "PT-USDe-27MAR2025",
+    decimals: 18,
+    logoURI:
+      "https://assets.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
+    meta: {
+      isPendlePT: true,
+      pendleMarket: "0xb451a36c8b6b2eac77ad0737ba732818143a0e25",
+      poolId: "48f7ef7c-c08e-4b43-bc00-e2111c2fd65d",
     },
   },
 ]
