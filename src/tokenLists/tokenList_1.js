@@ -1457,4 +1457,16 @@ export default [
       poolId: "48f7ef7c-c08e-4b43-bc00-e2111c2fd65d",
     },
   },
+  {
+    addressInfo: "0x3eE841F47947FEFbE510366E4bbb49e145484195",
+    chainId: 1,
+    name: "Curve USR/USDC",
+    symbol: "USRUSDC",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {
+      poolId: "6258d8cc-e618-4165-9385-7775168369b2",
+    },
+  },
 ]
