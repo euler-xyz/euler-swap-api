@@ -304,6 +304,7 @@ export class StrategyBalmySDK {
         choose: {
           by: "most-swapped-accounting-for-gas",
         },
+        timeout: "30000", // TODO config
       },
     })
 
