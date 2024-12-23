@@ -50,7 +50,6 @@ export class CustomPendleQuoteSource
     params: QuoteParams<PendleSupport, PendleConfig>,
   ): Promise<SourceQuoteResponse<PendleData>> {
     const { dstAmount, to, data } = await this.getQuote(params)
-    console.log("pendle: ", dstAmount)
 
     const quote = {
       sellAmount: params.request.order.sellAmount,
@@ -89,26 +88,48 @@ export class CustomPendleQuoteSource
     },
     config,
   }: QuoteParams<PendleSupport, PendleConfig>) {
-    const queryParams = {
-      receiver: recipient || takeFrom,
-      slippage: slippagePercentage / 100, // 1 = 100%
-      enableAggregator: true,
-      tokenIn: sellToken,
-      tokenOut: buyToken,
-      amountIn: order.sellAmount.toString(),
-    }
-
-    const queryString = qs.stringify(queryParams, {
-      skipNulls: true,
-      arrayFormat: "comma",
-    })
     const tokenIn = findToken(chainId, getAddress(sellToken))
     const tokenOut = findToken(chainId, getAddress(buyToken))
 
-    const pendleMarket =
-      tokenIn.meta?.pendleMarket || tokenOut.meta?.pendleMarket
+    let url
+    if (tokenIn?.meta?.isPendlePT && tokenOut?.meta?.isPendlePT) {
+      // rollover
+      const queryParams = {
+        receiver: recipient || takeFrom,
+        slippage: slippagePercentage / 100, // 1 = 100%
+        dstMarket: tokenOut.meta.pendleMarket,
+        ptAmount: order.sellAmount.toString(),
+      }
 
-    const url = `${getUrl()}/${chainId}/markets/${pendleMarket}/swap?${queryString}`
+      const queryString = qs.stringify(queryParams, {
+        skipNulls: true,
+        arrayFormat: "comma",
+      })
+
+      const pendleMarket = tokenIn.meta.pendleMarket
+      url = `${getUrl()}/${chainId}/markets/${pendleMarket}/roll-over-pt?${queryString}`
+    } else {
+      // swap
+      const queryParams = {
+        receiver: recipient || takeFrom,
+        slippage: slippagePercentage / 100, // 1 = 100%
+        enableAggregator: true,
+        tokenIn: sellToken,
+        tokenOut: buyToken,
+        amountIn: order.sellAmount.toString(),
+      }
+
+      const queryString = qs.stringify(queryParams, {
+        skipNulls: true,
+        arrayFormat: "comma",
+      })
+
+      const pendleMarket =
+        tokenIn?.meta?.pendleMarket || tokenOut?.meta?.pendleMarket
+
+      url = `${getUrl()}/${chainId}/markets/${pendleMarket}/swap?${queryString}`
+    }
+
     const response = await fetchService.fetch(url, {
       timeout,
       headers: getHeaders(config),
@@ -123,10 +144,12 @@ export class CustomPendleQuoteSource
         (await response.text()) || `Failed with status ${response.status}`,
       )
     }
+
     const {
-      data: { amountOut: dstAmount },
+      data: { amountOut, amountPtOut },
       tx: { to, data },
     } = await response.json()
+    const dstAmount = amountOut || amountPtOut
 
     return { dstAmount, to, data }
   }

@@ -44,7 +44,7 @@ export async function runPipeline(
 
   console.log(allResults)
 
-  const finalResult = allResults.pop()
+  const finalResult = allResults.at(-1)
   if (!finalResult)
     throw new ApiError(
       StatusCodes.NOT_FOUND,

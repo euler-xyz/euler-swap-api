@@ -30,7 +30,7 @@ export async function fetchUniswapQuote(
   })
 
   const router = new AlphaRouter({
-    chainId: swapParams.chainId as ChainId,
+    chainId: swapParams.chainId,
     provider: provider,
   })
 

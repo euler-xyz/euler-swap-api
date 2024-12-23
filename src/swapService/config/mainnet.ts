@@ -19,6 +19,7 @@ const WUSDM_MAINNET = "0x57f5e098cad7a3d1eed53991d4d66c45c9af7812"
 const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559"
 const WM_MAINNET = "0x437cc33344a0B27A429f795ff6B469C72698B291"
 const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
+const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
 // TEST mBASIS
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
@@ -47,7 +48,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   {
     strategy: StrategyERC4626Wrapper.name(),
     match: {
-      tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET],
+      tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET, PT_WSTUSR1740182579],
     },
   },
   {
