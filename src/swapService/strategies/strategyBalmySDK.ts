@@ -14,6 +14,7 @@ import {
   type Hex,
   encodeAbiParameters,
   parseAbiParameters,
+  parseUnits,
 } from "viem"
 import { SwapperMode } from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
@@ -24,6 +25,7 @@ import {
   buildApiResponseExactInputFromQuote,
   buildApiResponseSwap,
   buildApiResponseVerifyDebtMax,
+  calculateEstimatedAmountFrom,
   encodeSwapMulticallItem,
   isExactInRepay,
   matchParams,
@@ -239,13 +241,6 @@ export class StrategyBalmySDK {
       }
     }
 
-    const reverseSwapParams = {
-      ...swapParams,
-      tokenIn: swapParams.tokenOut,
-      tokenOut: swapParams.tokenIn,
-      swapperMode: SwapperMode.EXACT_IN,
-    }
-
     let sourcesFilter
     if (this.config.sourcesFilter?.includeSources) {
       sourcesFilter = {
@@ -263,12 +258,28 @@ export class StrategyBalmySDK {
     } else {
       sourcesFilter = { excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES }
     }
+    const swapParamsExactIn = {
+      ...swapParams,
+      swapperMode: SwapperMode.EXACT_IN,
+      receiver: swapParams.from,
+      isRepay: false,
+    }
+    const { amountTo: unitAmountTo } = await fetchQuote(
+      {
+        ...swapParamsExactIn,
+        amount: parseUnits("1", swapParams.tokenIn.decimals),
+      },
+      sourcesFilter,
+    )
 
-    const reverseQuote = await fetchQuote(reverseSwapParams, sourcesFilter)
-    const estimatedAmountIn = reverseQuote.amountTo
+    const estimatedAmountIn = calculateEstimatedAmountFrom(
+      unitAmountTo,
+      swapParamsExactIn.amount,
+      swapParamsExactIn.tokenIn.decimals,
+      swapParamsExactIn.tokenOut.decimals,
+    )
+
     if (estimatedAmountIn === 0n) throw new Error("quote not found")
-
-    const bestSourceId = reverseQuote.quote.source.id
 
     const overSwapTarget = adjustForInterest(swapParams.amount)
 
@@ -277,10 +288,19 @@ export class StrategyBalmySDK {
       currentAmountTo < overSwapTarget ||
       (currentAmountTo * 1000n) / overSwapTarget > 1005n
 
+    let bestSourceId: string
+
     const quote = await binarySearchQuote(
       swapParams,
-      (swapParams: SwapParams) =>
-        fetchQuote(swapParams, { includeSources: [bestSourceId] }), // preselect single source to avoid oscilations
+      async (swapParams: SwapParams) => {
+        let bestSourceConfig
+        if (bestSourceId) {
+          bestSourceConfig = { includeSources: [bestSourceId] }
+        }
+        const q = await fetchQuote(swapParams, bestSourceConfig) // preselect single source to avoid oscilations
+        if (!bestSourceId) bestSourceId = q.quote.source.id
+        return q
+      },
       overSwapTarget,
       estimatedAmountIn,
       shouldContinue,
@@ -292,6 +312,73 @@ export class StrategyBalmySDK {
 
     return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
   }
+
+  //   async #binarySearchOverswapQuote(swapParams: SwapParams) {
+  //     const fetchQuote = async (
+  //       sp: SwapParams,
+  //       sourcesFilter?: SourcesFilter,
+  //     ) => {
+  //       const quote = await this.#getBestSDKQuote(sp, sourcesFilter)
+  //       return {
+  //         quote,
+  //         amountTo: quote.buyAmount.amount,
+  //       }
+  //     }
+
+  //     const reverseSwapParams = {
+  //       ...swapParams,
+  //       tokenIn: swapParams.tokenOut,
+  //       tokenOut: swapParams.tokenIn,
+  //       swapperMode: SwapperMode.EXACT_IN,
+  //     }
+
+  //     let sourcesFilter
+  //     if (this.config.sourcesFilter?.includeSources) {
+  //       sourcesFilter = {
+  //         includeSources: this.config.sourcesFilter.includeSources.filter(
+  //           (s) => !BINARY_SEARCH_EXCLUDE_SOURCES.includes(s),
+  //         ),
+  //       }
+  //     } else if (this.config.sourcesFilter?.excludeSources) {
+  //       sourcesFilter = {
+  //         excludeSources: [
+  //           ...this.config.sourcesFilter.excludeSources,
+  //           ...BINARY_SEARCH_EXCLUDE_SOURCES,
+  //         ],
+  //       }
+  //     } else {
+  //       sourcesFilter = { excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES }
+  //     }
+  // console.log(11);
+  //     const reverseQuote = await fetchQuote(reverseSwapParams, sourcesFilter)
+  //     console.log(22);
+  //     const estimatedAmountIn = reverseQuote.amountTo
+  //     if (estimatedAmountIn === 0n) throw new Error("quote not found")
+
+  //     const bestSourceId = reverseQuote.quote.source.id
+
+  //     const overSwapTarget = adjustForInterest(swapParams.amount)
+
+  //     const shouldContinue = (currentAmountTo: bigint): boolean =>
+  //       // search until quote is 100 - 100.5% target
+  //       currentAmountTo < overSwapTarget ||
+  //       (currentAmountTo * 1000n) / overSwapTarget > 1005n
+
+  //     const quote = await binarySearchQuote(
+  //       swapParams,
+  //       (swapParams: SwapParams) =>
+  //         fetchQuote(swapParams, { includeSources: [bestSourceId] }), // preselect single source to avoid oscilations
+  //       overSwapTarget,
+  //       estimatedAmountIn,
+  //       shouldContinue,
+  //     )
+  //     const quoteWithTx = {
+  //       ...quote,
+  //       tx: await this.#getTxForQuote(quote),
+  //     }
+
+  //     return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
+  //   }
 
   async #getBestSDKQuote(
     swapParams: SwapParams,

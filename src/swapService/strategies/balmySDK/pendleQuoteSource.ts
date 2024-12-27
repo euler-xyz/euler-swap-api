@@ -1,5 +1,6 @@
+import type { TokenListItem } from "@/common/utils/tokenList"
 import { findToken } from "@/swapService/utils"
-import { Chains } from "@balmy/sdk"
+import { Chains, type IFetchService } from "@balmy/sdk"
 import type {
   BuildTxParams,
   IQuoteSource,
@@ -14,7 +15,7 @@ import {
   failed,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/utils"
 import qs from "qs"
-import { getAddress } from "viem"
+import { type Address, getAddress, isAddressEqual } from "viem"
 
 // https://api-v2.pendle.finance/core/docs#/Chains/ChainsController_getSupportedChainIds
 export const PENDLE_METADATA: QuoteSourceMetadata<PendleSupport> = {
@@ -39,9 +40,27 @@ type CustomOrAPIKeyConfig =
   | { customUrl?: undefined; apiKey: string }
 type PendleConfig = CustomOrAPIKeyConfig
 type PendleData = { tx: SourceQuoteTransaction }
+
+type ExpiredMarketsCache = {
+  [chainId: number]: {
+    lastUpdatedUTCDate: number
+    markets: {
+      name: string
+      address: Address
+      expiry: string
+      pt: string
+      yt: string
+      sy: string
+      underlyingAsset: string
+    }[]
+  }
+}
+
 export class CustomPendleQuoteSource
   implements IQuoteSource<PendleSupport, PendleConfig, PendleData>
 {
+  private expiredMarketsCache: ExpiredMarketsCache = {}
+
   getMetadata() {
     return PENDLE_METADATA
   }
@@ -90,9 +109,10 @@ export class CustomPendleQuoteSource
   }: QuoteParams<PendleSupport, PendleConfig>) {
     const tokenIn = findToken(chainId, getAddress(sellToken))
     const tokenOut = findToken(chainId, getAddress(buyToken))
+    if (!tokenIn || !tokenOut) throw new Error("Missing token in or out")
 
     let url
-    if (tokenIn?.meta?.isPendlePT && tokenOut?.meta?.isPendlePT) {
+    if (tokenIn.meta?.isPendlePT && tokenOut.meta?.isPendlePT) {
       // rollover
       const queryParams = {
         receiver: recipient || takeFrom,
@@ -107,7 +127,33 @@ export class CustomPendleQuoteSource
       })
 
       const pendleMarket = tokenIn.meta.pendleMarket
-      url = `${getUrl()}/${chainId}/markets/${pendleMarket}/roll-over-pt?${queryString}`
+      url = `${getUrl()}/sdk/${chainId}/markets/${pendleMarket}/roll-over-pt?${queryString}`
+    } else if (
+      tokenIn.meta?.isPendlePT &&
+      !!(await this.getExpiredMarket(fetchService, chainId, tokenIn, timeout))
+    ) {
+      // redeem expired PT
+      const market = await this.getExpiredMarket(
+        fetchService,
+        chainId,
+        tokenIn,
+        timeout,
+      )
+      const queryParams = {
+        receiver: recipient || takeFrom,
+        slippage: slippagePercentage / 100, // 1 = 100%
+        enableAggregator: true,
+        yt: market?.yt.slice(2),
+        amountIn: order.sellAmount.toString(),
+        tokenOut: buyToken,
+      }
+
+      const queryString = qs.stringify(queryParams, {
+        skipNulls: true,
+        arrayFormat: "comma",
+      })
+
+      url = `${getUrl()}/sdk/${chainId}/redeem?${queryString}`
     } else {
       // swap
       const queryParams = {
@@ -127,7 +173,7 @@ export class CustomPendleQuoteSource
       const pendleMarket =
         tokenIn?.meta?.pendleMarket || tokenOut?.meta?.pendleMarket
 
-      url = `${getUrl()}/${chainId}/markets/${pendleMarket}/swap?${queryString}`
+      url = `${getUrl()}/sdk/${chainId}/markets/${pendleMarket}/swap?${queryString}`
     }
 
     const response = await fetchService.fetch(url, {
@@ -154,6 +200,42 @@ export class CustomPendleQuoteSource
     return { dstAmount, to, data }
   }
 
+  private async getExpiredMarket(
+    fetchService: IFetchService,
+    chainId: number,
+    token: TokenListItem,
+    timeout?: string,
+  ) {
+    if (
+      !this.expiredMarketsCache[chainId] ||
+      this.expiredMarketsCache[chainId].lastUpdatedUTCDate !==
+        new Date().getUTCDate()
+    ) {
+      this.expiredMarketsCache[chainId] = {
+        markets: [],
+        lastUpdatedUTCDate: -1,
+      }
+
+      const url = `${getUrl()}/${chainId}/markets/inactive`
+      const response = await fetchService.fetch(url, {
+        timeout: timeout as any,
+      })
+
+      if (response.ok) {
+        const { markets } = await response.json()
+
+        this.expiredMarketsCache[chainId] = {
+          markets,
+          lastUpdatedUTCDate: new Date().getUTCDate(),
+        }
+      }
+    }
+
+    return this.expiredMarketsCache[chainId].markets.find((m) =>
+      isAddressEqual(m.address, token.meta?.pendleMarket as Address),
+    )
+  }
+
   isConfigAndContextValidForQuoting(
     config: Partial<PendleConfig> | undefined,
   ): config is PendleConfig {
@@ -168,7 +250,7 @@ export class CustomPendleQuoteSource
 }
 
 function getUrl() {
-  return "https://api-v2.pendle.finance/core/v1/sdk"
+  return "https://api-v2.pendle.finance/core/v1"
 }
 
 function getHeaders(config: PendleConfig) {
