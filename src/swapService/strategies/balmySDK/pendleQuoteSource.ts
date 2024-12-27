@@ -43,7 +43,7 @@ type PendleData = { tx: SourceQuoteTransaction }
 
 type ExpiredMarketsCache = {
   [chainId: number]: {
-    lastUpdatedUTCDate: number
+    lastUpdated: number
     markets: {
       name: string
       address: Address
@@ -55,6 +55,8 @@ type ExpiredMarketsCache = {
     }[]
   }
 }
+
+const todayUTC = () => new Date().setUTCHours(0, 0, 0, 0)
 
 export class CustomPendleQuoteSource
   implements IQuoteSource<PendleSupport, PendleConfig, PendleData>
@@ -208,12 +210,11 @@ export class CustomPendleQuoteSource
   ) {
     if (
       !this.expiredMarketsCache[chainId] ||
-      this.expiredMarketsCache[chainId].lastUpdatedUTCDate !==
-        new Date().getUTCDate()
+      this.expiredMarketsCache[chainId].lastUpdated !== todayUTC()
     ) {
       this.expiredMarketsCache[chainId] = {
         markets: [],
-        lastUpdatedUTCDate: -1,
+        lastUpdated: -1,
       }
 
       const url = `${getUrl()}/${chainId}/markets/inactive`
@@ -226,7 +227,7 @@ export class CustomPendleQuoteSource
 
         this.expiredMarketsCache[chainId] = {
           markets,
-          lastUpdatedUTCDate: new Date().getUTCDate(),
+          lastUpdated: todayUTC(),
         }
       }
     }
