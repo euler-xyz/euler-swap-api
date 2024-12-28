@@ -1,9 +1,11 @@
 import type { IFetchService, IProviderService } from "@balmy/sdk"
 import { LocalSourceList } from "@balmy/sdk/dist/services/quotes/source-lists/local-source-list"
 import { CustomLiFiQuoteSource } from "./lifiQuoteSource"
+import { CustomNeptuneQuoteSource } from "./neptuneQuoteSource"
 import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
 import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
 import { CustomPendleQuoteSource } from "./pendleQuoteSource"
+
 type ConstructorParameters = {
   providerService: IProviderService
   fetchService: IFetchService
@@ -14,6 +16,7 @@ const customSources = {
   "li-fi": new CustomLiFiQuoteSource(),
   pendle: new CustomPendleQuoteSource(),
   "open-ocean": new CustomOpenOceanQuoteSource(),
+  neptune: new CustomNeptuneQuoteSource(),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {
