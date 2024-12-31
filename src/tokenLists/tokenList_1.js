@@ -163,7 +163,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
-    meta: {},
+    meta: {
+      poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
+    },
   },
   {
     addressInfo: "0x853d955acef822db058eb8505911ed77f175b99e",
@@ -1062,6 +1064,15 @@ export default [
     meta: {},
   },
   {
+    addressInfo: "0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
+    chainId: 1,
+    name: "RLUSD",
+    symbol: "RLUSD",
+    decimals: 18,
+    logoURI: "/tokens/1/0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD.png",
+    meta: {},
+  },
+  {
     addressInfo: "0x15700b564ca08d9439c58ca5053166e8317aa138",
     chainId: 1,
     name: "Elixir deUSD",
@@ -1150,6 +1161,16 @@ export default [
     meta: {},
   },
   {
+    addressInfo: "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+    chainId: 1,
+    name: "EUL",
+    symbol: "EUL",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    meta: {},
+  },
+  {
     addressInfo: "0xf3e621395fc714b90da337aa9108771597b4e696",
     chainId: 1,
     name: "Reward EUL",
@@ -1202,15 +1223,6 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD",
-    chainId: 1,
-    name: "RLUSD",
-    symbol: "RLUSD",
-    decimals: 18,
-    logoURI: "/tokens/1/0x8292Bb45bf1Ee4d140127049757C2E0fF06317eD.png",
-    meta: {},
-  },
-  {
     addressInfo: "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559",
     chainId: 1,
     name: "Wrapped USDL",
@@ -1227,6 +1239,26 @@ export default [
     decimals: 18,
     logoURI: "/tokens/1/0x2a8c22E3b10036f3AEF5875d04f8441d4188b656.png",
     meta: {},
+  },
+  {
+    addressInfo: "0x45054c6753b4Bce40C5d54418DabC20b070F85bE",
+    chainId: 1,
+    name: "IdleCDO AA Tranche - idle_Fasanara",
+    symbol: "AA_idle_Fasanara",
+    decimals: 18,
+    logoURI: "/tokens/1/0x45054c6753b4Bce40C5d54418DabC20b070F85bE.svg",
+    meta: {},
+  },
+  {
+    addressInfo: "0x4956b52aE2fF65D74CA2d61207523288e4528f96",
+    chainId: 1,
+    name: "Resolv Liquidity Provider Token",
+    symbol: "RLP",
+    decimals: 18,
+    logoURI: "/tokens/1/0x4956b52aE2fF65D74CA2d61207523288e4528f96.webp",
+    meta: {
+      poolId: "2ad8497d-c855-4840-85ad-cdc536b92ced",
+    },
   },
   {
     addressInfo: "0xE00bd3Df25fb187d6ABBB620b3dfd19839947b81",
@@ -1253,7 +1285,7 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xa0ab94debb3cc9a7ea77f3205ba4ab23276fed08",
-      poolId: "9be76d1d-734c-435d-bcbf-f0d2704e84d0",
+      poolId: "104f1152-d692-4e9f-9e79-db1dddd70891",
     },
   },
   {
@@ -1412,7 +1444,7 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x6010676bc2534652ad1ef5fa8073dcf9ad7ebfbe",
-      poolId: "",
+      poolId: "4b93db81-f182-4c73-86e3-5d30aafb0291",
     },
   },
   {
@@ -1427,6 +1459,18 @@ export default [
       isPendlePT: true,
       pendleMarket: "0x84a50177a84dad50fdbf665dfbfb39914b52dff2",
       poolId: "",
+    },
+  },
+  {
+    addressInfo: "0x3eE841F47947FEFbE510366E4bbb49e145484195",
+    chainId: 1,
+    name: "Curve USR/USDC",
+    symbol: "USRUSDC-Curve-LP",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {
+      poolId: "6258d8cc-e618-4165-9385-7775168369b2",
     },
   },
   {
@@ -1455,18 +1499,6 @@ export default [
       isPendlePT: true,
       pendleMarket: "0xb451a36c8b6b2eac77ad0737ba732818143a0e25",
       poolId: "48f7ef7c-c08e-4b43-bc00-e2111c2fd65d",
-    },
-  },
-  {
-    addressInfo: "0x3eE841F47947FEFbE510366E4bbb49e145484195",
-    chainId: 1,
-    name: "Curve USR/USDC",
-    symbol: "USRUSDC",
-    decimals: 18,
-    logoURI:
-      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
-    meta: {
-      poolId: "6258d8cc-e618-4165-9385-7775168369b2",
     },
   },
 ]

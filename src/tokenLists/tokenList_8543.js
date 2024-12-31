@@ -16,7 +16,9 @@ export default [
     symbol: "cbETH",
     decimals: 18,
     logoURI: "/tokens/8453/cbeth.png",
-    meta: {},
+    meta: {
+      poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
+    },
   },
   {
     addressInfo: "0x4200000000000000000000000000000000000006",
@@ -53,7 +55,9 @@ export default [
     symbol: "wstETH",
     decimals: 18,
     logoURI: "/tokens/8453/wsteth.png",
-    meta: {},
+    meta: {
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+    },
   },
   {
     addressInfo: "0x04c0599ae5a44757c0af6f9ec3b93da8976c150a",
@@ -61,8 +65,11 @@ export default [
     name: "Wrapped eETH",
     symbol: "weETH",
     decimals: 18,
-    logoURI: "/tokens/8453/weeth.svg",
-    meta: {},
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+    meta: {
+      poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
+    },
   },
   {
     addressInfo: "0xecac9c5f704e954931349da37f60e39f515c11c1",
@@ -72,6 +79,37 @@ export default [
     decimals: 8,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+    meta: {},
+  },
+  {
+    addressInfo: "0x2416092f143378750bb29b79eD961ab195CcEea5",
+    chainId: 8453,
+    name: "Renzo Restaked ETH",
+    symbol: "ezETH",
+    decimals: 18,
+    logoURI: "/tokens/8453/0x7223442cad8e9cA474fC40109ab981608F8c4273.svg",
+    meta: {
+      poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
+    },
+  },
+  {
+    addressInfo: "0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c",
+    chainId: 8453,
+    name: "Rocket Pool ETH",
+    symbol: "rETH",
+    decimals: 18,
+    logoURI: "/tokens/8453/0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c.webp",
+    meta: {
+      poolId: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
+    },
+  },
+  {
+    addressInfo: "0x940181a94A35A4569E4529A3CDfB74e38FD98631",
+    chainId: 8453,
+    name: "Aerodrome",
+    symbol: "AERO",
+    decimals: 6,
+    logoURI: "/tokens/8453/0x940181a94A35A4569E4529A3CDfB74e38FD98631.png",
     meta: {},
   },
 ]
