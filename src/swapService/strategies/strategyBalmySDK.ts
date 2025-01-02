@@ -34,6 +34,7 @@ import {
 import { CustomSourceList } from "./balmySDK/customSourceList"
 
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
+const DEFAULT_TIMEOUT = "30000"
 // TODO config
 const BINARY_SEARCH_EXCLUDE_SOURCES = ["paraswap"] // paraswap is rate limited and fails if selected as best source for binary search
 
@@ -48,24 +49,29 @@ type SourcesFilter =
     >
   | undefined
 
-export const defaultConfig: {
+export type BalmyStrategyConfig = {
   referrer: {
     address: Address
     name: string
   }
+  timeout: string
   sourcesFilter: SourcesFilter
   tryExactOut?: boolean
   onlyExactOut?: boolean
-} = {
+}
+
+export const defaultConfig: BalmyStrategyConfig = {
   referrer: {
     address: DAO_MULTISIG,
     name: "euler",
   },
+  timeout: DEFAULT_TIMEOUT,
   sourcesFilter: undefined,
   tryExactOut: false, // tries buy order search through balmy before falling back to binary search.
   // Use only if exact out behavior is known for source
   onlyExactOut: false, // don't try overswapping when exact out not available
 }
+
 export class StrategyBalmySDK {
   static name() {
     return "balmy_sdk"
@@ -75,7 +81,8 @@ export class StrategyBalmySDK {
 
   private readonly sdk
 
-  constructor(match = {}, config = defaultConfig) {
+  constructor(match = {}, config?: BalmyStrategyConfig) {
+    this.config = { ...defaultConfig, ...(config || {}) }
     const fetchService = buildFetchService()
     const providerService = buildProviderService()
 
@@ -88,7 +95,7 @@ export class StrategyBalmySDK {
         defaultConfig: {
           global: {
             disableValidation: true,
-            referrer: config.referrer,
+            referrer: this.config.referrer,
           },
           custom: {
             "1inch": {
@@ -109,7 +116,6 @@ export class StrategyBalmySDK {
     } as BuildParams
     this.sdk = buildSDK(buildParams)
     this.match = match
-    this.config = config
   }
 
   async supports(swapParams: SwapParams) {
@@ -245,7 +251,7 @@ export class StrategyBalmySDK {
     if (this.config.sourcesFilter?.includeSources) {
       sourcesFilter = {
         includeSources: this.config.sourcesFilter.includeSources.filter(
-          (s) => !BINARY_SEARCH_EXCLUDE_SOURCES.includes(s),
+          (s: string) => !BINARY_SEARCH_EXCLUDE_SOURCES.includes(s),
         ),
       }
     } else if (this.config.sourcesFilter?.excludeSources) {
@@ -391,7 +397,7 @@ export class StrategyBalmySDK {
         choose: {
           by: "most-swapped-accounting-for-gas",
         },
-        timeout: "30000", // TODO config
+        timeout: this.config.timeout || DEFAULT_TIMEOUT,
       },
     })
 
