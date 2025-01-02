@@ -14,3 +14,5 @@ const routingConfig: RoutingConfig = {
 export const getRoutingConfig = (chainId: number) => {
   return routingConfig[chainId] || defaultRoutingConfig
 }
+
+export const getSupportedChains = () => [mainnet.id, base.id, 1923]

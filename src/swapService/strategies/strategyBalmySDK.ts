@@ -9,6 +9,7 @@ import {
 import { buildFetchService } from "@balmy/sdk/dist/sdk/builders/fetch-builder"
 import { buildProviderService } from "@balmy/sdk/dist/sdk/builders/provider-builder"
 import type { Either } from "@balmy/sdk/dist/utility-types"
+import type { StringValue } from "ms"
 import {
   type Address,
   type Hex,
@@ -32,6 +33,7 @@ import {
   quoteToRoute,
 } from "../utils"
 import { CustomSourceList } from "./balmySDK/customSourceList"
+import { EulerPriceApiPriceSource } from "./balmySDK/eulerPriceApiPriceSource"
 
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
 // TODO config
@@ -54,6 +56,7 @@ export const defaultConfig: {
     name: string
   }
   sourcesFilter: SourcesFilter
+  timeout: StringValue
   tryExactOut?: boolean
   onlyExactOut?: boolean
 } = {
@@ -62,6 +65,7 @@ export const defaultConfig: {
     name: "euler",
   },
   sourcesFilter: undefined,
+  timeout: "100",
   tryExactOut: false, // tries buy order search through balmy before falling back to binary search.
   // Use only if exact out behavior is known for source
   onlyExactOut: false, // don't try overswapping when exact out not available
@@ -104,6 +108,19 @@ export class StrategyBalmySDK {
               apiKey: String(process.env.OPENOCEAN_API_KEY),
             },
           },
+        },
+      },
+      price: {
+        source: {
+          type: "prioritized",
+          sources: [
+            {
+              type: "custom",
+              instance: new EulerPriceApiPriceSource(buildFetchService()),
+            },
+            { type: "coingecko" },
+            { type: "defi-llama" },
+          ],
         },
       },
     } as BuildParams
@@ -384,14 +401,13 @@ export class StrategyBalmySDK {
     swapParams: SwapParams,
     sourcesFilter?: SourcesFilter,
   ) {
-    // TODO type
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {
         choose: {
           by: "most-swapped-accounting-for-gas",
         },
-        timeout: "30000", // TODO config
+        timeout: this.config.timeout || "30000",
       },
     })
 
