@@ -25,15 +25,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   },
   // SPECIAL CASE TOKENS
   {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["pendle", "li-fi", "open-ocean"],
-      },
-    },
-    match: { isPendlePT: true },
-  },
-  {
     strategy: StrategyMidas.name(),
     match: {}, // supports function will match mTokens
   },
@@ -42,6 +33,15 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     match: {
       tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET, PT_WSTUSR1740182579],
     },
+  },
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["pendle", "li-fi", "open-ocean"],
+      },
+    },
+    match: { isPendlePT: true },
   },
   {
     strategy: StrategyBalmySDK.name(),
