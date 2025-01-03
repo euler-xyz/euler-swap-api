@@ -75,6 +75,7 @@ async function findSwap(
       error.statusCode,
       error.message,
       error.errorMessage,
+      JSON.stringify(error.data),
       req.url,
     )
     if (error instanceof ApiError) {
