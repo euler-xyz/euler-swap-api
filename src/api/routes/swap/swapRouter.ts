@@ -70,7 +70,14 @@ async function findSwap(
 
     return ServiceResponse.success<SwapResponse>(data)
   } catch (error) {
-    console.log("error: ", error)
+    console.log(
+      "error: ",
+      error.statusCode,
+      error.message,
+      error.errorMessage,
+      JSON.stringify(error.data),
+      req.url,
+    )
     if (error instanceof ApiError) {
       return ServiceResponse.failure(
         error.message,

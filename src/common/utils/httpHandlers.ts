@@ -8,8 +8,6 @@ export const handleServiceResponse = (
   serviceResponse: ServiceResponse<any>,
   response: Response,
 ) => {
-  if (serviceResponse.statusCode !== StatusCodes.OK)
-    console.log(serviceResponse)
   return response.status(serviceResponse.statusCode).send(serviceResponse)
 }
 
