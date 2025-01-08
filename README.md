@@ -37,7 +37,7 @@ pnpm run lint:fix   # fix
 
 # Swagger API docs
 
-Swagger UI is served at the root. Request and response schemas are also available [here](./src/api/routes/swap/swapModel.ts)
+Swagger UI is served at the root, it is also available at [swap.euler.finance](https://swap.euler.finance). Request and response schemas are also available [here](./src/api/routes/swap/swapModel.ts)
 
 # Fetching quotes and executing trades
 
