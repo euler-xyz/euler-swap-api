@@ -9,19 +9,19 @@ dependencies:
     specifier: 7.2.0
     version: 7.2.0(zod@3.23.8)
   '@balmy/sdk':
-    specifier: ^0.4.8
+    specifier: 0.4.8
     version: 0.4.8(typescript@5.7.2)(zod@3.23.8)
   '@uniswap/router-sdk':
-    specifier: ^1.15.0
+    specifier: 1.15.0
     version: 1.15.0(hardhat@2.22.17)
   '@uniswap/sdk-core':
-    specifier: ^6.1.1
+    specifier: 6.1.1
     version: 6.1.1
   '@uniswap/smart-order-router':
-    specifier: ^4.9.2
+    specifier: 4.9.2
     version: 4.9.2(hardhat@2.22.17)(jsbi@3.2.5)
   '@uniswap/v3-sdk':
-    specifier: ^3.19.0
+    specifier: 3.19.0
     version: 3.19.0(hardhat@2.22.17)
   cors:
     specifier: 2.8.5

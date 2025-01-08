@@ -2,7 +2,7 @@
 
 API for fetching swap quotes and payloads from multiple DEX aggregators for use with Euler V2.
 
-# Instalation
+## Instalation
 
 Install npm packages
 ```
@@ -16,7 +16,7 @@ pnpm run doppler:syncstg # staging
 pnpm run doppler:syncprd # production
 ```
 
-# Running
+## Running
 
 Dev server
 ```
@@ -29,17 +29,17 @@ pnpm run build
 pnpm run start
 ```
 
-# Lint
+## Lint
 ```
 pnpm run lint       # check
 pnpm run lint:fix   # fix
 ```
 
-# Swagger API docs
+## Swagger API docs
 
 Swagger UI is served at the root, it is also available at [swap.euler.finance](https://swap.euler.finance). Request and response schemas are also available [here](./src/api/routes/swap/swapModel.ts)
 
-# Fetching quotes and executing trades
+## Fetching quotes and executing trades
 
 The `/swap` endpoint fetches token trade quotes which can be used with the swapping peripheries in the Euler Vault Kit [periphery contracts](https://github.com/euler-xyz/evk-periphery/tree/master/src/Swaps). See [periphery docs](https://github.com/euler-xyz/evk-periphery/blob/master/docs/swaps.md) for detailed description of the swapping architecture in Euler V2. The API response includes both encoded payloads as well as raw data for calls to the `Swapper` (`swap` field of the response) and `SwapVerifier` (`verify` field) contracts. These payloads can be used directly in EVC batches.
 
@@ -120,7 +120,7 @@ const evcBatch = encodeFunctionData({
 
 ```
 
-# Configuration
+## Configuration
 
 To handle an incoming swap request, the API processes the query through a series of strategies until one of them provides a valid response. The strategy pipelines are defined per chain in `/swapService/config` folder. The strategies can handle requests in multiple ways. The basic one is the balmy SDK strategy, which queries multiple DEXes and aggregators for a swap quote and picks the best one. Strategies can themselves run the pipelines recursively. ERC4626 wrapper can be configured for assets which are vault shares and are not supported by aggregators. The strategy will deposit or redeem vault shares and run the pipeline again, this time using the underlying asset of the vault. For a list of available strategies see `swapService/strategies` folder.
 

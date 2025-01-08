@@ -1501,4 +1501,18 @@ export default [
       poolId: "48f7ef7c-c08e-4b43-bc00-e2111c2fd65d",
     },
   },
+  {
+    addressInfo: "0xA8c8861b5ccF8CCe0ade6811CD2A7A7d3222B0B8",
+    chainId: 1,
+    name: "PT Wrapped stUSR 27MAR2025",
+    symbol: "PT-wstUSR-27MAR2025",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {
+      isPendlePT: true,
+      pendleMarket: "0x353d0b2efb5b3a7987fb06d30ad6160522d08426",
+      poolId: "180d6922-83b2-4b0f-bb5b-6c1938cbc24c",
+    },
+  },
 ]
