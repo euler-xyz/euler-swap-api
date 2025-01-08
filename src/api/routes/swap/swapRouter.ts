@@ -28,11 +28,11 @@ import {
 export const swapRegistry = new OpenAPIRegistry()
 export const swapRouter: Router = express.Router()
 
-swapRegistry.register("Swap", swapResponseSchema)
+swapRegistry.register("SwapQuote", swapResponseSchema)
 swapRegistry.registerPath({
   method: "get",
   path: "/swap",
-  tags: ["Swap"],
+  tags: ["Get swap quote"],
   request: { query: getSwapSchema.shape.query },
   responses: createApiResponse(swapResponseSchema, "Success"),
 })
