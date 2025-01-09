@@ -9,6 +9,7 @@ import {
 
 const SUSDS_MAINNET = "0xa3931d71877c0e7a3148cb7eb4463524fec27fbd"
 const WSTUSR_MAINNET = "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055"
+const RLP_MAINNET = "0x4956b52aE2fF65D74CA2d61207523288e4528f96"
 // TEST YIELD
 const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559"
 const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
@@ -55,6 +56,20 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       tokensInOrOut: [SUSDS_MAINNET],
     },
   },
+  // Target debt RLP through Odos
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["odos", "1inch"],
+      },
+    },
+    match: {
+      swapperModes: [SwapperMode.TARGET_DEBT],
+      tokensInOrOut: [RLP_MAINNET],
+    },
+  },
+
   // DEFAULTS
   {
     strategy: StrategyBalmySDK.name(),
@@ -67,7 +82,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          // "conveyor",
           "uniswap",
         ],
       },
@@ -109,7 +123,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          // "conveyor",
           "uniswap",
         ],
       },
