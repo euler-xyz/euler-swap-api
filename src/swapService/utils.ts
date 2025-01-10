@@ -8,6 +8,7 @@ import {
   encodeAbiParameters,
   encodeFunctionData,
   isAddressEqual,
+  maxUint256,
   parseAbiParameters,
   parseUnits,
   stringToHex,
@@ -157,8 +158,18 @@ export function buildApiResponseExactInputFromQuote(
   quote: SwapQuote,
 ): SwapApiResponse {
   const amountOutMin = applySlippage(quote.amountOut, swapParams.slippage)
+  const multicallItems: SwapApiResponseMulticallItem[] = []
 
-  const multicallItems = [
+  if (quote.allowanceTarget) {
+    multicallItems.push(
+      encodeApproveMulticallItem(
+        swapParams.tokenIn.addressInfo,
+        quote.allowanceTarget,
+      ),
+    )
+  }
+
+  multicallItems.push(
     encodeSwapMulticallItem({
       handler: SWAPPER_HANDLER_GENERIC,
       mode: BigInt(SwapperMode.EXACT_IN),
@@ -171,7 +182,17 @@ export function buildApiResponseExactInputFromQuote(
       amountOut: 0n, // ignored in exact in
       data: quote.data,
     }),
-  ]
+  )
+
+  if (quote.shouldTransferToReceiver) {
+    multicallItems.push(
+      encodeSweepMulticallItem(
+        swapParams.tokenOut.addressInfo,
+        0n,
+        swapParams.receiver,
+      ),
+    )
+  }
 
   const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -322,6 +343,46 @@ export const encodeRepayAndDepositMulticallItem = (
       args: [token, vault, repayAmount, account],
     }),
   }
+}
+
+export const encodeApproveMulticallItem = (
+  token: Address,
+  spender: Address,
+): SwapApiResponseMulticallItem => {
+  // TODO migrate to dedicated Swapper function when available
+
+  const abiItem = {
+    inputs: [
+      { name: "spender", type: "address" },
+      { name: "amount", type: "uint256" },
+    ],
+    name: "approve",
+    stateMutability: "nonpayable",
+    type: "function",
+  }
+
+  const functionData = encodeFunctionData({
+    abi: [abiItem],
+    args: [spender, maxUint256],
+  })
+
+  const data = encodeAbiParameters(parseAbiParameters("address, bytes"), [
+    token,
+    functionData,
+  ])
+
+  return encodeSwapMulticallItem({
+    handler: SWAPPER_HANDLER_GENERIC,
+    mode: SwapperMode.EXACT_IN,
+    account: zeroAddress,
+    tokenIn: zeroAddress,
+    tokenOut: zeroAddress,
+    vaultIn: zeroAddress,
+    accountIn: zeroAddress,
+    receiver: zeroAddress,
+    amountOut: 0n,
+    data,
+  })
 }
 
 export const getSwapper = (chainId: number) => {

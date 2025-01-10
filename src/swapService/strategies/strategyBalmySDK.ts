@@ -13,10 +13,11 @@ import {
   type Address,
   type Hex,
   encodeAbiParameters,
+  getAddress,
   parseAbiParameters,
   parseUnits,
 } from "viem"
-import { SwapperMode } from "../interface"
+import { type SwapApiResponseMulticallItem, SwapperMode } from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
 import {
   SWAPPER_HANDLER_GENERIC,
@@ -26,6 +27,7 @@ import {
   buildApiResponseSwap,
   buildApiResponseVerifyDebtMax,
   calculateEstimatedAmountFrom,
+  encodeApproveMulticallItem,
   encodeSwapMulticallItem,
   isExactInRepay,
   matchParams,
@@ -110,6 +112,11 @@ export class StrategyBalmySDK {
             "open-ocean": {
               apiKey: String(process.env.OPENOCEAN_API_KEY),
             },
+            "okx-dex": {
+              apiKey: String(process.env.OKX_API_KEY),
+              secretKey: String(process.env.OKX_SECRET_KEY),
+              passphrase: String(process.env.OKX_PASSPHRASE),
+            },
           },
         },
       },
@@ -192,7 +199,18 @@ export class StrategyBalmySDK {
 
     if (!quote) throw new Error("Quote not found")
 
-    const multicallItems = [
+    const multicallItems: SwapApiResponseMulticallItem[] = []
+
+    if (quote.allowanceTarget) {
+      multicallItems.push(
+        encodeApproveMulticallItem(
+          swapParams.tokenIn.addressInfo,
+          quote.allowanceTarget,
+        ),
+      )
+    }
+
+    multicallItems.push(
       encodeSwapMulticallItem({
         handler: SWAPPER_HANDLER_GENERIC,
         mode: BigInt(SwapperMode.TARGET_DEBT),
@@ -205,7 +223,7 @@ export class StrategyBalmySDK {
         amountOut: swapParams.targetDebt,
         data: quote.data,
       }),
-    ]
+    )
 
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -390,7 +408,6 @@ export class StrategyBalmySDK {
     swapParams: SwapParams,
     sourcesFilter?: SourcesFilter,
   ) {
-    // TODO type
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {
@@ -441,6 +458,7 @@ export class StrategyBalmySDK {
       takerAddress: swapParams.from,
       recipient: swapParams.receiver,
       filters: sourcesFilter || this.config.sourcesFilter,
+      includeNonTransferSourcesWhenRecipientIsSet: true,
     }
   }
 
@@ -453,6 +471,13 @@ export class StrategyBalmySDK {
       sdkQuote.tx.data as Hex,
     ])
 
+    const sources = this.sdk.quoteService.supportedSources()
+    const shouldTransferToReceiver =
+      !sources[sdkQuote.source.id].supports.swapAndTransfer
+    const allowanceTarget = sdkQuote.source.allowanceTarget
+      ? getAddress(sdkQuote.source.allowanceTarget)
+      : undefined
+
     return {
       swapParams,
       amountIn: sdkQuote.sellAmount.amount,
@@ -461,6 +486,8 @@ export class StrategyBalmySDK {
       amountOutMin: sdkQuote.minBuyAmount.amount,
       data,
       protocol: sdkQuote.source.name,
+      shouldTransferToReceiver,
+      allowanceTarget,
     }
   }
 }

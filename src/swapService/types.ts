@@ -35,6 +35,8 @@ export interface SwapQuote {
   amountOutMin?: bigint
   data: Hex
   protocol: string
+  shouldTransferToReceiver?: boolean
+  allowanceTarget?: Address
 }
 
 export interface StrategyResult {
