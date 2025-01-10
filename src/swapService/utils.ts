@@ -62,6 +62,17 @@ export function matchParams(
     )
       return false
   }
+  if (match.excludeTokensInOrOut) {
+    if (
+      match.excludeTokensInOrOut.some((token: Hex) => {
+        return (
+          isAddressEqual(swapParams.tokenIn.addressInfo, token) ||
+          isAddressEqual(swapParams.tokenOut.addressInfo, token)
+        )
+      })
+    )
+      return false
+  }
   if (match.isRepay) {
     if (swapParams.isRepay !== match.isRepay) return false
   }

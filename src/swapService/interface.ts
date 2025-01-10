@@ -70,6 +70,7 @@ export interface StrategyMatchConfig {
   isRepay?: boolean
   isPendlePT?: boolean
   tokensInOrOut?: Address[]
+  excludeTokensInOrOut?: Address[]
 }
 
 export interface RoutingItem {

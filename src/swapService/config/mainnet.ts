@@ -42,32 +42,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
     match: { isPendlePT: true },
   },
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["paraswap", "open-ocean", "li-fi", "odos", "1inch"],
-      },
-      tryExactOut: true,
-    },
-    match: {
-      tokensInOrOut: [SUSDS_MAINNET],
-    },
-  },
-  // Target debt RLP through Odos
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["odos", "1inch"],
-      },
-    },
-    match: {
-      swapperModes: [SwapperMode.TARGET_DEBT],
-      tokensInOrOut: [RLP_MAINNET],
-    },
-  },
-
   // DEFAULTS
   {
     strategy: StrategyBalmySDK.name(),
@@ -92,6 +66,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyCombinedUniswap.name(),
     match: {
       swapperModes: [SwapperMode.TARGET_DEBT],
+      excludeTokensInOrOut: [RLP_MAINNET, SUSDS_MAINNET],
     },
   },
   // FALLBACKS
