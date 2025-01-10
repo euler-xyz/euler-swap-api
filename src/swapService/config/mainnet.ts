@@ -42,6 +42,28 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
     match: { isPendlePT: true },
   },
+
+  // RLP - only include odos for RLP, otherwise rate limits are hit
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: [
+          "kyberswap",
+          "paraswap",
+          "odos",
+          "1inch",
+          "li-fi",
+          "open-ocean",
+          "uniswap",
+        ],
+      },
+    },
+    match: {
+      tokensInOrOut: [RLP_MAINNET],
+    },
+  },
+
   // DEFAULTS
   {
     strategy: StrategyBalmySDK.name(),
