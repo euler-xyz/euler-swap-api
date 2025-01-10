@@ -2,6 +2,7 @@ import type { IFetchService, IProviderService } from "@balmy/sdk"
 import { LocalSourceList } from "@balmy/sdk/dist/services/quotes/source-lists/local-source-list"
 import { CustomLiFiQuoteSource } from "./lifiQuoteSource"
 import { CustomNeptuneQuoteSource } from "./neptuneQuoteSource"
+import { CustomOdosQuoteSource } from "./odosQuoteSource"
 import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
 import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
 import { CustomPendleQuoteSource } from "./pendleQuoteSource"
@@ -17,6 +18,7 @@ const customSources = {
   pendle: new CustomPendleQuoteSource(),
   "open-ocean": new CustomOpenOceanQuoteSource(),
   neptune: new CustomNeptuneQuoteSource(),
+  odos: new CustomOdosQuoteSource(),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {
