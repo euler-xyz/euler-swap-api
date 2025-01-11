@@ -13,6 +13,7 @@ const RLP_MAINNET = "0x4956b52aE2fF65D74CA2d61207523288e4528f96"
 const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559"
 const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
 const PT_WSTUSR_27MAR2025_MAINNET = "0xA8c8861b5ccF8CCe0ade6811CD2A7A7d3222B0B8"
+const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -65,6 +66,26 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       tokensInOrOut: [RLP_MAINNET],
     },
   },
+  // USD0++ route without open-ocean and combined
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: [
+          "kyberswap",
+          "paraswap",
+          // "odos",
+          "1inch",
+          "li-fi",
+          // "open-ocean",
+          "uniswap",
+        ],
+      },
+    },
+    match: {
+      tokensInOrOut: [USD0PLUSPLUS_MAINNET],
+    },
+  },
 
   // DEFAULTS
   {
@@ -90,7 +111,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyCombinedUniswap.name(),
     match: {
       swapperModes: [SwapperMode.TARGET_DEBT],
-      excludeTokensInOrOut: [RLP_MAINNET, SUSDS_MAINNET],
+      excludeTokensInOrOut: [RLP_MAINNET, SUSDS_MAINNET, USD0PLUSPLUS_MAINNET],
     },
   },
   // FALLBACKS
