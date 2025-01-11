@@ -12,6 +12,7 @@ const WSTUSR_MAINNET = "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055"
 const RLP_MAINNET = "0x4956b52aE2fF65D74CA2d61207523288e4528f96"
 const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559"
 const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
+const PT_WSTUSR_27MAR2025_MAINNET = "0xA8c8861b5ccF8CCe0ade6811CD2A7A7d3222B0B8"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -31,6 +32,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyERC4626Wrapper.name(),
     match: {
       tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET, PT_WSTUSR1740182579],
+      excludeTokensInOrOut: [PT_WSTUSR_27MAR2025_MAINNET],
     },
   },
   {
