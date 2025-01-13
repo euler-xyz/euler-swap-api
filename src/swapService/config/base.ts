@@ -18,7 +18,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           // "paraswap",
-          "odos",
+          // "odos",
           "1inch",
           "li-fi",
           "open-ocean",
