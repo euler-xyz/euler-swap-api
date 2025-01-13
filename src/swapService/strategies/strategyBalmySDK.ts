@@ -14,6 +14,8 @@ import {
   type Hex,
   encodeAbiParameters,
   getAddress,
+  isAddress,
+  isAddressEqual,
   parseAbiParameters,
   parseUnits,
 } from "viem"
@@ -477,9 +479,11 @@ export class StrategyBalmySDK {
     const sources = this.sdk.quoteService.supportedSources()
     const shouldTransferToReceiver =
       !sources[sdkQuote.source.id].supports.swapAndTransfer
-    const allowanceTarget = sdkQuote.source.allowanceTarget
-      ? getAddress(sdkQuote.source.allowanceTarget)
-      : undefined
+    const allowanceTarget =
+      isAddress(sdkQuote.source.allowanceTarget) &&
+      !isAddressEqual(sdkQuote.source.allowanceTarget, sdkQuote.tx.to as Hex)
+        ? getAddress(sdkQuote.source.allowanceTarget)
+        : undefined
 
     return {
       swapParams,
