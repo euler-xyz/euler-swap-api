@@ -51,7 +51,8 @@ type SourcesConfig =
 type OdosSupport = { buyOrders: false; swapAndTransfer: true }
 type OdosConfig = {
   supportRFQs?: boolean
-  referralCode?: number
+  referralCode: number
+  apiKey: string
 } & SourcesConfig
 type OdosData = { tx: SourceQuoteTransaction }
 export class CustomOdosQuoteSource extends AlwaysValidConfigAndContextSource<
@@ -128,20 +129,28 @@ async function getQuote({
     pathViz: false,
     disableRFQs: !config?.supportRFQs, // Disable by default
     simple,
-    ...(config?.referralCode ? { referralCode: config?.referralCode } : {}),
+    referralCode: config.referralCode,
+  }
+
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    "x-api-key": config.apiKey,
   }
 
   const [quoteResponse, routerResponse] = await Promise.all([
-    fetchService.fetch("https://api.odos.xyz/sor/quote/v2", {
+    fetchService.fetch("https://enterprise-api.odos.xyz/sor/quote/v2", {
       body: JSON.stringify(quoteBody),
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       timeout,
     }),
-    fetchService.fetch(`https://api.odos.xyz/info/router/v2/${chainId}`, {
-      headers: { "Content-Type": "application/json" },
-      timeout,
-    }),
+    fetchService.fetch(
+      `https://enterprise-api.odos.xyz/info/router/v2/${chainId}`,
+      {
+        headers,
+        timeout,
+      },
+    ),
   ])
 
   if (!quoteResponse.ok) {
@@ -171,11 +180,11 @@ async function getQuote({
   const { address } = await routerResponse.json()
 
   const assembleResponse = await fetchService.fetch(
-    "https://api.odos.xyz/sor/assemble",
+    "https://enterprise-api.odos.xyz/sor/assemble",
     {
       body: JSON.stringify({ userAddr, pathId, receiver: recipient }),
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       timeout,
     },
   )

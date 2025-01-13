@@ -45,27 +45,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
     match: { isPendlePT: true },
   },
-
-  // RLP - only include odos for RLP, otherwise rate limits are hit
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: [
-          "kyberswap",
-          "paraswap",
-          "odos",
-          "1inch",
-          "li-fi",
-          "open-ocean",
-          "uniswap",
-        ],
-      },
-    },
-    match: {
-      tokensInOrOut: [RLP_MAINNET],
-    },
-  },
   // USD0++ route without open-ocean and combined
   {
     strategy: StrategyBalmySDK.name(),
@@ -74,7 +53,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           "paraswap",
-          // "odos",
+          "odos",
           "1inch",
           "li-fi",
           // "open-ocean",
@@ -95,7 +74,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           "paraswap",
-          // "odos",
+          "odos",
           "1inch",
           "li-fi",
           "open-ocean",
@@ -124,7 +103,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           "paraswap",
-          // "odos",
+          "odos",
           "1inch",
           "li-fi",
           "open-ocean",

@@ -120,6 +120,7 @@ export class StrategyBalmySDK {
               passphrase: String(process.env.OKX_PASSPHRASE),
             },
             odos: {
+              apiKey: String(process.env.ODOS_API_KEY),
               referralCode: Number(process.env.ODOS_REFERRAL_CODE),
             },
           },
