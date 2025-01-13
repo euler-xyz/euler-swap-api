@@ -17,12 +17,12 @@ const baseRoutingConfig: ChainRoutingConfig = [
       sourcesFilter: {
         includeSources: [
           "kyberswap",
-          "paraswap",
+          // "paraswap",
           "odos",
           "1inch",
           "li-fi",
           "open-ocean",
-          "conveyor",
+          // "conveyor",
           "uniswap",
         ],
       },
