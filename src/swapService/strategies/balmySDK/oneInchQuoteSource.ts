@@ -112,7 +112,7 @@ export class CustomOneInchQuoteSource
       referrer: config.referrer?.address,
       protocols: config.sourceAllowlist,
       excludedProtocols:
-        "ONE_INCH_LIMIT_ORDER_V4,ONE_INCH_LIMIT_ORDER_V3,ONE_INCH_LIMIT_ORDER_V2,ONE_INCH_LIMIT_ORDER",
+        "ONE_INCH_LIMIT_ORDER_V4,ONE_INCH_LIMIT_ORDER_V3,ONE_INCH_LIMIT_ORDER_V2,ONE_INCH_LIMIT_ORDER,BASE_ONE_INCH_LIMIT_ORDER_V4,BASE_ONE_INCH_LIMIT_ORDER_V3,BASE_ONE_INCH_LIMIT_ORDER_V2,BASE_ONE_INCH_LIMIT_ORDER",
       includeGas: true,
     }
     const queryString = qs.stringify(queryParams, {
