@@ -267,7 +267,7 @@ export class StrategyBalmySDK {
       const quote = await this.#getBestSDKQuote(sp, sourcesFilter)
       return {
         quote,
-        amountTo: quote.buyAmount.amount,
+        amountTo: quote.minBuyAmount.amount,
       }
     }
 
