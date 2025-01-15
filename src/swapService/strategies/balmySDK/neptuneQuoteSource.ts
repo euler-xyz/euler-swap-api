@@ -15,7 +15,7 @@ import qs from "qs"
 
 // Supported networks: https://docs.1inch.io/docs/aggregation-protocol/introduction/#supported-networkschains
 export const NEPTUNE_METADATA: QuoteSourceMetadata<NeptuneSupport> = {
-  name: "Swell",
+  name: "Neptune",
   supports: {
     chains: [1923],
     swapAndTransfer: true,
