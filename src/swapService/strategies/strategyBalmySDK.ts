@@ -134,7 +134,8 @@ export class StrategyBalmySDK {
   async supports(swapParams: SwapParams) {
     return (
       !isExactInRepay(swapParams) &&
-      this.sdk.quoteService.supportedChains().includes(swapParams.chainId)
+      (this.sdk.quoteService.supportedChains().includes(swapParams.chainId) ||
+        swapParams.chainId === 1923) // TODO fix!
     )
   }
 

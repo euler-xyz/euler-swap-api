@@ -107,8 +107,9 @@ export class CustomNeptuneQuoteSource
         (await response.text()) || `Failed with status ${response.status}`,
       )
     }
+
     const {
-      amountOut,
+      quote: { amountOut },
       tx: { router, data },
     } = await response.json()
     return { amountOut, data, to: router }

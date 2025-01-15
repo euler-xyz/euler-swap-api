@@ -1,0 +1,37 @@
+diff --git a/dist/services/quotes/quote-service.js b/dist/services/quotes/quote-service.js
+index 87b99845acffff1c3c103de1d41b250debe1b840..4439c828dcbd28ea1e202bee0b2f144bf0c4105c 100644
+--- a/dist/services/quotes/quote-service.js
++++ b/dist/services/quotes/quote-service.js
+@@ -131,16 +131,17 @@ class QuoteService {
+         return result;
+     }
+     async listResponseToQuoteResponse({ request, response: responsePromise, promises, }) {
+-        const [response, tokens, prices, gasCalculator] = await Promise.all([
++        let [response, tokens, prices, gasCalculator] = await Promise.all([
+             responsePromise,
+             promises.tokens,
+             promises.prices,
+             promises.gasCalculator,
+         ]);
+-        if (!tokens)
++        if (!tokens && request.chainId !== 1923)
+             throw new Error(`Failed to fetch the quote's tokens`);
+-        if (!gasCalculator)
++        if (!gasCalculator && request.chainId !== 1923)
+             throw new Error(`Failed to fetch gas data`);
++        if (request.chainId === 1923) tokens = {}
+         const sellToken = { ...tokens[request.sellToken], price: prices?.[request.sellToken]?.price };
+         const buyToken = { ...tokens[request.buyToken], price: prices?.[request.buyToken]?.price };
+         let gas;
+diff --git a/dist/shared/defi-llama.js b/dist/shared/defi-llama.js
+index 2b237c74bdb3d8185ea1b2a221955244f2ccf9ea..6472633c4606d35e7dd5ffb6cf0222e0c89d0ebc 100644
+--- a/dist/shared/defi-llama.js
++++ b/dist/shared/defi-llama.js
+@@ -37,6 +37,7 @@ const CHAIN_ID_TO_KEY = {
+     [_chains_1.Chains.SCROLL.chainId]: 'scroll',
+     [_chains_1.Chains.MANTLE.chainId]: 'mantle',
+     [_chains_1.Chains.METIS_ANDROMEDA.chainId]: 'metis',
++    [1923]: 'swell',
+ };
+ const KEY_TO_CHAIN_ID = Object.fromEntries(Object.entries(CHAIN_ID_TO_KEY).map(([chainId, key]) => [key, parseInt(chainId)]));
+ class DefiLlamaClient {
