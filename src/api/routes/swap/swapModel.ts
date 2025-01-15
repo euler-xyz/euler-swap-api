@@ -1,3 +1,4 @@
+import { EXAMPLE_API_KEY } from "@/common/constants"
 import { SwapVerificationType, SwapperMode } from "@/swapService/interface"
 import { extendZodWithOpenApi } from "@asteasolutions/zod-to-openapi"
 import { InvalidAddressError, getAddress, isHex } from "viem"
@@ -131,6 +132,16 @@ const swapApiResponseSwapSchema = z.object({
   multicallItems: z
     .array(swapApiResponseMulticallItemSchema)
     .openapi({ description: "Raw Swapper multicall items" }),
+})
+
+const getSwapHeadersSchema = z.object({
+  "x-api-key": z.string().openapi({
+    param: {
+      description:
+        "API key. You can use the example key provided to try this call out",
+    },
+    example: EXAMPLE_API_KEY,
+  }),
 })
 
 const getSwapSchema = z.object({
@@ -320,4 +331,4 @@ const swapResponseSchema = z.object({
     .openapi({ description: "Swap route details" }),
 })
 
-export { getSwapSchema, swapResponseSchema }
+export { getSwapSchema, getSwapHeadersSchema, swapResponseSchema }

@@ -39,6 +39,18 @@ pnpm run lint:fix   # fix
 
 Swagger UI is served at the root, it is also available at [swap.euler.finance](https://swap.euler.finance). Request and response schemas are also available [here](./src/api/routes/swap/swapModel.ts)
 
+To try out the `swap` call in Swagger use string `example_api_key` as the `x-api-key` header value.
+
+## Authorization and rate limits
+
+The `/swap` endpoint is protected with an API key expected in `x-api-key` header. Accepted keys are configured through environment variables starting with `API_KEY_`.
+
+Rate limits can be configured with environment variables:
+- `COMMON_RATE_LIMIT_MAX_REQUESTS` defines the max number of requests allowed per API key, per window.
+- `COMMON_RATE_LIMIT_WINDOW_MS` defines window duration in miliseconds.
+
+The example key is allowed 1 request per window.
+
 ## Fetching quotes and executing trades
 
 The `/swap` endpoint fetches token trade quotes which can be used with the swapping peripheries in the Euler Vault Kit [periphery contracts](https://github.com/euler-xyz/evk-periphery/tree/master/src/Swaps). See [periphery docs](https://github.com/euler-xyz/evk-periphery/blob/master/docs/swaps.md) for detailed description of the swapping architecture in Euler V2. The API response includes both encoded payloads as well as raw data for calls to the `Swapper` (`swap` field of the response) and `SwapVerifier` (`verify` field) contracts. These payloads can be used directly in EVC batches.

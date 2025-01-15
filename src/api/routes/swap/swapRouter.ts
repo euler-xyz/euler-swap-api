@@ -3,6 +3,7 @@ import express, { type Router, type Request, type Response } from "express"
 
 import { createApiResponse } from "@/api-docs/openAPIResponseBuilders"
 
+import { apiKeyAuth } from "@/common/middleware/apiKey"
 import { ServiceResponse } from "@/common/models/serviceResponse"
 import {
   handleServiceResponse,
@@ -21,6 +22,7 @@ import { InvalidAddressError, isHex } from "viem"
 import { z } from "zod"
 import {
   type SwapResponse,
+  getSwapHeadersSchema,
   getSwapSchema,
   swapResponseSchema,
 } from "./swapModel"
@@ -33,17 +35,17 @@ swapRegistry.registerPath({
   method: "get",
   path: "/swap",
   tags: ["Get swap quote"],
-  request: { query: getSwapSchema.shape.query },
+  request: { query: getSwapSchema.shape.query, headers: getSwapHeadersSchema },
   responses: createApiResponse(swapResponseSchema, "Success"),
 })
 
 swapRouter.get(
   "/",
-  validateRequest(getSwapSchema),
+  [validateRequest(getSwapSchema), apiKeyAuth],
   async (req: Request, res: Response) => {
     const serviceResponse = await findSwap(req)
     console.log("===== END =====")
-    return handleServiceResponse(serviceResponse, res)
+    return handleServiceResponse(serviceResponse, req, res)
   },
 )
 
@@ -70,14 +72,6 @@ async function findSwap(
 
     return ServiceResponse.success<SwapResponse>(data)
   } catch (error) {
-    console.log(
-      "error: ",
-      error.statusCode,
-      error.message,
-      error.errorMessage,
-      JSON.stringify(error.data),
-      req.url,
-    )
     if (error instanceof ApiError) {
       return ServiceResponse.failure(
         error.message,
