@@ -25,6 +25,7 @@ export const apiKeyAuth: Handler = (
       { ip: req.ip },
     )
     handleServiceResponse(serviceResponse, req, res)
+    return
   }
   next()
 }

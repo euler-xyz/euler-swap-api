@@ -37,6 +37,6 @@ export const validateRequest =
       const errorMessage = `Invalid input: ${(err as ZodError).errors.map((e) => e.message).join(", ")}`
       const statusCode = StatusCodes.BAD_REQUEST
       const serviceResponse = ServiceResponse.failure(errorMessage, statusCode)
-      return handleServiceResponse(serviceResponse, req, res)
+      handleServiceResponse(serviceResponse, req, res)
     }
   }
