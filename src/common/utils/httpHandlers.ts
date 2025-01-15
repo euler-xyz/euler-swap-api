@@ -18,7 +18,7 @@ export const handleServiceResponse = (
       request.url,
     )
   }
-  console.log(serviceResponse)
+
   response.status(serviceResponse.statusCode).send(serviceResponse)
 }
 
