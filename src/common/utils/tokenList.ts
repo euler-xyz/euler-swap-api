@@ -26,3 +26,7 @@ const cache: Record<number, TokenListItem[]> = {
 export default function getTokenList(chainId: number): TokenListItem[] {
   return cache[chainId]
 }
+
+export function getAllTokenLists() {
+  return cache
+}

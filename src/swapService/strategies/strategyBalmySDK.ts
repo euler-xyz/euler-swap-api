@@ -1,10 +1,12 @@
 import {
   type BuildParams,
+  type Chain,
   type QuoteRequest,
   type QuoteResponse,
   type QuoteResponseWithTx,
   type SourceId,
   buildSDK,
+  getAllChains,
 } from "@balmy/sdk"
 import { buildFetchService } from "@balmy/sdk/dist/sdk/builders/fetch-builder"
 import { buildProviderService } from "@balmy/sdk/dist/sdk/builders/provider-builder"
@@ -36,6 +38,7 @@ import {
   quoteToRoute,
 } from "../utils"
 import { CustomSourceList } from "./balmySDK/customSourceList"
+import { TokenlistMetadataSource } from "./balmySDK/tokenlistMetadataSource"
 
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
 const DEFAULT_TIMEOUT = "30000"
@@ -123,6 +126,21 @@ export class StrategyBalmySDK {
               apiKey: String(process.env.ODOS_API_KEY),
               referralCode: Number(process.env.ODOS_REFERRAL_CODE),
             },
+          },
+        },
+      },
+      metadata: {
+        source: {
+          type: "custom",
+          instance: new TokenlistMetadataSource(),
+        },
+      },
+      provider: {
+        source: {
+          type: "public-rpcs",
+          rpcsPerChain: combinePublicAndPrivateRPCs(),
+          config: {
+            type: "fallback",
           },
         },
       },
@@ -499,4 +517,28 @@ export class StrategyBalmySDK {
       allowanceTarget,
     }
   }
+}
+
+function combinePublicAndPrivateRPCs() {
+  const rpcs = Object.fromEntries(
+    getAllChains()
+      .filter(
+        (chain): chain is Chain & { publicRPCs: string[] } =>
+          chain.publicRPCs.length > 0,
+      )
+      .map(({ chainId, publicRPCs }) => [chainId, publicRPCs]),
+  )
+
+  const envRPCs = Object.entries(process.env).filter(([key]) =>
+    /^RPC_URL_/.test(key),
+  )
+
+  for (const [key, val] of envRPCs) {
+    if (typeof val !== "string") return
+    const chainId = Number(key.split("_").at(-1))
+    if (!rpcs[chainId]) rpcs[chainId] = []
+    if (!rpcs[chainId].includes(val)) rpcs[chainId].unshift(val)
+  }
+
+  return rpcs
 }
