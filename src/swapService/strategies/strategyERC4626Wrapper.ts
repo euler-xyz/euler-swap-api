@@ -48,6 +48,13 @@ const defaultConfig: {
       asset: "0xbdC7c08592Ee4aa51D06C27Ee23D5087D65aDbcD",
       assetDustEVault: "0x0Fc9cdb39317354a98a1Afa6497a969ff3a6BA9C",
     },
+    {
+      chainId: 1,
+      protocol: "ynETHX",
+      vault: "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb",
+      asset: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      assetDustEVault: "0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8",
+    },
     // {
     //   chainId: 1,
     //   protocol: "sUSDS",
