@@ -52,7 +52,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       sourcesFilter: {
         includeSources: [
           "kyberswap",
-          "paraswap",
+          // "paraswap",
           "odos",
           "1inch",
           "li-fi",
@@ -65,8 +65,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       tokensInOrOut: [USD0PLUSPLUS_MAINNET],
     },
   },
-
-  // DEFAULTS
+  // WUSDL with paraswap
   {
     strategy: StrategyBalmySDK.name(),
     config: {
@@ -74,6 +73,26 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           "paraswap",
+          "odos",
+          "1inch",
+          "li-fi",
+          // "open-ocean",
+          "uniswap",
+        ],
+      },
+    },
+    match: {
+      tokensInOrOut: [WUSDL_MAINNET],
+    },
+  },
+  // DEFAULTS
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: [
+          "kyberswap",
+          // "paraswap",
           "odos",
           "1inch",
           "li-fi",
@@ -107,7 +126,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       sourcesFilter: {
         includeSources: [
           "kyberswap",
-          "paraswap",
+          // "paraswap",
           "odos",
           "1inch",
           "li-fi",

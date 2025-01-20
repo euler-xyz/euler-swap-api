@@ -1515,4 +1515,26 @@ export default [
       poolId: "180d6922-83b2-4b0f-bb5b-6c1938cbc24c",
     },
   },
+  {
+    addressInfo: "0x0655977feb2f289a4ab78af67bab0d17aab84367",
+    chainId: 1,
+    name: "Savings crvUSD",
+    symbol: "SCRVUSD",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/51712/large/scrvUSD200x200.png?1731899723",
+    meta: {
+      poolId: "5fd328af-4203-471b-bd16-1705c726d926",
+    },
+  },
+  {
+    addressInfo: "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb",
+    chainId: 1,
+    name: "ynETH MAX",
+    symbol: "YNETHX",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/51623/large/ynETHx.png?1731659494",
+    meta: {},
+  },
 ]

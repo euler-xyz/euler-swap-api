@@ -235,7 +235,7 @@ export class StrategyERC4626Wrapper {
     const intermediateDustDepositMulticallItem = encodeDepositMulticallItem(
       vaultData.asset,
       vaultData.assetDustEVault,
-      1n,
+      5n, // avoid zero shares
       swapParams.accountOut,
     )
 

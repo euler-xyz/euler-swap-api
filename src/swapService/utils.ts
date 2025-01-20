@@ -242,13 +242,13 @@ export function addInOutDeposits(
     encodeDepositMulticallItem(
       swapParams.tokenIn.addressInfo,
       swapParams.vaultIn,
-      1n,
+      5n, // avoid zero shares error
       swapParams.accountIn,
     ),
     encodeDepositMulticallItem(
       swapParams.tokenOut.addressInfo,
       swapParams.receiver,
-      1n,
+      5n, // avoid zero shares error
       swapParams.accountOut,
     ),
   ]
