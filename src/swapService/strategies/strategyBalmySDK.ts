@@ -43,7 +43,7 @@ import { TokenlistMetadataSource } from "./balmySDK/tokenlistMetadataSource"
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
 const DEFAULT_TIMEOUT = "30000"
 // TODO config
-const BINARY_SEARCH_EXCLUDE_SOURCES = ["paraswap"] // paraswap is rate limited and fails if selected as best source for binary search
+const BINARY_SEARCH_EXCLUDE_SOURCES = [] // paraswap is rate limited and fails if selected as best source for binary search
 
 type SourcesFilter =
   | Either<

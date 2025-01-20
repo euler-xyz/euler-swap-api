@@ -32,7 +32,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   {
     strategy: StrategyERC4626Wrapper.name(),
     match: {
-      tokensInOrOut: [WSTUSR_MAINNET, WUSDL_MAINNET, PT_WSTUSR1740182579],
+      tokensInOrOut: [WSTUSR_MAINNET, PT_WSTUSR1740182579],
       excludeTokensInOrOut: [PT_WSTUSR_27MAR2025_MAINNET],
     },
   },
@@ -90,7 +90,12 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyCombinedUniswap.name(),
     match: {
       swapperModes: [SwapperMode.TARGET_DEBT],
-      excludeTokensInOrOut: [RLP_MAINNET, SUSDS_MAINNET, USD0PLUSPLUS_MAINNET],
+      excludeTokensInOrOut: [
+        RLP_MAINNET,
+        SUSDS_MAINNET,
+        USD0PLUSPLUS_MAINNET,
+        WUSDL_MAINNET,
+      ],
     },
   },
   // FALLBACKS
