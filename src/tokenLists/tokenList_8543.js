@@ -112,4 +112,27 @@ export default [
     logoURI: "/tokens/8453/0x940181a94A35A4569E4529A3CDfB74e38FD98631.png",
     meta: {},
   },
+  {
+    addressInfo: "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
+    chainId: 8453,
+    name: "Resolv USD",
+    symbol: "USR",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+  },
+  {
+    addressInfo: "0x5d746848005507DA0b1717C137A10C30AD9ee307",
+    chainId: 8453,
+    name: "PT Lombard LBTC 29MAY2025",
+    symbol: "PT-LBTC-29MAY2025",
+    decimals: 8,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+    meta: {
+      isPendlePT: true,
+      pendleMarket: "0x727cebacfb10ffd353fc221d06a862b437ec1735",
+      poolId: "",
+    },
+  },
 ]
