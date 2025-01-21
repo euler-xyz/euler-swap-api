@@ -1,5 +1,9 @@
 import { type ChainRoutingConfig, SwapperMode } from "../interface"
-import { StrategyBalmySDK, StrategyRepayWrapper } from "../strategies"
+import {
+  StrategyBalmySDK,
+  StrategyMidas,
+  StrategyRepayWrapper,
+} from "../strategies"
 
 const CBBTC_BASE = "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
 
@@ -13,7 +17,10 @@ const baseRoutingConfig: ChainRoutingConfig = [
     },
   },
   // SPECIAL CASE TOKENS
-
+  {
+    strategy: StrategyMidas.name(),
+    match: {}, // supports function will match mTokens
+  },
   // avoid 1inch because of InvalidatedOrder error. Kyberswap and li.fi also route through 1inch
   {
     strategy: StrategyBalmySDK.name(),

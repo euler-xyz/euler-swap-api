@@ -59,7 +59,7 @@ const defaultConfig: Config = {
         redeemerContract: "0x569d7dccbf6923350521ecbc28a555a500c4f0ec",
         oracleContract: "0x056339C044055819E8Db84E71f5f2E1F536b2E5b",
         paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
-        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // USDC-1 escrow
+        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
         priceOne: 100000000n,
       },
       mBTC: {
@@ -69,7 +69,7 @@ const defaultConfig: Config = {
         redeemerContract: "0x30d9D1e76869516AEa980390494AaEd45C3EfC1a",
         oracleContract: "0xA537EF0343e83761ED42B8E017a1e495c9a189Ee",
         paymentToken: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599", // WBTC
-        paymentTokenSweepVault: "0x598513C77236Bd5821CCC7bc3E3a585F3FeC9fb1", // WBTC-1 escrow
+        paymentTokenSweepVault: "0x598513C77236Bd5821CCC7bc3E3a585F3FeC9fb1", // eWBTC-1 escrow
         priceOne: 100000000n,
       },
       mBASIS: {
@@ -79,33 +79,33 @@ const defaultConfig: Config = {
         redeemerContract: "0x0D89C1C4799353F3805A3E6C4e1Cbbb83217D123",
         oracleContract: "0xE4f2AE539442e1D3Fb40F03ceEbF4A372a390d24",
         paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
-        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // USDC-1 escrow
+        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
         priceOne: 100000000n,
       },
     },
 
     [base.id]: {
-      // mTBILL: {
-      //   tokenContract: "0xDD629E5241CbC5919847783e6C96B2De4754e438",
-      //   redemptionInstantFeeBps: 7n,
-      //   depositorContract: "0x8978e327FE7C72Fa4eaF4649C23147E279ae1470",
-      //   redeemerContract: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
-      //   oracleContract: "0x70E58b7A1c884fFFE7dbce5249337603a28b8422",
-      //   paymentToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC
-      //   paymentTokenSweepVault: "", // USDC-1 escrow
-      //   priceOne: 1000000000000000000n,
-      //   isChronicleOracle: true,
-      // },
-      // mBASIS: {
-      //   tokenContract: "0x1C2757c1FeF1038428b5bEF062495ce94BBe92b2",
-      //   redemptionInstantFeeBps: 50n,
-      //   depositorContract: "0x80b666D60293217661E7382737bb3E42348f7CE5",
-      //   redeemerContract: "0xF804a646C034749b5484bF7dfE875F6A4F969840",
-      //   oracleContract: "0x6d62D3C3C8f9912890788b50299bF4D2C64823b6",
-      //   paymentToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC
-      //   paymentTokenSweepVault: "", // USDC-1 escrow
-      //   priceOne: 100000000n,
-      // },
+      mTBILL: {
+        tokenContract: "0xDD629E5241CbC5919847783e6C96B2De4754e438",
+        redemptionInstantFeeBps: 7n,
+        depositorContract: "0x8978e327FE7C72Fa4eaF4649C23147E279ae1470",
+        redeemerContract: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
+        oracleContract: "0x70E58b7A1c884fFFE7dbce5249337603a28b8422",
+        paymentToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC
+        paymentTokenSweepVault: "0x0A1a3b5f2041F33522C4efc754a7D096f880eE16", // eUSDC-1
+        priceOne: 1000000000000000000n,
+        isChronicleOracle: true,
+      },
+      mBASIS: {
+        tokenContract: "0x1C2757c1FeF1038428b5bEF062495ce94BBe92b2",
+        redemptionInstantFeeBps: 50n,
+        depositorContract: "0x80b666D60293217661E7382737bb3E42348f7CE5",
+        redeemerContract: "0xF804a646C034749b5484bF7dfE875F6A4F969840",
+        oracleContract: "0x6d62D3C3C8f9912890788b50299bF4D2C64823b6",
+        paymentToken: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // USDC
+        paymentTokenSweepVault: "0x0A1a3b5f2041F33522C4efc754a7D096f880eE16", // eUSDC-1
+        priceOne: 100000000n,
+      },
     },
   },
 }
