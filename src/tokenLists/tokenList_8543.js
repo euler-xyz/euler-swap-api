@@ -120,6 +120,7 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {},
   },
   {
     addressInfo: "0x5d746848005507DA0b1717C137A10C30AD9ee307",
