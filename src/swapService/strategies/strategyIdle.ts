@@ -230,11 +230,10 @@ export class StrategyERC4626Wrapper {
     )
 
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
-    if (!tokenIn) throw new Error("Inner token not found")
+
     const innerSwapParams = {
       ...swapParams,
-      tokenIn,
+      tokenIn: findToken(swapParams.chainId, vaultData.asset),
       amount: redeemAmountOut,
     }
 
@@ -326,11 +325,10 @@ export class StrategyERC4626Wrapper {
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
-    const tokenOut = findToken(swapParams.chainId, vaultData.asset)
-    if (!tokenOut) throw new Error("Inner token not found")
+
     const innerSwapParams = {
       ...swapParams,
-      tokenOut,
+      tokenOut: findToken(swapParams.chainId, vaultData.asset),
       receiver: swapParams.from,
     }
 
@@ -438,11 +436,9 @@ export class StrategyERC4626Wrapper {
   ): Promise<SwapApiResponse> {
     // TODO expects dust out - add to dust list
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
-    if (!tokenIn) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
-      tokenIn,
+      tokenIn: findToken(swapParams.chainId, vaultData.asset),
       vaultIn: vaultData.assetDustEVault,
       onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
@@ -552,11 +548,9 @@ export class StrategyERC4626Wrapper {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
 
     const mintAmount = adjustForInterest(swapParams.amount)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
-    if (!tokenIn) throw new Error("Inner token in not found")
     const mintSwapParams = {
       ...swapParams,
-      tokenIn,
+      tokenIn: findToken(swapParams.chainId, vaultData.asset),
       vaultIn: vaultData.assetDustEVault,
     }
 
@@ -571,12 +565,10 @@ export class StrategyERC4626Wrapper {
       swapParams.from,
     )
 
-    const tokenOut = findToken(swapParams.chainId, vaultData.asset)
-    if (!tokenOut) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
       amount: mintAmountIn,
-      tokenOut,
+      tokenOut: findToken(swapParams.chainId, vaultData.asset),
       receiver: swapParams.from,
       onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
     }

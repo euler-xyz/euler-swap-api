@@ -25,45 +25,35 @@ import {
 } from "../utils"
 
 const defaultConfig: {
-  supportedVaults: Array<{
+  supportedTranches: Array<{
     chainId: number
-    vault: Address
-    asset: Address
-    assetDustEVault: Address
-    protocol: string
+    swapHandler: Address
+    cdo: Address
+    aaTranche: Address
+    aaTrancheVault: Address
+    underlying: Address
+    underlyingDustVault: Address
+    underlyingDecimals: bigint
+    priceOne: bigint
   }>
 } = {
-  supportedVaults: [
+  supportedTranches: [
     {
+      // IdleCDO AA Tranche - idle_Fasanara
       chainId: 1,
-      protocol: "wstUSR",
-      vault: "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055",
-      asset: "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
-      assetDustEVault: "0x3a8992754e2ef51d8f90620d2766278af5c59b90",
+      swapHandler: "0xA24689b6Ab48eCcF7038c70eBC39f9ed4217aFE3",
+      cdo: "0xf6223C567F21E33e859ED7A045773526E9E3c2D5",
+      aaTranche: "0x45054c6753b4Bce40C5d54418DabC20b070F85bE",
+      aaTrancheVault: "0xd820C8129a853a04dC7e42C64aE62509f531eE5A",
+      underlying: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      underlyingDustVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
+      underlyingDecimals: 6n,
+      priceOne: 1000000n,
     },
-    {
-      chainId: 1,
-      protocol: "wUSDL",
-      vault: "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559",
-      asset: "0xbdC7c08592Ee4aa51D06C27Ee23D5087D65aDbcD",
-      assetDustEVault: "0x0Fc9cdb39317354a98a1Afa6497a969ff3a6BA9C",
-    },
-    {
-      chainId: 1,
-      protocol: "ynETHX",
-      vault: "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb",
-      asset: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      assetDustEVault: "0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8",
-    },
-    // {
-    //   chainId: 1,
-    //   protocol: "sUSDS",
-    //   vault: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-    //   asset: "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
-    //   assetDustEVault: "0x98238Ee86f2c571AD06B0913bef21793dA745F57",
-    // },
   ],
 }
+
+const PROTOCOL = { providerName: "IdleCDO" }
 
 // Wrapper which adds an ERC4626 deposit or withdraw in front or at the back of a trade
 export class StrategyERC4626Wrapper {
@@ -81,11 +71,11 @@ export class StrategyERC4626Wrapper {
   async supports(swapParams: SwapParams) {
     return (
       !isExactInRepay(swapParams) &&
-      this.config.supportedVaults.some(
+      this.config.supportedTranches.some(
         (v) =>
           v.chainId === swapParams.chainId &&
-          (isAddressEqual(v.vault, swapParams.tokenIn.addressInfo) ||
-            isAddressEqual(v.vault, swapParams.tokenOut.addressInfo)),
+          (isAddressEqual(v.aaTranche, swapParams.tokenIn.addressInfo) ||
+            isAddressEqual(v.aaTranche, swapParams.tokenOut.addressInfo)),
       )
     )
   }
@@ -102,38 +92,38 @@ export class StrategyERC4626Wrapper {
     try {
       switch (swapParams.swapperMode) {
         case SwapperMode.EXACT_IN: {
-          if (this.isSupportedVault(swapParams.tokenIn.addressInfo)) {
+          if (this.isSupportedTranche(swapParams.tokenIn.addressInfo)) {
             if (
-              this.isSupportedVaultUnderlying({
-                vault: swapParams.tokenIn.addressInfo,
+              this.isSupportedTrancheUnderlying({
+                aaTranche: swapParams.tokenIn.addressInfo,
                 underlying: swapParams.tokenOut.addressInfo,
               })
             ) {
               result.response =
-                await this.exactInFromVaultToUnderlying(swapParams)
+                await this.exactInFromAssetToUnderlying(swapParams)
             } else {
-              result.response = await this.exactInFromVaultToAny(swapParams)
+              result.response = await this.exactInFromAssetToAny(swapParams)
             }
           } else {
             if (
-              this.isSupportedVaultUnderlying({
-                vault: swapParams.tokenOut.addressInfo,
+              this.isSupportedTrancheUnderlying({
+                aaTranche: swapParams.tokenOut.addressInfo,
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
               result.response =
-                await this.exactInFromUnderlyingToVault(swapParams)
+                await this.exactInFromUnderlyingToAsset(swapParams)
             } else {
-              result.response = await this.exactInFromAnyToVault(swapParams)
+              result.response = await this.exactInFromAnyToAsset(swapParams)
             }
           }
           break
         }
         case SwapperMode.TARGET_DEBT: {
-          if (this.isSupportedVault(swapParams.tokenIn.addressInfo)) {
+          if (this.isSupportedTranche(swapParams.tokenIn.addressInfo)) {
             if (
-              this.isSupportedVaultUnderlying({
-                vault: swapParams.tokenIn.addressInfo,
+              this.isSupportedTrancheUnderlying({
+                aaTranche: swapParams.tokenIn.addressInfo,
                 underlying: swapParams.tokenOut.addressInfo,
               })
             ) {
@@ -144,8 +134,8 @@ export class StrategyERC4626Wrapper {
             }
           } else {
             if (
-              this.isSupportedVaultUnderlying({
-                vault: swapParams.tokenOut.addressInfo,
+              this.isSupportedTrancheUnderlying({
+                aaTranche: swapParams.tokenOut.addressInfo,
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
@@ -169,7 +159,7 @@ export class StrategyERC4626Wrapper {
     return result
   }
 
-  async exactInFromVaultToUnderlying(
+  async exactInFromAssetToUnderlying(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const {
@@ -205,18 +195,13 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: 0,
-      route: [
-        {
-          providerName: this.getSupportedVault(swapParams.tokenIn.addressInfo)
-            .protocol,
-        },
-      ],
+      route: [PROTOCOL],
       swap,
       verify,
     }
   }
 
-  async exactInFromVaultToAny(
+  async exactInFromAssetToAny(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     const {
@@ -229,8 +214,8 @@ export class StrategyERC4626Wrapper {
       swapParams.from,
     )
 
-    const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
+    const trancheData = this.getSupportedTranche(swapParams.tokenIn.addressInfo)
+    const tokenIn = findToken(swapParams.chainId, trancheData.underlying)
     if (!tokenIn) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
@@ -241,8 +226,8 @@ export class StrategyERC4626Wrapper {
     const innerSwap = await runPipeline(innerSwapParams)
 
     const intermediateDustDepositMulticallItem = encodeDepositMulticallItem(
-      vaultData.asset,
-      vaultData.assetDustEVault,
+      trancheData.underlying,
+      trancheData.underlyingDustVault,
       5n, // avoid zero shares
       swapParams.accountOut,
     )
@@ -268,25 +253,27 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
+      route: [PROTOCOL, ...innerSwap.route],
       swap,
       verify,
     }
   }
 
-  async exactInFromUnderlyingToVault(
+  async exactInFromUnderlyingToAsset(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
-    const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
+    const trancheData = this.getSupportedTranche(
+      swapParams.tokenOut.addressInfo,
+    )
 
     const amountOut = await fetchPreviewDeposit(
       swapParams.chainId,
-      vaultData.vault,
+      trancheData.aaTranche,
       swapParams.amount,
     )
     const swapperDepositMulticallItem = encodeDepositMulticallItem(
-      vaultData.asset,
-      vaultData.vault,
+      trancheData.underlying,
+      trancheData.aaTranche,
       0n,
       swapParams.receiver,
     )
@@ -316,17 +303,19 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }],
+      route: [PROTOCOL],
       swap,
       verify,
     }
   }
 
-  async exactInFromAnyToVault(
+  async exactInFromAnyToAsset(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
-    const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
-    const tokenOut = findToken(swapParams.chainId, vaultData.asset)
+    const trancheData = this.getSupportedTranche(
+      swapParams.tokenOut.addressInfo,
+    )
+    const tokenOut = findToken(swapParams.chainId, trancheData.underlying)
     if (!tokenOut) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
@@ -337,19 +326,19 @@ export class StrategyERC4626Wrapper {
     const innerSwap = await runPipeline(innerSwapParams)
     const amountOut = await fetchPreviewDeposit(
       swapParams.chainId,
-      vaultData.vault,
+      trancheData.aaTranche,
       BigInt(innerSwap.amountOut),
     )
     const amountOutMin = await fetchPreviewDeposit(
       swapParams.chainId,
-      vaultData.vault,
+      trancheData.aaTranche,
       BigInt(innerSwap.amountOutMin),
     )
 
     // Swapper.deposit will deposit all of available balance into the wrapper, and move the wrapper straight to receiver, where it can be skimmed
     const swapperDepositMulticallItem = encodeDepositMulticallItem(
-      vaultData.asset,
-      vaultData.vault,
+      trancheData.underlying,
+      trancheData.aaTranche,
       0n,
       swapParams.receiver,
     )
@@ -380,7 +369,7 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
+      route: [PROTOCOL, ...innerSwap.route],
       swap,
       verify,
     }
@@ -390,7 +379,7 @@ export class StrategyERC4626Wrapper {
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     // TODO expects dust - add to dust list
-    const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
+    const trancheData = this.getSupportedTranche(swapParams.tokenIn.addressInfo)
     const withdrawAmount = adjustForInterest(swapParams.amount)
 
     const {
@@ -399,7 +388,7 @@ export class StrategyERC4626Wrapper {
       amountOut,
     } = await encodeWithdraw(
       swapParams,
-      vaultData.vault,
+      trancheData.aaTranche,
       withdrawAmount,
       swapParams.from,
     )
@@ -427,7 +416,7 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: 0,
-      route: [{ providerName: vaultData.protocol }],
+      route: [PROTOCOL],
       swap,
       verify,
     }
@@ -437,13 +426,13 @@ export class StrategyERC4626Wrapper {
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
     // TODO expects dust out - add to dust list
-    const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
+    const trancheData = this.getSupportedTranche(swapParams.tokenIn.addressInfo)
+    const tokenIn = findToken(swapParams.chainId, trancheData.underlying)
     if (!tokenIn) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
       tokenIn,
-      vaultIn: vaultData.assetDustEVault,
+      vaultIn: trancheData.underlyingDustVault,
       onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
 
@@ -458,7 +447,7 @@ export class StrategyERC4626Wrapper {
       amountIn: withdrawAmountIn,
     } = await encodeWithdraw(
       withdrawSwapParams,
-      vaultData.vault,
+      trancheData.aaTranche,
       BigInt(innerQuote.amountIn),
       swapParams.from,
     )
@@ -491,7 +480,7 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerQuote.route],
+      route: [PROTOCOL, ...innerQuote.route],
       swap,
       verify,
     }
@@ -500,7 +489,9 @@ export class StrategyERC4626Wrapper {
   async targetDebtFromUnderlyingToVault(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
-    const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
+    const trancheData = this.getSupportedTranche(
+      swapParams.tokenOut.addressInfo,
+    )
 
     const mintAmount = adjustForInterest(swapParams.amount)
 
@@ -510,7 +501,7 @@ export class StrategyERC4626Wrapper {
       amountOut,
     } = await encodeMint(
       swapParams,
-      vaultData.vault,
+      trancheData.aaTranche,
       mintAmount,
       swapParams.from,
     )
@@ -540,7 +531,7 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: 0,
-      route: [{ providerName: vaultData.protocol }],
+      route: [PROTOCOL],
       swap,
       verify,
     }
@@ -549,15 +540,17 @@ export class StrategyERC4626Wrapper {
   async targetDebtFromAnyToVault(
     swapParams: SwapParams,
   ): Promise<SwapApiResponse> {
-    const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
+    const trancheData = this.getSupportedTranche(
+      swapParams.tokenOut.addressInfo,
+    )
 
     const mintAmount = adjustForInterest(swapParams.amount)
-    const tokenIn = findToken(swapParams.chainId, vaultData.asset)
+    const tokenIn = findToken(swapParams.chainId, trancheData.underlying)
     if (!tokenIn) throw new Error("Inner token in not found")
     const mintSwapParams = {
       ...swapParams,
       tokenIn,
-      vaultIn: vaultData.assetDustEVault,
+      vaultIn: trancheData.underlyingDustVault,
     }
 
     const {
@@ -566,12 +559,12 @@ export class StrategyERC4626Wrapper {
       amountOut,
     } = await encodeMint(
       mintSwapParams,
-      vaultData.vault,
+      trancheData.aaTranche,
       mintAmount,
       swapParams.from,
     )
 
-    const tokenOut = findToken(swapParams.chainId, vaultData.asset)
+    const tokenOut = findToken(swapParams.chainId, trancheData.underlying)
     if (!tokenOut) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,
@@ -620,35 +613,35 @@ export class StrategyERC4626Wrapper {
       tokenIn: swapParams.tokenIn,
       tokenOut: swapParams.tokenOut,
       slippage: swapParams.slippage,
-      route: [...innerQuote.route, { providerName: vaultData.protocol }],
+      route: [...innerQuote.route, PROTOCOL],
       swap,
       verify,
     }
   }
 
-  isSupportedVault(vault: Address) {
-    return this.config.supportedVaults.some((v) =>
-      isAddressEqual(v.vault, vault),
+  isSupportedTranche(asset: Address) {
+    return this.config.supportedTranches.some((v) =>
+      isAddressEqual(v.aaTranche, asset),
     )
   }
 
-  isSupportedVaultUnderlying({
-    vault,
+  isSupportedTrancheUnderlying({
+    aaTranche,
     underlying,
-  }: { vault: Address; underlying: Address }) {
-    const asset = this.config.supportedVaults.find((v) =>
-      isAddressEqual(v.vault, vault),
-    )?.asset
+  }: { aaTranche: Address; underlying: Address }) {
+    const asset = this.config.supportedTranches.find((v) =>
+      isAddressEqual(v.aaTranche, aaTranche),
+    )?.underlying
     return !!asset && isAddressEqual(asset, underlying)
   }
 
-  getSupportedVault(vault: Address) {
-    const supportedVault = this.config.supportedVaults.find((v) =>
-      isAddressEqual(v.vault, vault),
+  getSupportedTranche(aaTranche: Address) {
+    const supportedTranche = this.config.supportedTranches.find((v) =>
+      isAddressEqual(v.aaTranche, aaTranche),
     )
-    if (!supportedVault) throw new Error("Vault not supported")
+    if (!supportedTranche) throw new Error("Tranche not supported")
 
-    return supportedVault
+    return supportedTranche
   }
 }
 
