@@ -3,6 +3,7 @@ import {
   StrategyBalmySDK,
   StrategyCombinedUniswap,
   StrategyERC4626Wrapper,
+  StrategyIdleCDOTranche,
   StrategyMidas,
   StrategyRepayWrapper,
 } from "../strategies"
@@ -33,20 +34,15 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     match: {}, // supports function will match mTokens
   },
   {
+    strategy: StrategyIdleCDOTranche.name(),
+    match: { tokensInOrOut: [IDLEAATRANCHEFASANARA_MAINNET] },
+  },
+  {
     strategy: StrategyERC4626Wrapper.name(),
     match: {
       tokensInOrOut: [WSTUSR_MAINNET, PT_WSTUSR1740182579, YNETHX_MAINNET],
       excludeTokensInOrOut: [PT_WSTUSR_27MAR2025_MAINNET],
     },
-  },
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["idle-tranche"],
-      },
-    },
-    match: { tokensInOrOut: [IDLEAATRANCHEFASANARA_MAINNET] },
   },
   {
     strategy: StrategyBalmySDK.name(),
