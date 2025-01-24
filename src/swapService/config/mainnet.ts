@@ -54,7 +54,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           // "paraswap",
-          "odos",
+          // "odos",
           "1inch",
           "li-fi",
           // "open-ocean",
@@ -74,7 +74,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           "paraswap",
-          "odos",
+          // "odos",
           "1inch",
           "li-fi",
           // "open-ocean",
@@ -94,7 +94,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           // "paraswap",
-          "odos",
+          // "odos",
           "1inch",
           "li-fi",
           "open-ocean",
@@ -128,7 +128,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
         includeSources: [
           "kyberswap",
           // "paraswap",
-          "odos",
+          // "odos",
           "1inch",
           "li-fi",
           "open-ocean",
