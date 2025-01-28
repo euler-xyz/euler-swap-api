@@ -1,6 +1,7 @@
 import { StrategyBalmySDK } from "./strategyBalmySDK"
 import { StrategyCombinedUniswap } from "./strategyCombinedUniswap"
 import { StrategyERC4626Wrapper } from "./strategyERC4626Wrapper"
+import { StrategyIdleCDOTranche } from "./strategyIdleCDOTranche"
 import { StrategyMidas } from "./strategyMidas"
 import { StrategyRepayWrapper } from "./strategyRepayWrapper"
 
@@ -10,6 +11,7 @@ export {
   StrategyRepayWrapper,
   StrategyBalmySDK,
   StrategyERC4626Wrapper,
+  StrategyIdleCDOTranche,
 }
 
 export const strategies = {
@@ -18,4 +20,5 @@ export const strategies = {
   [StrategyRepayWrapper.name()]: StrategyRepayWrapper,
   [StrategyBalmySDK.name()]: StrategyBalmySDK,
   [StrategyERC4626Wrapper.name()]: StrategyERC4626Wrapper,
+  [StrategyIdleCDOTranche.name()]: StrategyIdleCDOTranche,
 }

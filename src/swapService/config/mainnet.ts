@@ -3,6 +3,7 @@ import {
   StrategyBalmySDK,
   StrategyCombinedUniswap,
   StrategyERC4626Wrapper,
+  StrategyIdleCDOTranche,
   StrategyMidas,
   StrategyRepayWrapper,
 } from "../strategies"
@@ -15,6 +16,8 @@ const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
 const PT_WSTUSR_27MAR2025_MAINNET = "0xA8c8861b5ccF8CCe0ade6811CD2A7A7d3222B0B8"
 const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
 const YNETHX_MAINNET = "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb"
+const IDLEAATRANCHEFASANARA_MAINNET =
+  "0x45054c6753b4Bce40C5d54418DabC20b070F85bE"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -29,6 +32,10 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   {
     strategy: StrategyMidas.name(),
     match: {}, // supports function will match mTokens
+  },
+  {
+    strategy: StrategyIdleCDOTranche.name(),
+    match: { tokensInOrOut: [IDLEAATRANCHEFASANARA_MAINNET] },
   },
   {
     strategy: StrategyERC4626Wrapper.name(),
