@@ -21,6 +21,15 @@ const baseRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyMidas.name(),
     match: {}, // supports function will match mTokens
   },
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["pendle", "li-fi", "open-ocean"],
+      },
+    },
+    match: { isPendlePT: true },
+  },
   // avoid 1inch because of InvalidatedOrder error. Kyberswap and li.fi also route through 1inch
   {
     strategy: StrategyBalmySDK.name(),

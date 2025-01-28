@@ -1,6 +1,6 @@
 export default [
   {
-    addressInfo: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    addressInfo: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     chainId: 1,
     name: "WETH",
     symbol: "WETH",
@@ -10,7 +10,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    addressInfo: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     chainId: 1,
     name: "USDC",
     symbol: "USDC",
@@ -20,7 +20,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    addressInfo: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
     chainId: 1,
     name: "Tether",
     symbol: "USDT",
@@ -30,7 +30,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+    addressInfo: "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
     chainId: 1,
     name: "Maker",
     symbol: "MKR",
@@ -40,7 +40,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+    addressInfo: "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
     chainId: 1,
     name: "Wrapped stETH",
     symbol: "WSTETH",
@@ -49,10 +49,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
     meta: {
       poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x111111111117dc0aa78b770fa6a738034120c302",
+    addressInfo: "0x111111111117dC0aa78b770fA6A738034120C302",
     chainId: 1,
     name: "1inch",
     symbol: "1INCH",
@@ -62,7 +63,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+    addressInfo: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
     chainId: 1,
     name: "Aave",
     symbol: "AAVE",
@@ -72,7 +73,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xba100000625a3754423978a60c9317c58a424e3d",
+    addressInfo: "0xba100000625a3754423978a60c9317c58a424e3D",
     chainId: 1,
     name: "Balancer",
     symbol: "BAL",
@@ -82,7 +83,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xbe9895146f7af43049ca1c1ae358b0541ea49704",
+    addressInfo: "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
     chainId: 1,
     name: "Coinbase Wrapped Staked ETH",
     symbol: "CBETH",
@@ -91,10 +92,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/27008/large/cbeth.png?1709186989",
     meta: {
       poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xd533a949740bb3306d119cc777fa900ba034cd52",
+    addressInfo: "0xD533a949740bb3306d119CC777fa900bA034cd52",
     chainId: 1,
     name: "Curve DAO",
     symbol: "CRV",
@@ -104,7 +106,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+    addressInfo: "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
     chainId: 1,
     name: "crvUSD",
     symbol: "CRVUSD",
@@ -114,7 +116,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b",
+    addressInfo: "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B",
     chainId: 1,
     name: "Convex Finance",
     symbol: "CVX",
@@ -124,7 +126,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x6b175474e89094c44da98b954eedeac495271d0f",
+    addressInfo: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     chainId: 1,
     name: "Dai",
     symbol: "DAI",
@@ -134,7 +136,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+    addressInfo: "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72",
     chainId: 1,
     name: "Ethereum Name Service",
     symbol: "ENS",
@@ -144,7 +146,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xa35b1b31ce002fbf2058d22f30f95d405200a15b",
+    addressInfo: "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b",
     chainId: 1,
     name: "Stader ETHx",
     symbol: "ETHX",
@@ -153,10 +155,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/30870/large/staderx.png?1696529717",
     meta: {
       poolId: "90bfb3c2-5d35-4959-a275-ba5085b08aa3",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+    addressInfo: "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
     chainId: 1,
     name: "Renzo Restaked ETH",
     symbol: "EZETH",
@@ -165,10 +168,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
     meta: {
       poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x853d955acef822db058eb8505911ed77f175b99e",
+    addressInfo: "0x853d955aCEf822Db058eb8505911ED77F175b99e",
     chainId: 1,
     name: "Frax",
     symbol: "FRAX",
@@ -178,7 +182,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+    addressInfo: "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
     chainId: 1,
     name: "Frax Share",
     symbol: "FXS",
@@ -188,7 +192,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f",
+    addressInfo: "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
     chainId: 1,
     name: "GHO",
     symbol: "GHO",
@@ -198,7 +202,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xc944e90c64b2c07662a292be6244bdf05cda44a7",
+    addressInfo: "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
     chainId: 1,
     name: "The Graph",
     symbol: "GRT",
@@ -208,7 +212,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x5a98fcbea516cf06857215779fd812ca3bef1b32",
+    addressInfo: "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
     chainId: 1,
     name: "Lido DAO",
     symbol: "LDO",
@@ -218,7 +222,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x514910771af9ca656af840dff83e8264ecf986ca",
+    addressInfo: "0x514910771AF9Ca656af840dff83E8264EcF986CA",
     chainId: 1,
     name: "Chainlink",
     symbol: "LINK",
@@ -228,7 +232,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+    addressInfo: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
     chainId: 1,
     name: "Liquity USD",
     symbol: "LUSD",
@@ -238,7 +242,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa",
+    addressInfo: "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
     chainId: 1,
     name: "Mantle Staked Ether",
     symbol: "METH",
@@ -247,10 +251,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
     meta: {
       poolId: "b9f2f00a-ba96-4589-a171-dde979a23d87",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x6c3ea9036406852006290770bedfcaba0e23a0e8",
+    addressInfo: "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
     chainId: 1,
     name: "PayPal USD",
     symbol: "PYUSD",
@@ -260,7 +265,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x137ddb47ee24eaa998a535ab00378d6bfa84f893",
+    addressInfo: "0x137dDB47Ee24EaA998a535Ab00378d6BFa84F893",
     chainId: 1,
     name: "Radiant Capital",
     symbol: "RDNT",
@@ -270,7 +275,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xae78736cd615f374d3085123a210448e74fc6393",
+    addressInfo: "0xae78736Cd615f374D3085123A210448E74Fc6393",
     chainId: 1,
     name: "Rocket Pool ETH",
     symbol: "RETH",
@@ -279,10 +284,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/20764/large/reth.png?1696520159",
     meta: {
       poolId: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
+    addressInfo: "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
     chainId: 1,
     name: "Kelp DAO Restaked ETH",
     symbol: "RSETH",
@@ -291,10 +297,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
     meta: {
       poolId: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xfae103dc9cf190ed75350761e95403b7b8afa6c0",
+    addressInfo: "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
     chainId: 1,
     name: "Restaked Swell ETH",
     symbol: "RSWETH",
@@ -303,10 +310,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
     meta: {
       poolId: "eff9b43c-a80d-4bfc-9f9e-55e02a8ef619",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    addressInfo: "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
     chainId: 1,
     name: "Synthetix Network",
     symbol: "SNX",
@@ -316,7 +324,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6",
+    addressInfo: "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
     chainId: 1,
     name: "Stargate Finance",
     symbol: "STG",
@@ -326,7 +334,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    addressInfo: "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51",
     chainId: 1,
     name: "sUSD",
     symbol: "SUSD",
@@ -336,7 +344,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x9d39a5de30e57443bff2a8307a4256c8797a3497",
+    addressInfo: "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
     chainId: 1,
     name: "Ethena Staked USDe",
     symbol: "SUSDE",
@@ -346,7 +354,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+    addressInfo: "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
     chainId: 1,
     name: "Sushi",
     symbol: "SUSHI",
@@ -356,7 +364,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xf951e335afb289353dc249e82926178eac7ded78",
+    addressInfo: "0xf951E335afb289353dc249e82926178EaC7DEd78",
     chainId: 1,
     name: "Swell Ethereum",
     symbol: "SWETH",
@@ -365,10 +373,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
     meta: {
       poolId: "ca2acc2d-6246-44aa-ae91-8725b2c62c7c",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x18084fba666a33d37592fa2633fd49a74dd93a88",
+    addressInfo: "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
     chainId: 1,
     name: "tBTC",
     symbol: "TBTC",
@@ -378,7 +387,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x0000000000085d4780b73119b644ae5ecd22b376",
+    addressInfo: "0x0000000000085d4780B73119b644AE5ecd22b376",
     chainId: 1,
     name: "TrueUSD",
     symbol: "TUSD",
@@ -388,7 +397,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+    addressInfo: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
     chainId: 1,
     name: "Uniswap",
     symbol: "UNI",
@@ -398,7 +407,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x4c9edd5852cd905f086c759e8383e09bff1e68b3",
+    addressInfo: "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
     chainId: 1,
     name: "Ethena USDe",
     symbol: "USDE",
@@ -408,7 +417,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+    addressInfo: "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
     chainId: 1,
     name: "Pax Dollar",
     symbol: "USDP",
@@ -418,7 +427,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
+    addressInfo: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
     chainId: 1,
     name: "Wrapped eETH",
     symbol: "WEETH",
@@ -427,10 +436,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
     meta: {
       poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    addressInfo: "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
     chainId: 1,
     name: "yearn.finance",
     symbol: "YFI",
@@ -440,7 +450,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+    addressInfo: "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
     chainId: 1,
     name: "EURA",
     symbol: "EURA",
@@ -450,7 +460,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x57e114b691db790c35207b2e685d4a43181e6061",
+    addressInfo: "0x57e114B691Db790C35207b2e685D4A43181e6061",
     chainId: 1,
     name: "Ethena",
     symbol: "ENA",
@@ -460,7 +470,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xfe0c30065b384f05761f15d0cc899d4f9f9cc0eb",
+    addressInfo: "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
     chainId: 1,
     name: "Ether.fi",
     symbol: "ETHFI",
@@ -470,7 +480,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+    addressInfo: "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
     chainId: 1,
     name: "EURC",
     symbol: "EURC",
@@ -480,7 +490,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x5e8422345238f34275888049021821e8e08caa1f",
+    addressInfo: "0x5E8422345238F34275888049021821E8E08CAa1f",
     chainId: 1,
     name: "Frax Ether",
     symbol: "FRXETH",
@@ -489,10 +499,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
     meta: {
       poolId: "77020688-e1f9-443c-9388-e51ace15cc32",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x6810e776880c02933d47db1b9fc05908e5386b96",
+    addressInfo: "0x6810e776880C02933D47DB1b9fc05908e5386b96",
     chainId: 1,
     name: "Gnosis",
     symbol: "GNO",
@@ -502,7 +513,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x767fe9edc9e0df98e07454847909b5e959d7ca0e",
+    addressInfo: "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E",
     chainId: 1,
     name: "Illuvium",
     symbol: "ILV",
@@ -512,7 +523,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
+    addressInfo: "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
     chainId: 1,
     name: "Liquity",
     symbol: "LQTY",
@@ -522,7 +533,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x3c3a81e81dc49a522a592e7622a7e711c06bf354",
+    addressInfo: "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
     chainId: 1,
     name: "Mantle",
     symbol: "MNT",
@@ -532,7 +543,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xfaba6f8e4a5e8ab82f62fe7c39859fa577269be3",
+    addressInfo: "0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3",
     chainId: 1,
     name: "Ondo",
     symbol: "ONDO",
@@ -542,7 +553,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x45804880de22913dafe09f4980848ece6ecbaf78",
+    addressInfo: "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
     chainId: 1,
     name: "PAX Gold",
     symbol: "PAXG",
@@ -552,7 +563,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x808507121b80c02388fad14726482e061b8da827",
+    addressInfo: "0x808507121B80c02388fAd14726482e061B8da827",
     chainId: 1,
     name: "Pendle",
     symbol: "PENDLE",
@@ -562,7 +573,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xd9a442856c234a39a81a089c06451ebaa4306a72",
+    addressInfo: "0xD9A442856C234a39a81a089C06451EBAa4306a72",
     chainId: 1,
     name: "pufETH",
     symbol: "PUFETH",
@@ -572,7 +583,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x04c154b66cb340f3ae24111cc767e0184ed00cc6",
+    addressInfo: "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6",
     chainId: 1,
     name: "Dinero Staked ETH",
     symbol: "PXETH",
@@ -581,10 +592,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33608/large/pxETH-icon-transbg_72dpi.png?1702512024",
     meta: {
       poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xd33526068d116ce69f19a9ee46f0bd304f21a51f",
+    addressInfo: "0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
     chainId: 1,
     name: "Rocket Pool",
     symbol: "RPL",
@@ -594,7 +606,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x320623b8e4ff03373931769a31fc52a4e78b5d70",
+    addressInfo: "0x320623b8E4fF03373931769A31Fc52A4E78B5d70",
     chainId: 1,
     name: "Reserve Rights",
     symbol: "RSR",
@@ -604,7 +616,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x5afe3855358e112b5647b952709e6165e1c1eeee",
+    addressInfo: "0x5aFE3855358E112B5647B952709E6165e1c1eEEe",
     chainId: 1,
     name: "Safe",
     symbol: "SAFE",
@@ -614,7 +626,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x83f20f44975d03b1b09e64809b757c47f942beea",
+    addressInfo: "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
     chainId: 1,
     name: "Savings Dai",
     symbol: "SDAI",
@@ -623,10 +635,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
     meta: {
       poolId: "c8a24fee-ec00-4f38-86c0-9f6daebc4225",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xac3e018457b222d93114458476f3e3416abbe38f",
+    addressInfo: "0xac3E018457B222d93114458476f3E3416Abbe38F",
     chainId: 1,
     name: "Staked Frax Ether",
     symbol: "SFRXETH",
@@ -636,7 +649,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x96f6ef951840721adbf46ac996b59e0235cb985c",
+    addressInfo: "0x96F6eF951840721AdBF46Ac996b59E0235CB985C",
     chainId: 1,
     name: "Ondo US Dollar Yield",
     symbol: "USDY",
@@ -646,7 +659,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    addressInfo: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
     chainId: 1,
     name: "Wrapped Bitcoin",
     symbol: "WBTC",
@@ -656,7 +669,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x163f8c2467924be0ae7b5347228cabf260318753",
+    addressInfo: "0x163f8C2467924be0ae7B5347228CABF260318753",
     chainId: 1,
     name: "Worldcoin",
     symbol: "WLD",
@@ -666,7 +679,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x4691937a7508860f876c9c0a2a617e7d9e945d4b",
+    addressInfo: "0x4691937a7508860F876c9c0a2a617E7d9E945D4B",
     chainId: 1,
     name: "WOO",
     symbol: "WOO",
@@ -676,7 +689,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x68749665ff8d2d112fa859aa293f07a622782f38",
+    addressInfo: "0x68749665FF8D2d112Fa859AA293F07A622782F38",
     chainId: 1,
     name: "Tether Gold",
     symbol: "XAUT",
@@ -686,7 +699,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xf1c9acdc66974dfb6decb12aa385b9cd01190e38",
+    addressInfo: "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38",
     chainId: 1,
     name: "StakeWise Staked ETH",
     symbol: "OSETH",
@@ -695,10 +708,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33117/large/Frame_27513839.png?1700732599",
     meta: {
       poolId: "4d01599c-69ae-41a3-bae1-5fab896f04c8",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xa0d69e286b938e21cbf7e51d71f6a4c8918f482f",
+    addressInfo: "0xA0d69E286B938e21CBf7E51D71F6A4c8918f482F",
     chainId: 1,
     name: "Electronic USD",
     symbol: "EUSD",
@@ -708,7 +722,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x9ba021b0a9b958b5e75ce9f6dff97c7ee52cb3e6",
+    addressInfo: "0x9Ba021B0a9b958B5E75cE9f6dff97C7eE52cb3E6",
     chainId: 1,
     name: "Dinero apxETH",
     symbol: "APXETH",
@@ -717,10 +731,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33609/large/apxETH-icon-transbg_72dpi.png?1702512027",
     meta: {
       poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
+    addressInfo: "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8",
     chainId: 1,
     name: "ETHPlus",
     symbol: "ETH+",
@@ -729,10 +744,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/38061/large/ETH__Logo.png?1716440789",
     meta: {
       poolId: "4e6cd326-72d5-4680-8d2f-3481d50e8bb1",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x57f5e098cad7a3d1eed53991d4d66c45c9af7812",
+    addressInfo: "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
     chainId: 1,
     name: "Wrapped USDM",
     symbol: "WUSDM",
@@ -742,7 +758,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x8c9532a60e0e7c6bbd2b2c1303f63ace1c3e9811",
+    addressInfo: "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
     chainId: 1,
     name: "Renzo Restaked LST",
     symbol: "PZETH",
@@ -752,7 +768,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xdcee70654261af21c44c093c300ed3bb97b78192",
+    addressInfo: "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
     chainId: 1,
     name: "Wrapped OETH",
     symbol: "WOETH",
@@ -761,10 +777,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
     meta: {
       poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x0022228a2cc5e7ef0274a7baa600d44da5ab5776",
+    addressInfo: "0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776",
     chainId: 1,
     name: "Angle Staked USDA",
     symbol: "STUSD",
@@ -773,10 +790,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/34509/large/stUSD_copie.png?1705288386",
     meta: {
       poolId: "01e33a85-8bb6-4f30-a11b-7b2a8166e6b7",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3",
+    addressInfo: "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3",
     chainId: 1,
     name: "Origin Ether",
     symbol: "OETH",
@@ -785,10 +803,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/29733/large/OETH.png?1696528663",
     meta: {
       poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x866a2bf4e572cbcf37d5071a7a58503bfb36be1b",
+    addressInfo: "0x866A2BF4E572CbcF37D5071A7a58503Bfb36be1b",
     chainId: 1,
     name: "M",
     symbol: "M",
@@ -798,7 +817,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x0000206329b97db379d5e1bf586bbdb969c63274",
+    addressInfo: "0x0000206329b97DB379d5E1Bf586BbDB969C63274",
     chainId: 1,
     name: "USDA",
     symbol: "USDA",
@@ -808,7 +827,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xe1b4d34e8754600962cd944b535180bd758e6c2e",
+    addressInfo: "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e",
     chainId: 1,
     name: "Kelp Gain",
     symbol: "AGETH",
@@ -818,7 +837,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xbeef69ac7870777598a04b2bd4771c71212e6abc",
+    addressInfo: "0xBEEF69Ac7870777598A04B2bd4771c71212E6aBc",
     chainId: 1,
     name: "Steakhouse Resteaking Vault",
     symbol: "STEAKLRT",
@@ -827,20 +846,24 @@ export default [
       "https://coin-images.coingecko.com/coins/images/39410/large/Steakhouse_logo-05.jpg?1722053893",
     meta: {
       poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x09db87a538bd693e9d08544577d5ccfaa6373a48",
+    addressInfo: "0x09db87A538BD693E9d08544577d5cCfAA6373A48",
     chainId: 1,
     name: "YieldNest Restaked ETH",
     symbol: "YNETH",
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/37798/large/ynETH-YieldNest.png?1715589941",
-    meta: {},
+    meta: {
+      poolId: "44dd4153-aa9f-4616-9a88-e6803c86b995",
+      provider: "DEFILLAMA",
+    },
   },
   {
-    addressInfo: "0x73a15fed60bf67631dc6cd7bc5b6e8da8190acf5",
+    addressInfo: "0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
     chainId: 1,
     name: "Usual USD",
     symbol: "USD0",
@@ -850,7 +873,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+    addressInfo: "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
     chainId: 1,
     name: "Coinbase Wrapped BTC",
     symbol: "cbBTC",
@@ -860,7 +883,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+    addressInfo: "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
     chainId: 1,
     name: "USDS",
     symbol: "USDS",
@@ -880,7 +903,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x0d86883faf4ffd7aeb116390af37746f45b6f378",
+    addressInfo: "0x0d86883FAf4FfD7aEb116390af37746F45b6f378",
     chainId: 1,
     name: "Web 3 Dollar",
     symbol: "USD3",
@@ -889,10 +912,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/38073/large/usd3%28200_x_200_px%29.png?1716449060",
     meta: {
       poolId: "9c4e675e-7615-4d60-90ef-03d58c66b476",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x8236a87084f8b84306f72007f36f2618a5634494",
+    addressInfo: "0x8236a87084f8B84306f72007F36F2618A5634494",
     chainId: 1,
     name: "Lombard Staked BTC",
     symbol: "LBTC",
@@ -902,7 +926,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x59d9356e565ab3a36dd77763fc0d87feaf85508c",
+    addressInfo: "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
     chainId: 1,
     name: "Mountain Protocol USD",
     symbol: "USDM",
@@ -912,7 +936,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x56072c95faa701256059aa122697b133aded9279",
+    addressInfo: "0x56072C95FAA701256059aa122697B133aDEd9279",
     chainId: 1,
     name: "Sky",
     symbol: "SKY",
@@ -922,7 +946,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x657e8c867d8b37dcc18fa4caead9c45eb088c642",
+    addressInfo: "0x657e8C867D8B37dCC18fA4Caead9C45EB088C642",
     chainId: 1,
     name: "Ether.fi Staked BTC",
     symbol: "EBTC",
@@ -932,7 +956,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x7a56e1c57c7475ccf742a1832b028f0456652f97",
+    addressInfo: "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
     chainId: 1,
     name: "Solv Protocol SolvBTC",
     symbol: "SOLVBTC",
@@ -942,7 +966,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x2c537e5624e4af88a7ae4060c022609376c8d0eb",
+    addressInfo: "0x2C537E5624e4af88A7ae4060C022609376C8D0EB",
     chainId: 1,
     name: "BiLira",
     symbol: "TRYB",
@@ -952,7 +976,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x00000000efe302beaa2b3e6e1b18d08d69a9012a",
+    addressInfo: "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
     chainId: 1,
     name: "AUSD",
     symbol: "AUSD",
@@ -962,7 +986,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xc5f0f7b66764f6ec8c8dff7ba683102295e16409",
+    addressInfo: "0xc5f0f7b66764F6ec8C8Dff7BA683102295E16409",
     chainId: 1,
     name: "First Digital USD",
     symbol: "FDUSD",
@@ -972,7 +996,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xdd629e5241cbc5919847783e6c96b2de4754e438",
+    addressInfo: "0xDD629E5241CbC5919847783e6C96B2De4754e438",
     chainId: 1,
     name: "Midas mTBILL",
     symbol: "MTBILL",
@@ -982,7 +1006,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0",
+    addressInfo: "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
     chainId: 1,
     name: "Staked USD0",
     symbol: "USD0++",
@@ -991,10 +1015,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/39169/large/0x35d8949372d46b7a3d5a56006ae77b215fc69bc0.png?1720798057",
     meta: {
       poolId: "55b0893b-1dbb-47fd-9912-5e439cd3d511",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x9c7beba8f6ef6643abd725e45a4e8387ef260649",
+    addressInfo: "0x9C7BEBa8F6eF6643aBd725e45a4E8387eF260649",
     chainId: 1,
     name: "Gravity",
     symbol: "G",
@@ -1004,7 +1029,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xec53bf9167f50cdeb3ae105f56099aaab9061f83",
+    addressInfo: "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83",
     chainId: 1,
     name: "Eigenlayer",
     symbol: "EIGEN",
@@ -1014,7 +1039,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xca14007eff0db1f8135f4c25b34de49ab0d42766",
+    addressInfo: "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
     chainId: 1,
     name: "Starknet",
     symbol: "STRK",
@@ -1024,7 +1049,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xf469fbd2abcd6b9de8e169d128226c0fc90a012e",
+    addressInfo: "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
     chainId: 1,
     name: "pumpBTC",
     symbol: "PUMPBTC",
@@ -1034,7 +1059,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xbdc7c08592ee4aa51d06c27ee23d5087d65adbcd",
+    addressInfo: "0xbdC7c08592Ee4aa51D06C27Ee23D5087D65aDbcD",
     chainId: 1,
     name: "Lift Dollar",
     symbol: "USDL",
@@ -1044,7 +1069,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x007115416ab6c266329a03b09a8aa39ac2ef7d9d",
+    addressInfo: "0x007115416AB6c266329a03B09a8aa39aC2eF7d9d",
     chainId: 1,
     name: "Midas mBTC",
     symbol: "MBTC",
@@ -1054,7 +1079,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x66a1e37c9b0eaddca17d3662d6c05f4decf3e110",
+    addressInfo: "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
     chainId: 1,
     name: "Resolv USR",
     symbol: "USR",
@@ -1073,7 +1098,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x15700b564ca08d9439c58ca5053166e8317aa138",
+    addressInfo: "0x15700B564Ca08D9439C58cA5053166E8317aa138",
     chainId: 1,
     name: "Elixir deUSD",
     symbol: "DEUSD",
@@ -1083,7 +1108,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x8a60e489004ca22d775c5f2c657598278d17d9c2",
+    addressInfo: "0x8A60E489004Ca22d775C5F2c657598278d17D9c2",
     chainId: 1,
     name: "USDa",
     symbol: "USDA",
@@ -1093,7 +1118,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x5c5b196abe0d54485975d1ec29617d42d9198326",
+    addressInfo: "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
     chainId: 1,
     name: "Elixir Staked deUSD",
     symbol: "SDEUSD",
@@ -1103,7 +1128,17 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x62d0a8458ed7719fdaf978fe5929c6d342b0bfce",
+    addressInfo: "0x97Ad75064b20fb2B2447feD4fa953bF7F007a706",
+    chainId: 1,
+    name: "StakeStone Berachain Vault Token",
+    symbol: "BERASTONE",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/53143/large/beraSTONE.png?1735377526",
+    meta: {},
+  },
+  {
+    addressInfo: "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE",
     chainId: 1,
     name: "Beam",
     symbol: "BEAM",
@@ -1113,7 +1148,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055",
+    addressInfo: "0x1202F5C7b4B9E47a1A484E8B270be34dbbC75055",
     chainId: 1,
     name: "Resolv wstUSR",
     symbol: "WSTUSR",
@@ -1122,10 +1157,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
     meta: {
       poolId: "0aedb3f6-9298-49de-8bb0-2f611a4df784",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x0655977feb2f289a4ab78af67bab0d17aab84367",
+    addressInfo: "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
     chainId: 1,
     name: "Savings crvUSD",
     symbol: "SCRVUSD",
@@ -1134,17 +1170,21 @@ export default [
       "https://coin-images.coingecko.com/coins/images/51712/large/scrvUSD200x200.png?1731899723",
     meta: {
       poolId: "5fd328af-4203-471b-bd16-1705c726d926",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb",
+    addressInfo: "0x657d9ABA1DBb59e53f9F3eCAA878447dCfC96dCb",
     chainId: 1,
     name: "ynETH MAX",
     symbol: "YNETHX",
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/51623/large/ynETHx.png?1731659494",
-    meta: {},
+    meta: {
+      poolId: "e3c59895-d6ad-4634-b257-f599f1a1a4a0",
+      provider: "DEFILLAMA",
+    },
   },
   {
     addressInfo: "0x4342B77fE3417Bcb09d0A4383301b0DC733C755B",
@@ -1193,7 +1233,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xf3e621395fc714b90da337aa9108771597b4e696",
+    addressInfo: "0xf3e621395fc714B90dA337AA9108771597b4E696",
     chainId: 1,
     name: "Reward EUL",
     symbol: "rEUL",
@@ -1203,7 +1243,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x64047dd3288276d70a4f8b5df54668c8403f877f",
+    addressInfo: "0x64047dD3288276d70A4F8B5Df54668c8403f877F",
     chainId: 1,
     name: "Amphor Restaked BTC",
     symbol: "amphrBTC",
@@ -1221,6 +1261,7 @@ export default [
       "https://raw.githubusercontent.com/balancer/tokenlists/c52e53a7599932b9063c6dc4383fbedc8e3e8ae8/src/assets/images/tokens/0x5fd13359ba15a84b76f7f87568309040176167cd.png",
     meta: {
       poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      provider: "DEFILLAMA",
     },
   },
   {
@@ -1233,6 +1274,7 @@ export default [
       "https://raw.githubusercontent.com/balancer/tokenlists/c52e53a7599932b9063c6dc4383fbedc8e3e8ae8/src/assets/images/tokens/0x7a4effd87c2f3c55ca251080b1343b605f327e3a.png",
     meta: {
       poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      provider: "DEFILLAMA",
     },
   },
   {
@@ -1241,7 +1283,7 @@ export default [
     name: "wM",
     symbol: "wM",
     decimals: 6,
-    logoURI: "/tokens/1/0x437cc33344a0B27A429f795ff6B469C72698B291.png",
+    logoURI: "/tokens/1/0x437cc33344a0B27A429f795ff6B469C72698B291.svg",
     meta: {},
   },
   {
@@ -1325,7 +1367,7 @@ export default [
     },
   },
   {
-    addressInfo: "0xec5a52c685cc3ad79a6a347abace330d69e0b1ed",
+    addressInfo: "0xEc5a52C685CC3Ad79a6a347aBACe330d69e0b1eD",
     chainId: 1,
     name: "PT Lombard LBTC 27MAR2025",
     symbol: "PT-LBTC-27MAR2025",

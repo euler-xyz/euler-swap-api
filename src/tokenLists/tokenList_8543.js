@@ -1,6 +1,6 @@
 export default [
   {
-    addressInfo: "0xcbb7c0000ab88b473b1f5afd9ef808440eed33bf",
+    addressInfo: "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
     chainId: 1,
     name: "Coinbase Wrapped BTC",
     symbol: "CBBTC",
@@ -10,7 +10,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x2ae3f1ec7f1f5012cfeab0185bfc7aa3cf0dec22",
+    addressInfo: "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     chainId: 8453,
     name: "Coinbase Wrapped Staked ETH",
     symbol: "cbETH",
@@ -18,6 +18,7 @@ export default [
     logoURI: "/tokens/8453/cbeth.png",
     meta: {
       poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
+      provider: "DEFILLAMA",
     },
   },
   {
@@ -31,7 +32,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42",
+    addressInfo: "0x60a3E35Cc302bFA44Cb288Bc5a4F316Fdb1adb42",
     chainId: 8453,
     name: "EURC",
     symbol: "EURC",
@@ -40,7 +41,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    addressInfo: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
     chainId: 8453,
     name: "USDC",
     symbol: "USDC",
@@ -49,7 +50,7 @@ export default [
     meta: {},
   },
   {
-    addressInfo: "0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452",
+    addressInfo: "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
     chainId: 8453,
     name: "Wrapped liquid staked Ether 2.0",
     symbol: "wstETH",
@@ -57,10 +58,11 @@ export default [
     logoURI: "/tokens/8453/wsteth.png",
     meta: {
       poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0x04c0599ae5a44757c0af6f9ec3b93da8976c150a",
+    addressInfo: "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
     chainId: 8453,
     name: "Wrapped eETH",
     symbol: "weETH",
@@ -69,10 +71,11 @@ export default [
       "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
     meta: {
       poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
+      provider: "DEFILLAMA",
     },
   },
   {
-    addressInfo: "0xecac9c5f704e954931349da37f60e39f515c11c1",
+    addressInfo: "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
     chainId: 8453,
     name: "Lombard Staked Bitcoin",
     symbol: "LBTC",
@@ -90,6 +93,7 @@ export default [
     logoURI: "/tokens/8453/0x7223442cad8e9cA474fC40109ab981608F8c4273.svg",
     meta: {
       poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
+      provider: "DEFILLAMA",
     },
   },
   {
@@ -101,6 +105,7 @@ export default [
     logoURI: "/tokens/8453/0xB6fe221Fe9EeF5aBa221c348bA20A1Bf5e73624c.webp",
     meta: {
       poolId: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
+      provider: "DEFILLAMA",
     },
   },
   {
@@ -133,6 +138,20 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x727cebacfb10ffd353fc221d06a862b437ec1735",
+      poolId: "",
+    },
+  },
+  {
+    addressInfo: "0xec443e7E0e745348E500084892C89218B3ba4683",
+    chainId: 8453,
+    name: "PT Resolv USD 24APR2025",
+    symbol: "PT-USR-24APR2025",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {
+      isPendlePT: true,
+      pendleMarket: "0xe15578523937ed7f08e8f7a1fa8a021e07025a08",
       poolId: "",
     },
   },
