@@ -54,7 +54,7 @@ const PROTOCOL = { providerName: "Idle" }
 // Strategy uses a special SwapHandler contract, which deposits into IdleCDO tranches
 export class StrategyIdleCDOTranche {
   static name() {
-    return "erc4626_wrapper"
+    return "idle_cdo_tranche"
   }
   readonly match
   readonly config
