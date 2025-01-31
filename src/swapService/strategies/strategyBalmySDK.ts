@@ -505,7 +505,6 @@ export class StrategyBalmySDK {
         ? getAddress(sdkQuote.source.allowanceTarget)
         : undefined
 
-    console.log("allowanceTarget: ", allowanceTarget)
     return {
       swapParams,
       amountIn: sdkQuote.sellAmount.amount,
