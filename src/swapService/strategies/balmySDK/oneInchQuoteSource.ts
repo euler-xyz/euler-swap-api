@@ -1,5 +1,4 @@
-import { Chains } from "@balmy/sdk"
-import { isSameAddress } from "@balmy/sdk"
+import { Chains, isSameAddress } from "@balmy/sdk"
 import type {
   BuildTxParams,
   IQuoteSource,
@@ -29,7 +28,7 @@ export const ONE_INCH_METADATA: QuoteSourceMetadata<OneInchSupport> = {
       Chains.GNOSIS.chainId,
       Chains.AVALANCHE.chainId,
       Chains.FANTOM.chainId,
-      Chains.KLAYTN.chainId,
+      Chains.KAIA.chainId,
       Chains.AURORA.chainId,
       Chains.BASE.chainId,
     ],

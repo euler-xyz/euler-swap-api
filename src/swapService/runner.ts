@@ -61,11 +61,9 @@ export async function runPipeline(
   return finalResult.response
 }
 
-//
 // TODO timeouts on balmy
 // TODO review and add sources
 // TODO tokenlist, interfaces
 // TODO price impact
 // TODO logging - detect when fallback kicks
-// TODO pendle rollover
 // In wreapper strategy return dust to the original wrapper asset - deposit for EOA owner
