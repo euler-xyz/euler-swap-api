@@ -48,8 +48,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
     meta: {
-      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       provider: "DEFILLAMA",
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
     },
   },
   {
@@ -91,8 +91,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/27008/large/cbeth.png?1709186989",
     meta: {
-      poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
       provider: "DEFILLAMA",
+      poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
     },
   },
   {
@@ -154,8 +154,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/30870/large/staderx.png?1696529717",
     meta: {
-      poolId: "90bfb3c2-5d35-4959-a275-ba5085b08aa3",
       provider: "DEFILLAMA",
+      poolId: "90bfb3c2-5d35-4959-a275-ba5085b08aa3",
     },
   },
   {
@@ -167,8 +167,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
     meta: {
-      poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
       provider: "DEFILLAMA",
+      poolId: "e28e32b5-e356-41d9-8dc7-a376ece56619",
     },
   },
   {
@@ -250,8 +250,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
     meta: {
-      poolId: "b9f2f00a-ba96-4589-a171-dde979a23d87",
       provider: "DEFILLAMA",
+      poolId: "b9f2f00a-ba96-4589-a171-dde979a23d87",
     },
   },
   {
@@ -283,8 +283,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/20764/large/reth.png?1696520159",
     meta: {
-      poolId: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
       provider: "DEFILLAMA",
+      poolId: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
     },
   },
   {
@@ -296,8 +296,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
     meta: {
-      poolId: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
       provider: "DEFILLAMA",
+      poolId: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
     },
   },
   {
@@ -309,8 +309,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
     meta: {
-      poolId: "eff9b43c-a80d-4bfc-9f9e-55e02a8ef619",
       provider: "DEFILLAMA",
+      poolId: "eff9b43c-a80d-4bfc-9f9e-55e02a8ef619",
     },
   },
   {
@@ -351,7 +351,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
-    meta: {},
+    meta: {
+      provider: "SUSDE",
+    },
   },
   {
     addressInfo: "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
@@ -372,8 +374,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/30326/large/_lB7zEtS_400x400.jpg?1696529227",
     meta: {
-      poolId: "ca2acc2d-6246-44aa-ae91-8725b2c62c7c",
       provider: "DEFILLAMA",
+      poolId: "ca2acc2d-6246-44aa-ae91-8725b2c62c7c",
     },
   },
   {
@@ -435,8 +437,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
     meta: {
-      poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
       provider: "DEFILLAMA",
+      poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
     },
   },
   {
@@ -498,8 +500,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
     meta: {
-      poolId: "77020688-e1f9-443c-9388-e51ace15cc32",
       provider: "DEFILLAMA",
+      poolId: "77020688-e1f9-443c-9388-e51ace15cc32",
     },
   },
   {
@@ -591,8 +593,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33608/large/pxETH-icon-transbg_72dpi.png?1702512024",
     meta: {
-      poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
       provider: "DEFILLAMA",
+      poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
     },
   },
   {
@@ -634,8 +636,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
     meta: {
-      poolId: "c8a24fee-ec00-4f38-86c0-9f6daebc4225",
       provider: "DEFILLAMA",
+      poolId: "c8a24fee-ec00-4f38-86c0-9f6daebc4225",
     },
   },
   {
@@ -707,8 +709,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33117/large/Frame_27513839.png?1700732599",
     meta: {
-      poolId: "4d01599c-69ae-41a3-bae1-5fab896f04c8",
       provider: "DEFILLAMA",
+      poolId: "4d01599c-69ae-41a3-bae1-5fab896f04c8",
     },
   },
   {
@@ -730,8 +732,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33609/large/apxETH-icon-transbg_72dpi.png?1702512027",
     meta: {
-      poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
       provider: "DEFILLAMA",
+      poolId: "acee1e4d-a73c-4e20-98f7-e87c13d446e4",
     },
   },
   {
@@ -743,8 +745,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/38061/large/ETH__Logo.png?1716440789",
     meta: {
-      poolId: "4e6cd326-72d5-4680-8d2f-3481d50e8bb1",
       provider: "DEFILLAMA",
+      poolId: "4e6cd326-72d5-4680-8d2f-3481d50e8bb1",
     },
   },
   {
@@ -765,7 +767,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/39124/large/200x200.png?1720629607",
-    meta: {},
+    meta: {
+      provider: "RENZO",
+    },
   },
   {
     addressInfo: "0xDcEe70654261AF21C44c093C300eD3Bb97b78192",
@@ -776,8 +780,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
     meta: {
-      poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
       provider: "DEFILLAMA",
+      poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
     },
   },
   {
@@ -789,8 +793,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/34509/large/stUSD_copie.png?1705288386",
     meta: {
-      poolId: "01e33a85-8bb6-4f30-a11b-7b2a8166e6b7",
       provider: "DEFILLAMA",
+      poolId: "01e33a85-8bb6-4f30-a11b-7b2a8166e6b7",
     },
   },
   {
@@ -802,8 +806,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/29733/large/OETH.png?1696528663",
     meta: {
-      poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
       provider: "DEFILLAMA",
+      poolId: "423681e3-4787-40ce-ae43-e9f67c5269b3",
     },
   },
   {
@@ -845,8 +849,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/39410/large/Steakhouse_logo-05.jpg?1722053893",
     meta: {
-      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       provider: "DEFILLAMA",
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
     },
   },
   {
@@ -858,8 +862,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/37798/large/ynETH-YieldNest.png?1715589941",
     meta: {
-      poolId: "44dd4153-aa9f-4616-9a88-e6803c86b995",
       provider: "DEFILLAMA",
+      poolId: "44dd4153-aa9f-4616-9a88-e6803c86b995",
     },
   },
   {
@@ -900,7 +904,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://raw.githubusercontent.com/marsfoundation/spark-docs/9b2ece7f8d6d1575549a88bb78654fe68707156f/.gitbook/assets/sUSDS-Coin.svg",
-    meta: {},
+    meta: {
+      provider: "SUSDS",
+    },
   },
   {
     addressInfo: "0x0d86883FAf4FfD7aEb116390af37746F45b6f378",
@@ -911,8 +917,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/38073/large/usd3%28200_x_200_px%29.png?1716449060",
     meta: {
-      poolId: "9c4e675e-7615-4d60-90ef-03d58c66b476",
       provider: "DEFILLAMA",
+      poolId: "9c4e675e-7615-4d60-90ef-03d58c66b476",
     },
   },
   {
@@ -1003,7 +1009,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/37839/large/mTBILL_token.png?1728417279",
-    meta: {},
+    meta: {
+      provider: "MIDAS",
+    },
   },
   {
     addressInfo: "0x35D8949372D46B7a3D5A56006AE77B215fc69bC0",
@@ -1014,8 +1022,9 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/39169/large/0x35d8949372d46b7a3d5a56006ae77b215fc69bc0.png?1720798057",
     meta: {
-      poolId: "55b0893b-1dbb-47fd-9912-5e439cd3d511",
       provider: "DEFILLAMA",
+      poolId: "55b0893b-1dbb-47fd-9912-5e439cd3d511",
+      doesNotAutoCompound: true,
     },
   },
   {
@@ -1066,7 +1075,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/38484/large/USDL-Token-200px.png?1725022887",
-    meta: {},
+    meta: {
+      provider: "USDL",
+    },
   },
   {
     addressInfo: "0x007115416AB6c266329a03B09a8aa39aC2eF7d9d",
@@ -1076,7 +1087,9 @@ export default [
     decimals: 18,
     logoURI:
       "https://coin-images.coingecko.com/coins/images/51055/large/mbtc.png?1729875716",
-    meta: {},
+    meta: {
+      provider: "MIDAS",
+    },
   },
   {
     addressInfo: "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
@@ -1156,8 +1169,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
     meta: {
-      poolId: "0aedb3f6-9298-49de-8bb0-2f611a4df784",
       provider: "DEFILLAMA",
+      poolId: "0aedb3f6-9298-49de-8bb0-2f611a4df784",
     },
   },
   {
@@ -1169,8 +1182,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/51712/large/scrvUSD200x200.png?1731899723",
     meta: {
-      poolId: "5fd328af-4203-471b-bd16-1705c726d926",
       provider: "DEFILLAMA",
+      poolId: "5fd328af-4203-471b-bd16-1705c726d926",
     },
   },
   {
@@ -1182,9 +1195,29 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/51623/large/ynETHx.png?1731659494",
     meta: {
-      poolId: "e3c59895-d6ad-4634-b257-f599f1a1a4a0",
       provider: "DEFILLAMA",
+      poolId: "e3c59895-d6ad-4634-b257-f599f1a1a4a0",
     },
+  },
+  {
+    addressInfo: "0x8238884Ec9668Ef77B90C6dfF4D1a9F4F4823BFe",
+    chainId: 1,
+    name: "OpenEden Open Dollar",
+    symbol: "USDO",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/53750/large/USDO_LOGO-white.png?1737181887",
+    meta: {},
+  },
+  {
+    addressInfo: "0xaD55aebc9b8c03FC43cd9f62260391c13c23e7c0",
+    chainId: 1,
+    name: "Compounding Open Dollar",
+    symbol: "CUSDO",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/53751/large/cUSDO_logo_white.png?1737182014",
+    meta: {},
   },
   {
     addressInfo: "0x4342B77fE3417Bcb09d0A4383301b0DC733C755B",
@@ -1260,8 +1293,8 @@ export default [
     logoURI:
       "https://raw.githubusercontent.com/balancer/tokenlists/c52e53a7599932b9063c6dc4383fbedc8e3e8ae8/src/assets/images/tokens/0x5fd13359ba15a84b76f7f87568309040176167cd.png",
     meta: {
-      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       provider: "DEFILLAMA",
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
     },
   },
   {
@@ -1273,8 +1306,8 @@ export default [
     logoURI:
       "https://raw.githubusercontent.com/balancer/tokenlists/c52e53a7599932b9063c6dc4383fbedc8e3e8ae8/src/assets/images/tokens/0x7a4effd87c2f3c55ca251080b1343b605f327e3a.png",
     meta: {
-      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       provider: "DEFILLAMA",
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
     },
   },
   {
@@ -1293,7 +1326,9 @@ export default [
     symbol: "wUSDL",
     decimals: 18,
     logoURI: "/tokens/1/0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559.png",
-    meta: {},
+    meta: {
+      provider: "USDL",
+    },
   },
   {
     addressInfo: "0x2a8c22E3b10036f3AEF5875d04f8441d4188b656",
@@ -1302,7 +1337,9 @@ export default [
     symbol: "mBASIS",
     decimals: 18,
     logoURI: "/tokens/1/0x2a8c22E3b10036f3AEF5875d04f8441d4188b656.png",
-    meta: {},
+    meta: {
+      provider: "MIDAS",
+    },
   },
   {
     addressInfo: "0x45054c6753b4Bce40C5d54418DabC20b070F85bE",
@@ -1325,6 +1362,30 @@ export default [
     },
   },
   {
+    addressInfo: "0x3eE841F47947FEFbE510366E4bbb49e145484195",
+    chainId: 1,
+    name: "Curve USR/USDC",
+    symbol: "USRUSDC-Curve-LP",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
+    meta: {
+      poolId: "6258d8cc-e618-4165-9385-7775168369b2",
+    },
+  },
+  {
+    addressInfo: "0x90455bd11Ce8a67C57d467e634Dc142b8e4105Aa",
+    chainId: 1,
+    name: "Curve cUSDO/USDC",
+    symbol: "cUSDOUSDC-Curve-LP",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/53751/large/cUSDO_logo_white.png?1737182014",
+    meta: {
+      poolId: "08d1f13b-5d65-42c5-863d-fcb447dcea75",
+    },
+  },
+  {
     addressInfo: "0xE00bd3Df25fb187d6ABBB620b3dfd19839947b81",
     chainId: 1,
     name: "PT Ethena sUSDE 27MAR2025",
@@ -1335,7 +1396,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce",
-      poolId: "6b28892f-0909-418d-b4bb-3106fff72449",
     },
   },
   {
@@ -1349,7 +1409,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xa0ab94debb3cc9a7ea77f3205ba4ab23276fed08",
-      poolId: "104f1152-d692-4e9f-9e79-db1dddd70891",
     },
   },
   {
@@ -1363,7 +1422,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xbbf399db59a845066aafce9ae55e68c505fa97b7",
-      poolId: "d4dfc52a-fcfb-46e0-856a-3c7006ee8821",
     },
   },
   {
@@ -1377,7 +1435,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x70b70ac0445c3ef04e314dfda6caafd825428221",
-      poolId: "05216992-5538-4c93-aecc-49398388464f",
     },
   },
   {
@@ -1390,7 +1447,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x36d3ca43ae7939645c306e26603ce16e39a89192",
-      poolId: "e093fa52-1f6a-4256-9e3e-a58490468c0e",
     },
   },
   {
@@ -1403,7 +1459,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xCaE62858DB831272A03768f5844cbe1B40bB381f",
-      poolId: "f7826423-8043-4799-b12a-83a68adc992d",
     },
   },
   {
@@ -1416,7 +1471,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x2C71Ead7ac9AE53D05F8664e77031d4F9ebA064B",
-      poolId: "eb7de368-b460-4638-bde1-50a129109b7b",
     },
   },
   {
@@ -1429,7 +1483,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xf8208fb52ba80075af09840a683143c22dc5b4dd",
-      poolId: "100c958b-ff1e-4218-a820-45333746a7e0",
     },
   },
   {
@@ -1442,7 +1495,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xf8208fb52ba80075af09840a683143c22dc5b4dd",
-      poolId: "a23e2b97-ff92-4ebf-8c7d-171cad8431ad",
     },
   },
   {
@@ -1455,7 +1507,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xeb4d3057738b9ed930f451be473c1ccc42988384",
-      poolId: "cd887bf9-7fc3-49e8-9cf7-6fc1098ed311",
     },
   },
   {
@@ -1468,7 +1519,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x64506968e80c9ed07bff60c8d9d57474effff2c9",
-      poolId: "b7d643b7-285d-4a76-9cbb-c51c5d9b6664",
     },
   },
   {
@@ -1481,7 +1531,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xafdc922d0059147486cc1f0f32e3a2354b0d35cc",
-      poolId: "74f696d4-1a0e-4a1a-8392-14b714ec3ce6",
     },
   },
   {
@@ -1494,7 +1543,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x048680f64d6dff1748ba6d9a01f578433787e24b",
-      poolId: "6c33c8f1-3c7f-4d1a-b554-76b4b575ae31",
     },
   },
   {
@@ -1508,7 +1556,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x6010676bc2534652ad1ef5fa8073dcf9ad7ebfbe",
-      poolId: "4b93db81-f182-4c73-86e3-5d30aafb0291",
     },
   },
   {
@@ -1522,19 +1569,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x84a50177a84dad50fdbf665dfbfb39914b52dff2",
-      poolId: "",
-    },
-  },
-  {
-    addressInfo: "0x3eE841F47947FEFbE510366E4bbb49e145484195",
-    chainId: 1,
-    name: "Curve USR/USDC",
-    symbol: "USRUSDC-Curve-LP",
-    decimals: 18,
-    logoURI:
-      "https://coin-images.coingecko.com/coins/images/40008/large/USR_LOGO.png?1725222638",
-    meta: {
-      poolId: "6258d8cc-e618-4165-9385-7775168369b2",
     },
   },
   {
@@ -1548,7 +1582,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xb162b764044697cf03617c2efbcb1f42e31e4766",
-      poolId: "606e53bf-ea88-4d4e-92b8-fcd6e97e4106",
     },
   },
   {
@@ -1562,7 +1595,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xb451a36c8b6b2eac77ad0737ba732818143a0e25",
-      poolId: "48f7ef7c-c08e-4b43-bc00-e2111c2fd65d",
     },
   },
   {
@@ -1576,7 +1608,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x353d0b2efb5b3a7987fb06d30ad6160522d08426",
-      poolId: "180d6922-83b2-4b0f-bb5b-6c1938cbc24c",
     },
   },
 ]
