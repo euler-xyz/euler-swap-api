@@ -22,7 +22,6 @@ const defaultRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          "conveyor",
           "uniswap",
         ],
       },

@@ -9,8 +9,8 @@ dependencies:
     specifier: 7.2.0
     version: 7.2.0(zod@3.23.8)
   '@balmy/sdk':
-    specifier: 0.4.8
-    version: 0.4.8(typescript@5.7.2)(zod@3.23.8)
+    specifier: 0.6.8
+    version: 0.6.8(typescript@5.7.2)(zod@3.23.8)
   '@uniswap/router-sdk':
     specifier: 1.15.0
     version: 1.15.0(hardhat@2.22.17)
@@ -129,8 +129,8 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@balmy/sdk@0.4.8(typescript@5.7.2)(zod@3.23.8):
-    resolution: {integrity: sha512-3Y9lj9RugqgL6+6KrI8Dx0goVnHlWuAzqjjmQx/2HtBaGHOBTGHfeFiBQClOJbIBDN+kfD8vFr86wGNPzMNV6g==}
+  /@balmy/sdk@0.6.8(typescript@5.7.2)(zod@3.23.8):
+    resolution: {integrity: sha512-cFKVDLKixkEZyk0/d5U7aVgYgBC3g9bvO4bjIPwb77l9hhWF0a2pwdpt4yiRkQ10hTd3qZ3WWt9KCBXqBHPQ0w==}
     dependencies:
       cross-fetch: 3.1.5
       crypto-js: 4.2.0
