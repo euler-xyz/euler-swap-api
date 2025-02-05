@@ -2,6 +2,7 @@ import { type ChainRoutingConfig, SwapperMode } from "../interface"
 import {
   StrategyBalmySDK,
   StrategyCombinedUniswap,
+  StrategyCurveLPNG,
   StrategyERC4626Wrapper,
   StrategyIdleCDOTranche,
   StrategyMidas,
@@ -18,6 +19,7 @@ const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
 const YNETHX_MAINNET = "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb"
 const IDLEAATRANCHEFASANARA_MAINNET =
   "0x45054c6753b4Bce40C5d54418DabC20b070F85bE"
+const CUSDOUSDC_CURVELP_MAINNET = "0x90455bd11Ce8a67C57d467e634Dc142b8e4105Aa"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -36,6 +38,10 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   {
     strategy: StrategyIdleCDOTranche.name(),
     match: { tokensInOrOut: [IDLEAATRANCHEFASANARA_MAINNET] },
+  },
+  {
+    strategy: StrategyCurveLPNG.name(),
+    match: { tokensInOrOut: [CUSDOUSDC_CURVELP_MAINNET] },
   },
   {
     strategy: StrategyERC4626Wrapper.name(),
