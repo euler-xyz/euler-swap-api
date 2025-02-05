@@ -1,5 +1,5 @@
 # Base image with corepack and pnpm enabled
-FROM 310118226683.dkr.ecr.eu-west-1.amazonaws.com/node:23.7.0-slim
+FROM 310118226683.dkr.ecr.eu-west-1.amazonaws.com/node:23.3.0-slim
 
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 # Setup doppler
