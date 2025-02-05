@@ -156,14 +156,13 @@ export class StrategyCurveLPNG {
     )
 
     const amountOutMin = applySlippage(amountOut, swapParams.slippage)
-
     const { swapMulticallItem: removeLiquidityMulticallItem } =
       encodeRemoveLiquidityOneCoinMulticallItem(
         swapParams,
         lpData.lp,
         assetIndex,
         swapParams.amount,
-        amountOutMin,
+        amountOut,
         swapParams.receiver,
       )
 
@@ -174,7 +173,7 @@ export class StrategyCurveLPNG {
       swapParams.chainId,
       swapParams.receiver,
       swapParams.accountOut,
-      amountOut,
+      amountOutMin,
       swapParams.deadline,
     )
 
@@ -286,7 +285,7 @@ export class StrategyCurveLPNG {
       amountIn: String(amountIn), // adjusted for accruing debt
       amountInMax: String(amountIn),
       amountOut: String(amountOut),
-      amountOutMin: String(amountOut),
+      amountOutMin: String(swapParams.amount),
       vaultIn: swapParams.vaultIn,
       receiver: swapParams.receiver,
       accountIn: swapParams.accountIn,
@@ -456,116 +455,7 @@ const encodeRemoveLiquidityOneCoinMulticallItem = (
   }
 }
 
-export async function encodeMint(
-  swapParams: SwapParams,
-  vault: Address,
-  amountOut: bigint,
-  receiver: Address,
-) {
-  const amountIn = await fetchPreviewMint(swapParams.chainId, vault, amountOut)
-
-  const abiItem = {
-    inputs: [
-      { name: "amount", type: "uint256" },
-      { name: "receiver", type: "address" },
-    ],
-    name: "mint",
-    stateMutability: "nonpayable",
-    type: "function",
-  }
-
-  const mintData = encodeFunctionData({
-    abi: [abiItem],
-    args: [amountOut, receiver],
-  })
-
-  const swapData = encodeAbiParameters(parseAbiParameters("address, bytes"), [
-    vault,
-    mintData,
-  ])
-
-  const swapperAmountOut =
-    swapParams.swapperMode === SwapperMode.EXACT_IN
-      ? 0n //ignored
-      : swapParams.swapperMode === SwapperMode.EXACT_OUT
-        ? amountOut
-        : swapParams.targetDebt
-
-  const swapMulticallItem = encodeSwapMulticallItem({
-    handler: SWAPPER_HANDLER_GENERIC,
-    mode: BigInt(swapParams.swapperMode),
-    account: swapParams.accountOut,
-    tokenIn: swapParams.tokenIn.addressInfo,
-    tokenOut: swapParams.tokenOut.addressInfo,
-    vaultIn: swapParams.vaultIn,
-    accountIn: swapParams.accountIn,
-    receiver: swapParams.receiver,
-    amountOut: swapperAmountOut,
-    data: swapData,
-  })
-
-  return {
-    amountIn,
-    amountOut,
-    swapMulticallItem,
-  }
-}
-
-export async function fetchPreviewRedeem(
-  chainId: number,
-  vault: Address,
-  amount: bigint,
-) {
-  const client = getViemClient(chainId)
-
-  const abiItem = {
-    name: "previewRedeem",
-    inputs: [{ name: "shares", type: "uint256" }],
-    outputs: [{ name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  }
-
-  const query = {
-    address: vault,
-    abi: [abiItem],
-    functionName: "previewRedeem",
-    args: [amount],
-  } as const
-
-  const data = (await client.readContract(query)) as bigint
-
-  return data
-}
-
-export async function fetchPreviewWithdraw(
-  chainId: number,
-  vault: Address,
-  amount: bigint,
-) {
-  const client = getViemClient(chainId)
-
-  const abiItem = {
-    name: "previewWithdraw",
-    inputs: [{ name: "assets", type: "uint256" }],
-    outputs: [{ name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  }
-
-  const query = {
-    address: vault,
-    abi: [abiItem],
-    functionName: "previewWithdraw",
-    args: [amount],
-  } as const
-
-  const data = (await client.readContract(query)) as bigint
-
-  return data
-}
-
-export async function fetchCalcTokenAmount(
+async function fetchCalcTokenAmount(
   chainId: number,
   lp: Address,
   amounts: bigint[],
@@ -596,7 +486,7 @@ export async function fetchCalcTokenAmount(
   return data
 }
 
-export async function fetchCalcWithdrawOneCoin(
+async function fetchCalcWithdrawOneCoin(
   chainId: number,
   lp: Address,
   amount: bigint,
@@ -620,33 +510,6 @@ export async function fetchCalcWithdrawOneCoin(
     abi: [abiItem],
     functionName: "calc_withdraw_one_coin",
     args: [amount, coinIndex],
-  } as const
-
-  const data = (await client.readContract(query)) as bigint
-
-  return data
-}
-
-export async function fetchPreviewMint(
-  chainId: number,
-  vault: Address,
-  amount: bigint,
-) {
-  const client = getViemClient(chainId)
-
-  const abiItem = {
-    name: "previewMint",
-    inputs: [{ name: "shares", type: "uint256" }],
-    outputs: [{ name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  }
-
-  const query = {
-    address: vault,
-    abi: [abiItem],
-    functionName: "previewMint",
-    args: [amount],
   } as const
 
   const data = (await client.readContract(query)) as bigint
