@@ -25,7 +25,7 @@ function loadPipeline(swapParams: SwapParams) {
   return routing.map((routingItem: RoutingItem) => {
     return new strategies[routingItem.strategy](
       routingItem.match,
-      routingItem?.config,
+      routingItem.config,
     )
   })
 }
@@ -36,8 +36,8 @@ export async function runPipeline(
   const pipeline = loadPipeline(swapParams)
 
   const allResults: StrategyResult[] = []
-  for (let i = 0; i < pipeline.length; i++) {
-    const result = await pipeline[i].findSwap(swapParams)
+  for (const strategy of pipeline) {
+    const result = await strategy.findSwap(swapParams)
     allResults.push(result)
     if (result.response) break
   }
