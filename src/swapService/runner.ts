@@ -58,6 +58,7 @@ export async function runPipeline(
     )
   }
 
+  // console.log('finalResult.response: ', JSON.stringify(finalResult.response, null, 2));
   return finalResult.response
 }
 

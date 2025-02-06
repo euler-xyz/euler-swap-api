@@ -15,7 +15,7 @@ import {
 } from "@uniswap/smart-order-router"
 import { Route, encodeRouteToPath } from "@uniswap/v3-sdk"
 import { ethers } from "ethers"
-import { type Hex, parseUnits } from "viem"
+import { type Hex, encodeAbiParameters, parseUnits } from "viem"
 import { SWAP_DEFAULT_DEADLINE } from "../config/constants"
 import { SwapperMode } from "../interface"
 import type { SwapParams, SwapQuote } from "../types"
@@ -100,9 +100,9 @@ export async function fetchUniswapQuote(
               ),
               tradeType === TradeType.EXACT_OUTPUT,
             )
-          : route.trade.routes[0].path.reduce(
-              (path, token) => path + token.wrapped.address.substring(2),
-              "0x",
+          : encodeAbiParameters(
+              [{ type: "address[]" }],
+              [route.trade.routes[0].path.map((t) => t.wrapped.address as Hex)],
             ),
       // quoteRequest: route?.methodParameters?.data,
       priceImpact: route.trade.priceImpact.toFixed(6),
@@ -124,7 +124,7 @@ export async function fetchUniswapQuote(
       amountIn,
       amountOut,
       data: data.path as Hex,
-      protocol: "Uniswap",
+      protocol: data.protocol,
     }
   } catch (e) {
     if (e instanceof RangeError) {
