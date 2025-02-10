@@ -436,9 +436,6 @@ export class StrategyBalmySDK {
     const bestQuote = await this.sdk.quoteService.getBestQuote({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {
-        choose: {
-          by: "most-swapped-accounting-for-gas",
-        },
         timeout: this.config.timeout || DEFAULT_TIMEOUT,
       },
     })

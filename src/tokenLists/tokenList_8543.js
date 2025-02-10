@@ -17,8 +17,8 @@ export default [
     decimals: 18,
     logoURI: "/tokens/8453/cbeth.png",
     meta: {
-      poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
       provider: "DEFILLAMA",
+      poolId: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
     },
   },
   {
@@ -57,8 +57,8 @@ export default [
     decimals: 18,
     logoURI: "/tokens/8453/wsteth.png",
     meta: {
-      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       provider: "DEFILLAMA",
+      poolId: "747c1d2a-c668-4682-b9f9-296708a3dd90",
     },
   },
   {
@@ -70,8 +70,8 @@ export default [
     logoURI:
       "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
     meta: {
-      poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
       provider: "DEFILLAMA",
+      poolId: "46bd2bdf-6d92-4066-b482-e885ee172264",
     },
   },
   {
@@ -138,7 +138,6 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0x727cebacfb10ffd353fc221d06a862b437ec1735",
-      poolId: "",
     },
   },
   {
@@ -152,7 +151,48 @@ export default [
     meta: {
       isPendlePT: true,
       pendleMarket: "0xe15578523937ed7f08e8f7a1fa8a021e07025a08",
-      poolId: "",
     },
+  },
+  {
+    addressInfo: "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+    chainId: 8453,
+    name: "sUSDS",
+    symbol: "sUSDS",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/marsfoundation/spark-docs/9b2ece7f8d6d1575549a88bb78654fe68707156f/.gitbook/assets/sUSDS-Coin.svg",
+    meta: {
+      provider: "SUSDS",
+    },
+  },
+  {
+    addressInfo: "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+    chainId: 1,
+    name: "USDS",
+    symbol: "USDS",
+    decimals: 18,
+    logoURI:
+      "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+    meta: {},
+  },
+  {
+    addressInfo: "0xa153Ad732F831a79b5575Fa02e793EC4E99181b0",
+    chainId: 8453,
+    name: "EUL",
+    symbol: "EUL",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    meta: {},
+  },
+  {
+    addressInfo: "0xE08e1f00D388E201e48842E53fA96195568e6813",
+    chainId: 8453,
+    name: "Reward EUL",
+    symbol: "rEUL",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    meta: {},
   },
 ]
