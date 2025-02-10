@@ -8,88 +8,90 @@ import {
   handleServiceResponse,
   validateRequest,
 } from "@/common/utils/httpHandlers"
-import { runPipeline } from "@/swapService/runner"
+import { findSwaps } from "@/swapService/runner"
 import type { SwapParams } from "@/swapService/types"
-import {
-  ApiError,
-  addInOutDeposits,
-  findToken,
-  getSwapper,
-} from "@/swapService/utils"
+import { ApiError, findToken, getSwapper } from "@/swapService/utils"
 import { StatusCodes } from "http-status-codes"
-import { InvalidAddressError, isHex } from "viem"
+import { InvalidAddressError } from "viem"
 import { z } from "zod"
 import {
   type SwapResponse,
+  type SwapResponseSingle,
   getSwapSchema,
   swapResponseSchema,
+  swapResponseSchemaSingle,
 } from "./swapModel"
 
 export const swapRegistry = new OpenAPIRegistry()
 export const swapRouter: Router = express.Router()
 
-swapRegistry.register("SwapQuote", swapResponseSchema)
+swapRegistry.register("SwapQuote", swapResponseSchemaSingle)
 swapRegistry.registerPath({
   method: "get",
   path: "/swap",
-  tags: ["Get swap quote"],
+  tags: ["Get the best swap quote"],
+  request: { query: getSwapSchema.shape.query },
+  responses: createApiResponse(swapResponseSchemaSingle, "Success"),
+})
+
+swapRegistry.register("SwapQuotes", swapResponseSchema)
+swapRegistry.registerPath({
+  method: "get",
+  path: "/swaps",
+  tags: ["Get swap quotes ordered from best to worst"],
   request: { query: getSwapSchema.shape.query },
   responses: createApiResponse(swapResponseSchema, "Success"),
 })
 
 swapRouter.get(
-  "/",
+  "/swap",
   validateRequest(getSwapSchema),
   async (req: Request, res: Response) => {
-    const serviceResponse = await findSwap(req)
-    console.log("===== END =====")
-    return handleServiceResponse(serviceResponse, res)
+    try {
+      const swaps = await findSwaps(parseRequest(req))
+      return handleServiceResponse(
+        ServiceResponse.success<SwapResponseSingle>(swaps[0]),
+        res,
+      )
+    } catch (error) {
+      return handleServiceResponse(createFailureResponse(req, error), res)
+    } finally {
+      console.log("===== END =====")
+    }
   },
 )
 
-async function findSwap(
-  req: Request,
-): Promise<ServiceResponse<SwapResponse | null>> {
-  try {
-    const swapParams = parseRequest(req)
-
-    let data = await runPipeline(swapParams)
-
-    // GLOBAL CHECKS
-    data = addInOutDeposits(swapParams, data)
-
-    // make sure verify item includes at least a function selector
-    if (
-      !isHex(data.verify.verifierData) ||
-      data.verify.verifierData.length < 10
-    )
-      throw new ApiError(
-        StatusCodes.INTERNAL_SERVER_ERROR,
-        "Verifier transaction is empty",
+swapRouter.get(
+  "/swaps",
+  validateRequest(getSwapSchema),
+  async (req: Request, res: Response) => {
+    try {
+      const swaps = await findSwaps(parseRequest(req))
+      return handleServiceResponse(
+        ServiceResponse.success<SwapResponse>(swaps),
+        res,
       )
-
-    return ServiceResponse.success<SwapResponse>(data)
-  } catch (error) {
-    console.log(
-      "error: ",
-      error.statusCode,
-      error.message,
-      error.errorMessage,
-      JSON.stringify(error.data),
-      req.url,
-    )
-    if (error instanceof ApiError) {
-      return ServiceResponse.failure(
-        error.message,
-        error.statusCode,
-        error.data,
-      )
+    } catch (error) {
+      return handleServiceResponse(createFailureResponse(req, error), res)
+    } finally {
+      console.log("===== END =====")
     }
-    return ServiceResponse.failure(
-      `${error}`,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-    )
+  },
+)
+
+function createFailureResponse(req: Request, error: any) {
+  console.log(
+    "error: ",
+    error.statusCode,
+    error.message,
+    error.errorMessage,
+    JSON.stringify(error.data),
+    req.url,
+  )
+  if (error instanceof ApiError) {
+    return ServiceResponse.failure(error.message, error.statusCode, error.data)
   }
+  return ServiceResponse.failure(`${error}`, StatusCodes.INTERNAL_SERVER_ERROR)
 }
 
 function parseRequest(request: Request): SwapParams {

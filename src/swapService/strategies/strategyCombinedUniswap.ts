@@ -177,7 +177,7 @@ export class StrategyCombinedUniswap {
         verify,
       }
 
-      result.response = combinedQuote
+      result.quotes = [combinedQuote]
     } catch (error) {
       result.error = error
     }

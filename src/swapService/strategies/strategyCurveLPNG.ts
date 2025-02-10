@@ -95,7 +95,7 @@ export class StrategyCurveLPNG {
                 asset: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.response = await this.exactInFromLPToAsset(swapParams)
+              result.quotes = [await this.exactInFromLPToAsset(swapParams)]
             } else {
               throw new Error("Not supported")
             }
@@ -106,7 +106,7 @@ export class StrategyCurveLPNG {
                 asset: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.response = await this.exactInFromAssetToLP(swapParams)
+              result.quotes = [await this.exactInFromAssetToLP(swapParams)]
             } else {
               throw new Error("Not supported")
             }
