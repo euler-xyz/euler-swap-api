@@ -3,6 +3,7 @@ import tokenList1 from "../../tokenLists/tokenList_1"
 import tokenList146 from "../../tokenLists/tokenList_146"
 import tokenList1923 from "../../tokenLists/tokenList_1923"
 import tokenList8453 from "../../tokenLists/tokenList_8543"
+import tokenList80094 from "../../tokenLists/tokenList_80094"
 
 export type TokenListItem = {
   addressInfo: Address
@@ -23,6 +24,7 @@ const cache: Record<number, TokenListItem[]> = {
   8453: tokenList8453 as TokenListItem[],
   1923: tokenList1923 as TokenListItem[],
   146: tokenList146 as TokenListItem[],
+  80094: tokenList80094 as TokenListItem[],
 }
 
 export default function getTokenList(chainId: number): TokenListItem[] {

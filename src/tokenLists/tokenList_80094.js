@@ -1,0 +1,22 @@
+export default [
+  {
+    addressInfo: "0x549943e04f40284185054145c6e4e9568c1d3241",
+    chainId: 80094,
+    name: "USDC.e",
+    symbol: "USDC.e",
+    decimals: 6,
+    logoURI:
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    meta: {},
+  },
+  {
+    addressInfo: "0x6969696969696969696969696969696969696969",
+    chainId: 80094,
+    name: "WBERA",
+    symbol: "WBERA",
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    meta: {},
+  },
+]

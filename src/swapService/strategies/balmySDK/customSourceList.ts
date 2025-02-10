@@ -4,6 +4,7 @@ import { CustomLiFiQuoteSource } from "./lifiQuoteSource"
 import { CustomNeptuneQuoteSource } from "./neptuneQuoteSource"
 import { CustomOdosQuoteSource } from "./odosQuoteSource"
 import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
+import { CustomOogaboogaQuoteSource } from "./oogaboogaQuoteSource"
 import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
 import { CustomPendleQuoteSource } from "./pendleQuoteSource"
 
@@ -19,6 +20,7 @@ const customSources = {
   "open-ocean": new CustomOpenOceanQuoteSource(),
   neptune: new CustomNeptuneQuoteSource(),
   odos: new CustomOdosQuoteSource(),
+  oogabooga: new CustomOogaboogaQuoteSource(),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {
