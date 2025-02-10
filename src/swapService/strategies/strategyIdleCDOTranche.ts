@@ -99,10 +99,11 @@ export class StrategyIdleCDOTranche {
               underlying: swapParams.tokenIn.addressInfo,
             })
           ) {
-            result.response =
-              await this.exactInFromUnderlyingToTranche(swapParams)
+            result.quotes = [
+              await this.exactInFromUnderlyingToTranche(swapParams),
+            ]
           } else {
-            result.response = await this.exactInFromAnyToTranche(swapParams)
+            result.quotes = [await this.exactInFromAnyToTranche(swapParams)]
           }
           break
         }

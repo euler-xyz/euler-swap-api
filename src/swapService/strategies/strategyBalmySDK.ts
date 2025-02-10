@@ -5,6 +5,7 @@ import {
   type QuoteResponse,
   type QuoteResponseWithTx,
   type SourceId,
+  type TimeString,
   buildSDK,
   getAllChains,
 } from "@balmy/sdk"
@@ -21,7 +22,11 @@ import {
   parseAbiParameters,
   parseUnits,
 } from "viem"
-import { type SwapApiResponseMulticallItem, SwapperMode } from "../interface"
+import {
+  SwapApiResponse,
+  type SwapApiResponseMulticallItem,
+  SwapperMode,
+} from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
 import {
   SWAPPER_HANDLER_GENERIC,
@@ -178,11 +183,11 @@ export class StrategyBalmySDK {
     try {
       switch (swapParams.swapperMode) {
         case SwapperMode.EXACT_IN: {
-          result.response = await this.exactIn(swapParams)
+          result.quotes = await this.exactIn(swapParams)
           break
         }
         case SwapperMode.TARGET_DEBT: {
-          result.response = await this.targetDebt(swapParams)
+          result.quotes = await this.targetDebt(swapParams)
           break
         }
         // case SwapperMode.EXACT_OUT:
@@ -198,16 +203,15 @@ export class StrategyBalmySDK {
   }
 
   async exactIn(swapParams: SwapParams) {
-    const bestQuoteWithTx = await this.#getBestSDKQuoteWithTx(swapParams)
-    const swapQuote = this.#getSwapQuoteFromSDKQuoteWithTx(
-      swapParams,
-      bestQuoteWithTx,
-    )
-    return buildApiResponseExactInputFromQuote(swapParams, swapQuote)
+    const quotes = await this.#getAllQuotesWithTxs(swapParams)
+    return quotes.map((q) => {
+      const swapQuote = this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, q)
+      return buildApiResponseExactInputFromQuote(swapParams, swapQuote)
+    })
   }
 
   async targetDebt(swapParams: SwapParams) {
-    let quote: SwapQuote | undefined = undefined
+    let quotes: SwapQuote[] | undefined = undefined
     let innerSwapParams: SwapParams
     if (this.config.tryExactOut && !swapParams.onlyFixedInputExactOut) {
       try {
@@ -216,75 +220,79 @@ export class StrategyBalmySDK {
           ...swapParams,
           receiver: swapParams.from,
         }
-        const quoteSDK = await this.#getBestSDKQuoteWithTx(innerSwapParams)
-        quote = this.#getSwapQuoteFromSDKQuoteWithTx(innerSwapParams, quoteSDK)
+        const sdkQuotes = await this.#getAllQuotesWithTxs(innerSwapParams)
+        quotes = sdkQuotes.map((q) =>
+          this.#getSwapQuoteFromSDKQuoteWithTx(innerSwapParams, q),
+        )
       } catch {}
     }
 
-    if (!quote && !this.config.onlyExactOut) {
+    if (!quotes && !this.config.onlyExactOut) {
       innerSwapParams = {
         ...swapParams,
         receiver: swapParams.from,
         swapperMode: SwapperMode.EXACT_IN,
       }
 
-      quote = await this.#binarySearchOverswapQuote(innerSwapParams)
+      quotes = [await this.#binarySearchOverswapQuote(innerSwapParams)]
     }
 
-    if (!quote) throw new Error("Quote not found")
+    if (!quotes) throw new Error("Quote not found")
 
-    const multicallItems: SwapApiResponseMulticallItem[] = []
+    return quotes.map((quote) => {
+      const multicallItems: SwapApiResponseMulticallItem[] = []
 
-    if (quote.allowanceTarget) {
+      if (quote.allowanceTarget) {
+        multicallItems.push(
+          encodeApproveMulticallItem(
+            swapParams.tokenIn.addressInfo,
+            quote.allowanceTarget,
+          ),
+        )
+      }
+
       multicallItems.push(
-        encodeApproveMulticallItem(
-          swapParams.tokenIn.addressInfo,
-          quote.allowanceTarget,
-        ),
+        encodeSwapMulticallItem({
+          handler: SWAPPER_HANDLER_GENERIC,
+          mode: BigInt(SwapperMode.TARGET_DEBT),
+          account: swapParams.accountOut,
+          tokenIn: swapParams.tokenIn.addressInfo,
+          tokenOut: swapParams.tokenOut.addressInfo,
+          vaultIn: swapParams.vaultIn,
+          accountIn: swapParams.accountIn,
+          receiver: swapParams.receiver,
+          amountOut: swapParams.targetDebt,
+          data: quote.data,
+        }),
       )
-    }
 
-    multicallItems.push(
-      encodeSwapMulticallItem({
-        handler: SWAPPER_HANDLER_GENERIC,
-        mode: BigInt(SwapperMode.TARGET_DEBT),
-        account: swapParams.accountOut,
-        tokenIn: swapParams.tokenIn.addressInfo,
-        tokenOut: swapParams.tokenOut.addressInfo,
+      const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+
+      const verify = buildApiResponseVerifyDebtMax(
+        swapParams.chainId,
+        swapParams.receiver,
+        swapParams.accountOut,
+        swapParams.targetDebt,
+        swapParams.deadline,
+      )
+
+      return {
+        amountIn: String(quote.amountIn),
+        amountInMax: String(quote.amountInMax),
+        amountOut: String(quote.amountOut),
+        amountOutMin: String(quote.amountOutMin),
         vaultIn: swapParams.vaultIn,
-        accountIn: swapParams.accountIn,
         receiver: swapParams.receiver,
-        amountOut: swapParams.targetDebt,
-        data: quote.data,
-      }),
-    )
-
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-
-    const verify = buildApiResponseVerifyDebtMax(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      swapParams.targetDebt,
-      swapParams.deadline,
-    )
-
-    return {
-      amountIn: String(quote.amountIn),
-      amountInMax: String(quote.amountInMax),
-      amountOut: String(quote.amountOut),
-      amountOutMin: String(quote.amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: quoteToRoute(quote),
-      swap,
-      verify,
-    }
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: swapParams.slippage,
+        route: quoteToRoute(quote),
+        swap,
+        verify,
+      }
+    })
   }
 
   async #binarySearchOverswapQuote(swapParams: SwapParams) {
@@ -292,7 +300,7 @@ export class StrategyBalmySDK {
       sp: SwapParams,
       sourcesFilter?: SourcesFilter,
     ) => {
-      const quote = await this.#getBestSDKQuote(sp, sourcesFilter)
+      const quote = (await this.#getAllQuotes(sp, sourcesFilter))[0]
       return {
         quote,
         amountTo: quote.minBuyAmount.amount,
@@ -436,32 +444,29 @@ export class StrategyBalmySDK {
   //     return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
   //   }
 
-  async #getBestSDKQuote(
+  async #getAllQuotesWithTxs(
     swapParams: SwapParams,
     sourcesFilter?: SourcesFilter,
   ) {
-    const bestQuote = await this.sdk.quoteService.getBestQuote({
+    const quotes = await this.sdk.quoteService.getAllQuotesWithTxs({
       request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
       config: {
-        timeout: this.config.timeout || DEFAULT_TIMEOUT,
+        timeout: (this.config.timeout as TimeString) || DEFAULT_TIMEOUT,
       },
     })
 
-    return bestQuote
+    return quotes
   }
 
-  async #getBestSDKQuoteWithTx(
-    swapParams: SwapParams,
-    sourcesFilter?: SourcesFilter,
-  ) {
-    const bestQuote = await this.#getBestSDKQuote(swapParams, sourcesFilter)
+  async #getAllQuotes(swapParams: SwapParams, sourcesFilter?: SourcesFilter) {
+    const quotes = await this.sdk.quoteService.getAllQuotes({
+      request: this.#getSDKQuoteFromSwapParams(swapParams, sourcesFilter),
+      config: {
+        timeout: (this.config.timeout as TimeString) || DEFAULT_TIMEOUT,
+      },
+    })
 
-    const bestQuoteWithTx = {
-      ...bestQuote,
-      tx: await this.#getTxForQuote(bestQuote),
-    }
-
-    return bestQuoteWithTx
+    return quotes
   }
 
   async #getTxForQuote(quote: QuoteResponse) {

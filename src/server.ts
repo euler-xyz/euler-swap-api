@@ -28,7 +28,7 @@ app.use(requestLogger)
 
 // Routes
 app.use("/health-check", healthCheckRouter)
-app.use("/swap", swapRouter)
+app.use(swapRouter)
 
 // Swagger UI
 app.use(openAPIRouter)

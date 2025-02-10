@@ -164,10 +164,11 @@ export class StrategyMidas {
                 mToken.paymentToken,
               )
             ) {
-              result.response =
-                await this.exactInFromMTokenToPaymentToken(swapParams)
+              result.quotes = [
+                await this.exactInFromMTokenToPaymentToken(swapParams),
+              ]
             } else {
-              result.response = await this.exactInFromMTokenToAny(swapParams)
+              result.quotes = [await this.exactInFromMTokenToAny(swapParams)]
             }
           } else {
             if (
@@ -176,10 +177,11 @@ export class StrategyMidas {
                 mToken.paymentToken,
               )
             ) {
-              result.response =
-                await this.exactInFromPaymentTokenToMToken(swapParams)
+              result.quotes = [
+                await this.exactInFromPaymentTokenToMToken(swapParams),
+              ]
             } else {
-              result.response = await this.exactInFromAnyToMToken(swapParams)
+              result.quotes = [await this.exactInFromAnyToMToken(swapParams)]
             }
           }
           break
@@ -192,10 +194,11 @@ export class StrategyMidas {
                 mToken.paymentToken,
               )
             ) {
-              result.response =
-                await this.targetDebtFromMTokenToPaymentToken(swapParams)
+              result.quotes = [
+                await this.targetDebtFromMTokenToPaymentToken(swapParams),
+              ]
             } else {
-              result.response = await this.targetDebtFromMTokenToAny(swapParams)
+              result.quotes = [await this.targetDebtFromMTokenToAny(swapParams)]
             }
           } else {
             if (
@@ -204,10 +207,11 @@ export class StrategyMidas {
                 mToken.paymentToken,
               )
             ) {
-              result.response =
-                await this.targetDebtFromPaymentTokenToMToken(swapParams)
+              result.quotes = [
+                await this.targetDebtFromPaymentTokenToMToken(swapParams),
+              ]
             } else {
-              result.response = await this.targetDebtFromAnyToMToken(swapParams)
+              result.quotes = [await this.targetDebtFromAnyToMToken(swapParams)]
             }
           }
           break

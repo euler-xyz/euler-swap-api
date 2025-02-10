@@ -44,5 +44,5 @@ export interface StrategyResult {
   match: boolean
   supports: boolean
   error?: unknown
-  response?: SwapApiResponse
+  quotes?: SwapApiResponse[]
 }
