@@ -1,4 +1,6 @@
+import { SwapResponse } from "@/api/routes/swap/swapModel"
 import { StatusCodes } from "http-status-codes"
+import { isHex } from "viem"
 import { getRoutingConfig } from "./config"
 import type {
   ChainRoutingConfig,
@@ -7,7 +9,7 @@ import type {
 } from "./interface"
 import { strategies } from "./strategies/index"
 import type { StrategyResult, SwapParams } from "./types"
-import { ApiError } from "./utils"
+import { ApiError, addInOutDeposits } from "./utils"
 
 function loadPipeline(swapParams: SwapParams) {
   let routing: ChainRoutingConfig
@@ -32,14 +34,14 @@ function loadPipeline(swapParams: SwapParams) {
 
 export async function runPipeline(
   swapParams: SwapParams,
-): Promise<SwapApiResponse> {
+): Promise<SwapApiResponse[]> {
   const pipeline = loadPipeline(swapParams)
 
   const allResults: StrategyResult[] = []
   for (const strategy of pipeline) {
     const result = await strategy.findSwap(swapParams)
     allResults.push(result)
-    if (result.response) break
+    if (result.quotes) break
   }
 
   console.log(allResults)
@@ -50,7 +52,7 @@ export async function runPipeline(
       StatusCodes.NOT_FOUND,
       "Pipeline empty or result not found",
     )
-  if (!finalResult.response) {
+  if (!finalResult.quotes || finalResult.quotes.length === 0) {
     throw new ApiError(
       StatusCodes.NOT_FOUND,
       "Swap quote not found",
@@ -58,11 +60,35 @@ export async function runPipeline(
     )
   }
 
-  // console.log(
-  //   "finalResult.response: ",
-  //   JSON.stringify(finalResult.response, null, 2),
-  // )
-  return finalResult.response
+  console.log("Best quote", {
+    amountIn: finalResult.quotes[0].amountIn,
+    amountInMax: finalResult.quotes[0].amountInMax,
+    amountOut: finalResult.quotes[0].amountOut,
+    amountOutMin: finalResult.quotes[0].amountOutMin,
+    route: finalResult.quotes[0].route,
+  })
+
+  // console.log('finalResult.quotes: ', JSON.stringify(finalResult.quotes, null, 2));
+  return finalResult.quotes
+}
+
+export async function findSwaps(swapParams: SwapParams) {
+  // GLOBAL CHECKS
+  let quotes = await runPipeline(swapParams)
+
+  // make sure verify item includes at least a function selector
+  quotes = quotes.filter(
+    (q) => isHex(q.verify.verifierData) && q.verify.verifierData.length >= 10,
+  )
+
+  if (quotes.length === 0)
+    throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Invalid quotes")
+
+  for (const quote of quotes) {
+    addInOutDeposits(swapParams, quote)
+  }
+
+  return quotes
 }
 
 // TODO timeouts on balmy

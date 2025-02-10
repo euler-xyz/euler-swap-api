@@ -130,10 +130,11 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.response =
-                await this.exactInFromVaultToUnderlying(swapParams)
+              result.quotes = [
+                await this.exactInFromVaultToUnderlying(swapParams),
+              ]
             } else {
-              result.response = await this.exactInFromVaultToAny(swapParams)
+              result.quotes = [await this.exactInFromVaultToAny(swapParams)]
             }
           } else {
             if (
@@ -142,10 +143,11 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.response =
-                await this.exactInFromUnderlyingToVault(swapParams)
+              result.quotes = [
+                await this.exactInFromUnderlyingToVault(swapParams),
+              ]
             } else {
-              result.response = await this.exactInFromAnyToVault(swapParams)
+              result.quotes = [await this.exactInFromAnyToVault(swapParams)]
             }
           }
           break
@@ -158,10 +160,11 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.response =
-                await this.targetDebtFromVaultToUnderlying(swapParams)
+              result.quotes = [
+                await this.targetDebtFromVaultToUnderlying(swapParams),
+              ]
             } else {
-              result.response = await this.targetDebtFromVaultToAny(swapParams) //test
+              result.quotes = [await this.targetDebtFromVaultToAny(swapParams)]
             }
           } else {
             if (
@@ -170,10 +173,11 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.response =
-                await this.targetDebtFromUnderlyingToVault(swapParams)
+              result.quotes = [
+                await this.targetDebtFromUnderlyingToVault(swapParams),
+              ]
             } else {
-              result.response = await this.targetDebtFromAnyToVault(swapParams)
+              result.quotes = [await this.targetDebtFromAnyToVault(swapParams)]
             }
           }
           break

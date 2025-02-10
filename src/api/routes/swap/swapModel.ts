@@ -6,6 +6,7 @@ import { z } from "zod"
 extendZodWithOpenApi(z)
 
 export type Meta = z.infer<typeof metaSchema>
+export type SwapResponseSingle = z.infer<typeof swapResponseSchemaSingle>
 export type SwapResponse = z.infer<typeof swapResponseSchema>
 
 const addressSchema = z
@@ -265,7 +266,7 @@ const getSwapSchema = z.object({
   }),
 })
 
-const swapResponseSchema = z.object({
+const swapResponseSchemaSingle = z.object({
   amountIn: z.string().openapi({
     description:
       "In exact output - the trade quote. In exact input - the exact sold amount",
@@ -320,4 +321,6 @@ const swapResponseSchema = z.object({
     .openapi({ description: "Swap route details" }),
 })
 
-export { getSwapSchema, swapResponseSchema }
+const swapResponseSchema = z.array(swapResponseSchemaSingle)
+
+export { getSwapSchema, swapResponseSchemaSingle, swapResponseSchema }
