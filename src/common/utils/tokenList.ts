@@ -1,9 +1,5 @@
+import fs from "node:fs"
 import type { Address } from "viem"
-import tokenList1 from "../../tokenLists/tokenList_1"
-import tokenList146 from "../../tokenLists/tokenList_146"
-import tokenList1923 from "../../tokenLists/tokenList_1923"
-import tokenList8453 from "../../tokenLists/tokenList_8543"
-import tokenList80094 from "../../tokenLists/tokenList_80094"
 
 export type TokenListItem = {
   addressInfo: Address
@@ -19,13 +15,19 @@ export type TokenListItem = {
   }
 }
 
-const cache: Record<number, TokenListItem[]> = {
-  1: tokenList1 as TokenListItem[],
-  8453: tokenList8453 as TokenListItem[],
-  1923: tokenList1923 as TokenListItem[],
-  146: tokenList146 as TokenListItem[],
-  80094: tokenList80094 as TokenListItem[],
-}
+const cache: Record<number, TokenListItem[]> = {}
+;(function buildCache() {
+  const dir = `${__dirname}/../../tokenLists`
+  const files = fs.readdirSync(dir)
+  for (const file of files) {
+    const match = file.match(/(\d+)/g)
+    if (!match) throw new Error("Invalid tokenlist file")
+    const chainId = Number(match[0])
+    cache[chainId] = JSON.parse(
+      fs.readFileSync(`${dir}/${file}`).toString(),
+    ) as TokenListItem[]
+  }
+})()
 
 export default function getTokenList(chainId: number): TokenListItem[] {
   return cache[chainId] || []
