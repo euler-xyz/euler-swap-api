@@ -23,6 +23,7 @@ const defaultRoutingConfig: ChainRoutingConfig = [
           "li-fi",
           "open-ocean",
           "uniswap",
+          "0x",
         ],
       },
     },

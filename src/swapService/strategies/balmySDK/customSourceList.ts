@@ -7,6 +7,7 @@ import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
 import { CustomOogaboogaQuoteSource } from "./oogaboogaQuoteSource"
 import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
 import { CustomPendleQuoteSource } from "./pendleQuoteSource"
+import { CustomUniswapQuoteSource } from "./uniswapQuoteSource"
 
 type ConstructorParameters = {
   providerService: IProviderService
@@ -21,6 +22,7 @@ const customSources = {
   neptune: new CustomNeptuneQuoteSource(),
   odos: new CustomOdosQuoteSource(),
   oogabooga: new CustomOogaboogaQuoteSource(),
+  uniswap: new CustomUniswapQuoteSource(),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {
