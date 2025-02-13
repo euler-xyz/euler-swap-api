@@ -145,5 +145,55 @@
       "isPendlePT": true,
       "pendleMarket": "0xe15578523937ed7f08e8f7a1fa8a021e07025a08"
     }
+  },
+  {
+    "addressInfo": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+    "chainId": 8453,
+    "name": "sUSDS",
+    "symbol": "sUSDS",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/marsfoundation/spark-docs/9b2ece7f8d6d1575549a88bb78654fe68707156f/.gitbook/assets/sUSDS-Coin.svg",
+    "meta": {
+      "provider": "SUSDS"
+    }
+  },
+  {
+    "addressInfo": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+    "chainId": 8453,
+    "name": "USDS",
+    "symbol": "USDS",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x7FcD174E80f264448ebeE8c88a7C4476AAF58Ea6",
+    "chainId": 1,
+    "name": "Wrapped Super OETH",
+    "symbol": "wsuperOETHb",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/39829/large/Wrapped_Super_OETH.png?1724208632",
+    "meta": {
+      "provider": "DEFILLAMA",
+      "poolId": "f388573e-5c0f-4dac-9f70-116a4aabaf17"
+    }
+  },
+  {
+    "addressInfo": "0xa153Ad732F831a79b5575Fa02e793EC4E99181b0",
+    "chainId": 8453,
+    "name": "EUL",
+    "symbol": "EUL",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0xE08e1f00D388E201e48842E53fA96195568e6813",
+    "chainId": 8453,
+    "name": "Reward EUL",
+    "symbol": "rEUL",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    "meta": {}
   }
 ]
