@@ -25,7 +25,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["pendle", "li-fi", "open-ocean"],
+        includeSources: ["pendle", "li-fi" /* "open-ocean" */],
       },
     },
     match: { isPendlePT: true },
@@ -35,7 +35,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["odos", "open-ocean", "uniswap"],
+        includeSources: ["odos", "uniswap" /* "open-ocean" */],
       },
     },
     match: {
@@ -53,7 +53,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
           "odos",
           "1inch",
           "li-fi",
-          "open-ocean",
+          // "open-ocean",
           // "conveyor",
           "uniswap",
         ],
