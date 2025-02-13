@@ -55,6 +55,13 @@ const defaultConfig: {
       asset: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       assetDustEVault: "0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8",
     },
+    {
+      chainId: 1,
+      protocol: "ynETH",
+      vault: "0x09db87A538BD693E9d08544577d5cCfAA6373A48",
+      asset: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      assetDustEVault: "0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8",
+    },
     // {
     //   chainId: 1,
     //   protocol: "sUSDS",
