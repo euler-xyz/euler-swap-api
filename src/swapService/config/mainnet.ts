@@ -15,7 +15,7 @@ const RLP_MAINNET = "0x4956b52aE2fF65D74CA2d61207523288e4528f96"
 const WUSDL_MAINNET = "0x7751E2F4b8ae93EF6B79d86419d42FE3295A4559"
 const PT_WSTUSR1740182579 = "0xd0097149aa4cc0d0e1fc99b8bd73fc17dc32c1e9"
 const PT_WSTUSR_27MAR2025_MAINNET = "0xA8c8861b5ccF8CCe0ade6811CD2A7A7d3222B0B8"
-// const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
+const USD0PLUSPLUS_MAINNET = "0x35d8949372d46b7a3d5a56006ae77b215fc69bc0"
 const YNETH_MAINNET = "0x09db87A538BD693E9d08544577d5cCfAA6373A48"
 const YNETHX_MAINNET = "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb"
 const IDLEAATRANCHEFASANARA_MAINNET =
@@ -60,7 +60,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["pendle", "li-fi" /* "open-ocean" */],
+        includeSources: ["pendle", "li-fi", "open-ocean"],
       },
     },
     match: { isPendlePT: true },
@@ -76,13 +76,25 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "odos",
           "1inch",
           "li-fi",
-          // "open-ocean",
+          "open-ocean",
           "uniswap",
         ],
       },
     },
     match: {
       tokensInOrOut: [WUSDL_MAINNET],
+    },
+  },
+  {
+    strategy: StrategyBalmySDK.name(),
+    config: {
+      sourcesFilter: {
+        includeSources: ["1inch"],
+      },
+    },
+    match: {
+      swapperModes: [SwapperMode.EXACT_IN],
+      tokensInOrOut: [USD0PLUSPLUS_MAINNET],
     },
   },
   // DEFAULTS
@@ -96,7 +108,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "odos",
           "1inch",
           "li-fi",
-          // "open-ocean",
+          "open-ocean",
           "uniswap",
         ],
       },
@@ -125,7 +137,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "odos",
           "1inch",
           "li-fi",
-          // "open-ocean",
+          "open-ocean",
           "uniswap",
         ],
       },
