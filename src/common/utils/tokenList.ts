@@ -17,7 +17,7 @@ export type TokenListItem = {
 
 const cache: Record<number, TokenListItem[]> = {}
 ;(function buildCache() {
-  const dir = `${__dirname}/../../tokenLists`
+  const dir = `${__dirname}/../tokenLists`
   const files = fs.readdirSync(dir)
   for (const file of files) {
     const match = file.match(/(\d+)/g)
