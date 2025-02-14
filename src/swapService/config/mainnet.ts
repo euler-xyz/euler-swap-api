@@ -6,6 +6,7 @@ import {
   StrategyERC4626Wrapper,
   StrategyIdleCDOTranche,
   StrategyMidas,
+  StrategyRedirectDepositWrapper,
   StrategyRepayWrapper,
 } from "../strategies"
 
@@ -21,6 +22,8 @@ const YNETHX_MAINNET = "0x657d9aba1dbb59e53f9f3ecaa878447dcfc96dcb"
 const IDLEAATRANCHEFASANARA_MAINNET =
   "0x45054c6753b4Bce40C5d54418DabC20b070F85bE"
 const CUSDOUSDC_CURVELP_MAINNET = "0x90455bd11Ce8a67C57d467e634Dc142b8e4105Aa"
+
+const USUAL_USD0_VAULT_MAINNET = "0xd001f0a15D272542687b2677BA627f48A4333b5d"
 
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
@@ -125,7 +128,13 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
   },
   // FALLBACKS
-
+  // If exact out for Usual's USD0 repay doesn't work, over swap with deposit to escrow
+  {
+    strategy: StrategyRedirectDepositWrapper.name(),
+    match: {
+      repayVaults: [USUAL_USD0_VAULT_MAINNET],
+    },
+  },
   // Binary search overswap for target  debt
   {
     strategy: StrategyBalmySDK.name(),

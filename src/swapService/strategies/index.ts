@@ -4,6 +4,7 @@ import { StrategyCurveLPNG } from "./strategyCurveLPNG"
 import { StrategyERC4626Wrapper } from "./strategyERC4626Wrapper"
 import { StrategyIdleCDOTranche } from "./strategyIdleCDOTranche"
 import { StrategyMidas } from "./strategyMidas"
+import { StrategyRedirectDepositWrapper } from "./strategyRedirectDepositWrapper"
 import { StrategyRepayWrapper } from "./strategyRepayWrapper"
 
 export {
@@ -14,6 +15,7 @@ export {
   StrategyERC4626Wrapper,
   StrategyIdleCDOTranche,
   StrategyCurveLPNG,
+  StrategyRedirectDepositWrapper,
 }
 
 export const strategies = {
@@ -24,4 +26,5 @@ export const strategies = {
   [StrategyERC4626Wrapper.name()]: StrategyERC4626Wrapper,
   [StrategyIdleCDOTranche.name()]: StrategyIdleCDOTranche,
   [StrategyCurveLPNG.name()]: StrategyCurveLPNG,
+  [StrategyRedirectDepositWrapper.name()]: StrategyRedirectDepositWrapper,
 }
