@@ -184,13 +184,12 @@ export class CustomPendleQuoteSource
     })
 
     if (!response.ok) {
-      failed(
-        PENDLE_METADATA,
-        chainId,
-        sellToken,
-        buyToken,
-        (await response.text()) || `Failed with status ${response.status}`,
-      )
+      const msg =
+        (await response.text()) || `Failed with status ${response.status}`
+
+      if (response.status === 400) console.log("[PENDLE ERROR]", msg, url)
+
+      failed(PENDLE_METADATA, chainId, sellToken, buyToken, msg)
     }
 
     const {

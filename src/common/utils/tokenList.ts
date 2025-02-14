@@ -17,8 +17,14 @@ export type TokenListItem = {
 
 const cache: Record<number, TokenListItem[]> = {}
 ;(function buildCache() {
-  const dir = `${__dirname}/../tokenLists`
-  const files = fs.readdirSync(dir)
+  let dir = `${__dirname}/../tokenLists`
+  let files
+  try {
+    files = fs.readdirSync(dir)
+  } catch {
+    dir = `${__dirname}/../../../tokenLists`
+    files = fs.readdirSync(dir)
+  }
   for (const file of files) {
     const match = file.match(/(\d+)/g)
     if (!match) throw new Error("Invalid tokenlist file")
