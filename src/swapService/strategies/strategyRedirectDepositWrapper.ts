@@ -27,7 +27,7 @@ const defaultConfig: {
       chainId: 1,
       vault: "0xd001f0a15D272542687b2677BA627f48A4333b5d",
       asset: "0x73A15FeD60Bf67631dC6cd7Bc5B6e8da8190aCF5",
-      assetDustEVault: "0xdEd27A6da244a5f3Ff74525A2cfaD4ed9E5B0957",
+      assetDustEVault: "0xB0465546E8D70E667d4a187F66eF959B1522cc77",
     },
   ],
 }
