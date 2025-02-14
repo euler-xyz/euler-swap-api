@@ -11,6 +11,9 @@ dependencies:
   '@balmy/sdk':
     specifier: 0.6.8
     version: 0.6.8(typescript@5.7.2)(zod@3.23.8)
+  '@berachain-foundation/berancer-sdk':
+    specifier: ^0.33.2
+    version: 0.33.2(typescript@5.7.2)(zod@3.23.8)
   '@uniswap/router-sdk':
     specifier: 1.15.0
     version: 1.15.0(hardhat@2.22.17)
@@ -142,6 +145,20 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - encoding
+      - typescript
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /@berachain-foundation/berancer-sdk@0.33.2(typescript@5.7.2)(zod@3.23.8):
+    resolution: {integrity: sha512-Ao5aU4JEAr9GvZahIpnKb0ciNKa3z0POriC5bDwcLO6t5o8S9CX3qni0mTP7F4AaUtIi5VweOsev+oVzRQh2qw==}
+    engines: {node: '>=18.x'}
+    dependencies:
+      decimal.js-light: 2.5.1
+      lodash.clonedeep: 4.5.0
+      viem: 2.21.54(typescript@5.7.2)(zod@3.23.8)
+    transitivePeerDependencies:
+      - bufferutil
       - typescript
       - utf-8-validate
       - zod
@@ -3852,6 +3869,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
+    dev: false
+
+  /lodash.clonedeep@4.5.0:
+    resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
     dev: false
 
   /lodash.sortby@4.7.0:

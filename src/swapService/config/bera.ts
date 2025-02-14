@@ -1,7 +1,7 @@
 import { type ChainRoutingConfig, SwapperMode } from "../interface"
 import { StrategyBalmySDK, StrategyRepayWrapper } from "../strategies"
 
-const defaultRoutingConfig: ChainRoutingConfig = [
+const beraRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
     strategy: StrategyRepayWrapper.name(),
@@ -15,20 +15,11 @@ const defaultRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: [
-          "kyberswap",
-          "paraswap",
-          "odos",
-          "1inch",
-          "li-fi",
-          "open-ocean",
-          "uniswap",
-          "0x",
-        ],
+        includeSources: ["oogabooga"],
       },
     },
     match: {},
   },
 ]
 
-export default defaultRoutingConfig
+export default beraRoutingConfig

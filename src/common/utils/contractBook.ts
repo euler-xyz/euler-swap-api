@@ -9,6 +9,8 @@ const contractBook: any = {
       [chains.polygon.id]: "0x3e43F3CE1C364722df6470381Fa1F15ffbFB37E3",
       [1923]: "0x05Eb1A647265D974a1B0A57206048312604Ac6C3",
       [146]: "0xbAf5B12c92711a3657DD4adA6b3C7801e83Bb56a",
+      [80094]: "0x4A35e6A872cf35623cd3fD07ebECEDFc0170D705",
+      [130]: "0x319E8ecd3BaB57fE684ca1aCfaB60c5603087B3A",
     },
   },
   swapVerifier: {
@@ -19,6 +21,8 @@ const contractBook: any = {
       [chains.polygon.id]: "0x50C5ca05E916459F32c517932f1b4D78fb11018F",
       [1923]: "0x392C1570b3Bf29B113944b759cAa9a9282DA12Fe",
       [146]: "0x003ef4048b45a5A79D4499aaBd52108B3Bc9209f",
+      [80094]: "0x6fFf8Ac4AB123B62FF5e92aBb9fF702DCBD6C939",
+      [130]: "0x7eaf8C22480129E5D7426e3A33880D7bE19B50a7",
     },
   },
 }

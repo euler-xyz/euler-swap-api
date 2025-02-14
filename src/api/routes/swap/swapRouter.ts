@@ -99,7 +99,7 @@ function parseRequest(request: Request): SwapParams {
     // TODO
     // if (!isSupportedChainId(validatedParams.chainId)) {
     //   throw new Error("Unsupported chainId")
-    // }
+    //  }
 
     const chainId = validatedParams.chainId
     const tokenIn = findToken(chainId, validatedParams.tokenIn)

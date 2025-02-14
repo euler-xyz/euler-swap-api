@@ -126,6 +126,12 @@ export class StrategyBalmySDK {
               apiKey: String(process.env.ODOS_API_KEY),
               referralCode: Number(process.env.ODOS_REFERRAL_CODE),
             },
+            oogabooga: {
+              apiKey: String(process.env.OOGABOOGA_API_KEY),
+            },
+            "0x": {
+              apiKey: String(process.env.OX_API_KEY),
+            },
           },
         },
       },

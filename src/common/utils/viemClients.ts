@@ -38,6 +38,7 @@ export const RPC_URLS: Record<number, string> = {
   [chains.arbitrum.id]: process.env.RPC_URL_42161 || "",
   [chains.base.id]: process.env.RPC_URL_8453 || "",
   [bartio.id]: process.env.RPC_URL_80084 || "",
+  [80094]: process.env.RPC_URL_80094 || "",
   [chains.foundry.id]: process.env.RPC_URL_31337 || "http://localhost:8545",
 } as const
 

@@ -26,6 +26,7 @@
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "7.2.0",
     "@balmy/sdk": "0.6.8",
+    "@berachain-foundation/berancer-sdk": "^0.33.2",
     "@uniswap/router-sdk": "1.15.0",
     "@uniswap/sdk-core": "6.1.1",
     "@uniswap/smart-order-router": "4.9.2",

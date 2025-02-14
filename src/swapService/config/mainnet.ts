@@ -126,7 +126,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
   },
   // FALLBACKS
 
-  // Binary search overswap for target debt
+  // Binary search overswap for target  debt
   {
     strategy: StrategyBalmySDK.name(),
     config: {
