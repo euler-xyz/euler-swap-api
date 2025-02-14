@@ -54,7 +54,6 @@ export async function fetchLiFiExactInQuote(
   })
 
   const url = `https://li.quest/v1/quote?${params.toString()}`
-  console.log("url: ", url)
   const requestHeaders = new Headers()
   if (process.env.LIFI_API_KEY)
     requestHeaders.set("x-lifi-api-key", process.env.LIFI_API_KEY)

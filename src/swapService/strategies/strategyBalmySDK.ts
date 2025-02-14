@@ -404,9 +404,7 @@ export class StrategyBalmySDK {
   //     } else {
   //       sourcesFilter = { excludeSources: BINARY_SEARCH_EXCLUDE_SOURCES }
   //     }
-  // console.log(11);
   //     const reverseQuote = await fetchQuote(reverseSwapParams, sourcesFilter)
-  //     console.log(22);
   //     const estimatedAmountIn = reverseQuote.amountTo
   //     if (estimatedAmountIn === 0n) throw new Error("quote not found")
 

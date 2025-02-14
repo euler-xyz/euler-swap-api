@@ -900,7 +900,6 @@ export async function fetchMTokenPrice(chainId: number, mToken: MTokenConfig) {
   if (!viemClients[chainId])
     throw new Error(`No client found for chainId ${chainId}`)
   const client = viemClients[chainId].extend(publicActions)
-  // console.log('viemClients: ', viemClients[1]);
 
   const fn = mToken.isChronicleOracle ? "latestAnswer" : "lastAnswer"
 

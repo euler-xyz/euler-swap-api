@@ -8,11 +8,11 @@ import {
   buildApiResponseSwap,
   buildApiResponseVerifyDebtMax,
   encodeDepositMulticallItem,
-  encodeRepayAndDepositMulticallItem,
   encodeRepayMulticallItem,
   encodeSwapMulticallItem,
   matchParams,
 } from "../utils"
+import { StrategyCombinedUniswap } from "./strategyCombinedUniswap"
 
 const defaultConfig: {
   supportedVaults: Array<{
@@ -69,7 +69,9 @@ export class StrategyRedirectDepositWrapper {
       const vaultData = this.getSupportedVault(swapParams.receiver)
       // remove itself from the routing and run the pipeline, directing output to Swapper
       const routing = getRoutingConfig(swapParams.chainId).filter(
-        (r) => r.strategy !== StrategyRedirectDepositWrapper.name(),
+        (r) =>
+          r.strategy !== StrategyRedirectDepositWrapper.name() &&
+          r.strategy !== StrategyCombinedUniswap.name(), // assuming the exact out didn't work, and this is a fallback
       )
 
       const innerSwapParams = {
@@ -93,12 +95,10 @@ export class StrategyRedirectDepositWrapper {
               mode: SwapperMode.EXACT_IN,
             }
 
-            console.log("exactInSwapItemArgs: ", exactInSwapItemArgs)
             const swapItem = encodeSwapMulticallItem(exactInSwapItemArgs)
             // if target debt is 0, encode repay(max) to repay all debt, otherwise use all of the available Swapper balance
             const repayAmount =
               swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
-            console.log("repayAmount: ", repayAmount === maxUint256)
             const repayItem = encodeRepayMulticallItem(
               vaultData.asset,
               swapParams.receiver,
@@ -133,7 +133,6 @@ export class StrategyRedirectDepositWrapper {
         debtMax,
         swapParams.deadline,
       )
-      console.log("swapParams.deadline: ", swapParams.deadline)
 
       result.response = {
         ...innerSwap,
