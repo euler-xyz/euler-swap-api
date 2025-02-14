@@ -6,6 +6,7 @@ import {
   StrategyERC4626Wrapper,
   StrategyIdleCDOTranche,
   StrategyMidas,
+  StrategyRedirectDepositWrapper,
   StrategyRepayWrapper,
 } from "../strategies"
 
@@ -22,6 +23,8 @@ const IDLEAATRANCHEFASANARA_MAINNET =
   "0x45054c6753b4Bce40C5d54418DabC20b070F85bE"
 const CUSDOUSDC_CURVELP_MAINNET = "0x90455bd11Ce8a67C57d467e634Dc142b8e4105Aa"
 
+const USUAL_USD0_VAULT_MAINNET = "0xd001f0a15D272542687b2677BA627f48A4333b5d"
+
 const mainnetRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
@@ -32,6 +35,12 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     },
   },
   // SPECIAL CASE TOKENS
+  {
+    strategy: StrategyRedirectDepositWrapper.name(),
+    match: {
+      repayVaults: [USUAL_USD0_VAULT_MAINNET],
+    },
+  },
   {
     strategy: StrategyMidas.name(),
     match: {}, // supports function will match mTokens
@@ -66,25 +75,25 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     match: { isPendlePT: true },
   },
   // USD0++ route without open-ocean and combined
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: [
-          "kyberswap",
-          // "paraswap",
-          "odos",
-          "1inch",
-          "li-fi",
-          // "open-ocean",
-          "uniswap",
-        ],
-      },
-    },
-    match: {
-      tokensInOrOut: [USD0PLUSPLUS_MAINNET],
-    },
-  },
+  // {
+  //   strategy: StrategyBalmySDK.name(),
+  //   config: {
+  //     sourcesFilter: {
+  //       includeSources: [
+  //         "kyberswap",
+  //         // "paraswap",
+  //         "odos",
+  //         "1inch",
+  //         "li-fi",
+  //         // "open-ocean",
+  //         "uniswap",
+  //       ],
+  //     },
+  //   },
+  //   match: {
+  //     tokensInOrOut: [USD0PLUSPLUS_MAINNET],
+  //   },
+  // },
   // WUSDL with paraswap
   {
     strategy: StrategyBalmySDK.name(),
