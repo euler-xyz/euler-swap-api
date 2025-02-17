@@ -3,6 +3,7 @@ import { LocalSourceList } from "@balmy/sdk/dist/services/quotes/source-lists/lo
 import { CustomLiFiQuoteSource } from "./lifiQuoteSource"
 import { CustomNeptuneQuoteSource } from "./neptuneQuoteSource"
 import { CustomOdosQuoteSource } from "./odosQuoteSource"
+import { CustomOkuQuoteSource } from "./okuQuoteSource"
 import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
 import { CustomOogaboogaQuoteSource } from "./oogaboogaQuoteSource"
 import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
@@ -23,6 +24,12 @@ const customSources = {
   odos: new CustomOdosQuoteSource(),
   oogabooga: new CustomOogaboogaQuoteSource(),
   uniswap: new CustomUniswapQuoteSource(),
+  oku_bob_icecreamswap: new CustomOkuQuoteSource(
+    "icecreamswap",
+    "IceCreamSwap",
+    [60808],
+  ),
+  oku_bob_uniswap: new CustomOkuQuoteSource("usor", "Uniswap", [60808]),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {

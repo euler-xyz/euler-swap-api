@@ -1,0 +1,20 @@
+[
+  {
+    "addressInfo": "0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3",
+    "chainId": 60808,
+    "name": "WBTC",
+    "symbol": "WBTC",
+    "decimals": 8,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0xA45d4121b3D47719FF57a947A9d961539Ba33204",
+    "chainId": 60808,
+    "name": "LBTC",
+    "symbol": "LBTC",
+    "decimals": 8,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    "meta": {}
+  }
+]
