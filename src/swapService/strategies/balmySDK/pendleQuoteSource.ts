@@ -165,7 +165,6 @@ export class CustomPendleQuoteSource
         Date.now() - soldOutCoolOff[`${buyToken}${chainId}`] <
         SOLD_OUT_COOL_OFF_TIME
       ) {
-        console.log("SOLD OUT")
         failed(
           PENDLE_METADATA,
           chainId,
