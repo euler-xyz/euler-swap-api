@@ -15,7 +15,11 @@ import {
   failed,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/utils"
 import qs from "qs"
-import { type Address, getAddress, isAddressEqual } from "viem"
+import { type Address, Hex, getAddress, isAddressEqual } from "viem"
+
+const soldOutCoolOff: Record<string, number> = {}
+
+const SOLD_OUT_COOL_OFF_TIME = 5 * 60 * 1000
 
 // https://api-v2.pendle.finance/core/docs#/Chains/ChainsController_getSupportedChainIds
 export const PENDLE_METADATA: QuoteSourceMetadata<PendleSupport> = {
@@ -157,6 +161,19 @@ export class CustomPendleQuoteSource
 
       url = `${getUrl()}/sdk/${chainId}/redeem?${queryString}`
     } else {
+      if (
+        Date.now() - soldOutCoolOff[`${buyToken}${chainId}`] <
+        SOLD_OUT_COOL_OFF_TIME
+      ) {
+        console.log("SOLD OUT")
+        failed(
+          PENDLE_METADATA,
+          chainId,
+          sellToken,
+          buyToken,
+          "Sold out cool off",
+        )
+      }
       // swap
       const queryParams = {
         receiver: recipient || takeFrom,
@@ -187,7 +204,12 @@ export class CustomPendleQuoteSource
       const msg =
         (await response.text()) || `Failed with status ${response.status}`
 
-      if (response.status === 400) console.log("[PENDLE ERROR]", msg, url)
+      if (response.status === 400) {
+        console.log("[PENDLE ERROR]", msg, url)
+        if (msg.includes("SY limit exceeded")) {
+          soldOutCoolOff[`${buyToken}${chainId}`] = Date.now()
+        }
+      }
 
       failed(PENDLE_METADATA, chainId, sellToken, buyToken, msg)
     }
