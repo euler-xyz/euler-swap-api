@@ -19,7 +19,7 @@ import { type Address, Hex, getAddress, isAddressEqual } from "viem"
 
 const soldOutCoolOff: Record<string, number> = {}
 
-const SOLD_OUT_COOL_OFF_TIME = 5 * 60 * 1000
+const SOLD_OUT_COOL_OFF_TIME = 60 * 60 * 1000
 
 // https://api-v2.pendle.finance/core/docs#/Chains/ChainsController_getSupportedChainIds
 export const PENDLE_METADATA: QuoteSourceMetadata<PendleSupport> = {
@@ -75,7 +75,6 @@ export class CustomPendleQuoteSource
     params: QuoteParams<PendleSupport, PendleConfig>,
   ): Promise<SourceQuoteResponse<PendleData>> {
     const { dstAmount, to, data } = await this.getQuote(params)
-
     const quote = {
       sellAmount: params.request.order.sellAmount,
       buyAmount: BigInt(dstAmount),
@@ -204,7 +203,7 @@ export class CustomPendleQuoteSource
         (await response.text()) || `Failed with status ${response.status}`
 
       if (response.status === 400) {
-        console.log("[PENDLE ERROR]", msg, url)
+        console.log("[PENDLE ERROR]", msg, swapParams.receiver, url)
         if (msg.includes("SY limit exceeded")) {
           soldOutCoolOff[`${buyToken}${chainId}`] = Date.now()
         }
