@@ -68,7 +68,7 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
   getMetadata() {
     return {
       ...OKU_METADATA,
-      name: `${OKU_METADATA.name} ${this.marketName}`,
+      // name: `${OKU_METADATA.name} ${this.marketName}`,
       supports: {
         ...OKU_METADATA.supports,
         chains: this.chains || OKU_METADATA.supports.chains,
