@@ -29,7 +29,7 @@ const customSources = {
     "IceCreamSwap",
     [60808],
   ),
-  oku_bob_uniswap: new CustomOkuQuoteSource("usor", "Uniswap", [60808]),
+  // oku_bob_uniswap: new CustomOkuQuoteSource("usor", "Uniswap", [60808]),
 }
 export class CustomSourceList extends LocalSourceList {
   constructor({ providerService, fetchService }: ConstructorParameters) {
