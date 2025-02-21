@@ -62,6 +62,20 @@ const defaultConfig: {
       asset: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
       assetDustEVault: "0xb3b36220fA7d12f7055dab5c9FD18E860e9a6bF8",
     },
+    {
+      chainId: 146,
+      protocol: "wstkscETH",
+      vault: "0xE8a41c62BB4d5863C6eadC96792cFE90A1f37C47",
+      asset: "0x455d5f11Fea33A8fa9D3e285930b478B6bF85265",
+      assetDustEVault: "0x57056B888527A9ca638CA06f2e194eF73a32CAFC",
+    },
+    {
+      chainId: 146,
+      protocol: "wstkscUSD",
+      vault: "0x9fb76f7ce5FCeAA2C42887ff441D46095E494206",
+      asset: "0x4D85bA8c3918359c78Ed09581E5bc7578ba932ba",
+      assetDustEVault: "0x911Af5Bf5b7dd0F83869Ba857eDfDC3dea8254C2",
+    },
     // {
     //   chainId: 1,
     //   protocol: "sUSDS",
@@ -238,6 +252,7 @@ export class StrategyERC4626Wrapper {
 
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
     const tokenIn = findToken(swapParams.chainId, vaultData.asset)
+    console.log("vaultData: ", vaultData)
     if (!tokenIn) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,

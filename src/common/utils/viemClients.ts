@@ -32,6 +32,31 @@ export const bartio = defineChain({
   },
 })
 
+const sonicnetwork = defineChain({
+  id: 146,
+  name: "Sonic",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Sonic",
+    symbol: "S",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.soniclabs.com"],
+      webSocket: ["wss://sonic-rpc.publicnode.com"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://sonicscan.org" },
+  },
+  contracts: {
+    multicall3: {
+      address: "0xcA11bde05977b3631167028862bE2a173976CA11",
+      blockCreated: 1,
+    },
+  },
+})
+
 export const RPC_URLS: Record<number, string> = {
   [chains.mainnet.id]: process.env.RPC_URL_1 || "",
   [chains.sepolia.id]: process.env.RPC_URL_11155111 || "",
@@ -39,6 +64,7 @@ export const RPC_URLS: Record<number, string> = {
   [chains.base.id]: process.env.RPC_URL_8453 || "",
   [bartio.id]: process.env.RPC_URL_80084 || "",
   [80094]: process.env.RPC_URL_80094 || "",
+  [146]: process.env.RPC_URL_146 || "",
   [chains.foundry.id]: process.env.RPC_URL_31337 || "http://localhost:8545",
 } as const
 
@@ -67,6 +93,10 @@ export const createClients = (): Record<number, Client<Transport, Chain>> => ({
     transport: http(RPC_URLS[chains.foundry.id]),
   }),
   [chains.arbitrum.id]: createChainConfig(chains.arbitrum),
+  [sonicnetwork.id]: createClient({
+    chain: sonicnetwork,
+    transport: http(RPC_URLS[sonicnetwork.id]),
+  }),
 })
 
 export const viemClients = createClients()
