@@ -70,6 +70,7 @@ const SUPPORTED_CHAINS: Record<
   [Chains.BLAST.chainId]: { chainKey: "blast" },
   [Chains.ROOTSTOCK.chainId]: { chainKey: "rootstock" },
   [Chains.MODE.chainId]: { chainKey: "mode" },
+  [146]: { chainKey: "sonic" },
 }
 
 const OPEN_OCEAN_METADATA: QuoteSourceMetadata<OpenOceanSupport> = {
