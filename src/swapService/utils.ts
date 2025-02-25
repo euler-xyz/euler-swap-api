@@ -478,15 +478,17 @@ export function encodeERC20TransferMulticallItem(
   return swapMulticallItem
 }
 
+export type BinarySearchInternalQuote = {
+  quote: any
+  amountTo: bigint
+}
 export async function binarySearchQuote(
   swapParams: SwapParams,
-  fetchQuote: (swapParams: SwapParams) => Promise<{
-    quote: any
-    amountTo: bigint
-  }>,
+  fetchQuote: (swapParams: SwapParams) => Promise<BinarySearchInternalQuote>,
   targetAmountTo: bigint,
   amountFrom: bigint,
   shouldContinue: (currentAmountTo: bigint) => boolean,
+  initialQuote?: BinarySearchInternalQuote,
 ) {
   let percentageChange = 10000n // 100% no change
   let cnt = 0
@@ -495,10 +497,12 @@ export async function binarySearchQuote(
 
   do {
     amountFrom = (amountFrom * percentageChange) / 10000n
-    ;({ quote, amountTo } = await fetchQuote({
-      ...swapParams,
-      amount: amountFrom,
-    }))
+    ;({ quote, amountTo } =
+      (cnt === 0 && initialQuote) ||
+      (await fetchQuote({
+        ...swapParams,
+        amount: amountFrom,
+      })))
 
     if (amountTo === 0n || targetAmountTo === 0n)
       throw new Error("Quote not found")
@@ -551,4 +555,13 @@ export function quoteToRoute(quote: SwapQuote): SwapRouteItem[] {
 
 export function isExactInRepay(swapParams: SwapParams) {
   return swapParams.swapperMode === SwapperMode.EXACT_IN && swapParams.isRepay
+}
+
+export function promiseWithTimeout(fn: any, timeoutSeconds: number) {
+  return Promise.race([
+    fn(),
+    new Promise((_, reject) =>
+      setTimeout(() => reject("Timeout"), timeoutSeconds * 1000),
+    ),
+  ])
 }

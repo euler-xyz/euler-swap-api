@@ -22,11 +22,8 @@ import {
   parseAbiParameters,
   parseUnits,
 } from "viem"
-import {
-  SwapApiResponse,
-  type SwapApiResponseMulticallItem,
-  SwapperMode,
-} from "../interface"
+import { BINARY_SEARCH_TIMEOUT_SECONDS } from "../config/constants"
+import { type SwapApiResponseMulticallItem, SwapperMode } from "../interface"
 import type { StrategyResult, SwapParams, SwapQuote } from "../types"
 import {
   SWAPPER_HANDLER_GENERIC,
@@ -40,6 +37,7 @@ import {
   encodeSwapMulticallItem,
   isExactInRepay,
   matchParams,
+  promiseWithTimeout,
   quoteToRoute,
 } from "../utils"
 import { CustomSourceList } from "./balmySDK/customSourceList"
@@ -48,7 +46,7 @@ import { TokenlistMetadataSource } from "./balmySDK/tokenlistMetadataSource"
 const DAO_MULTISIG = "0xcAD001c30E96765aC90307669d578219D4fb1DCe"
 const DEFAULT_TIMEOUT = "30000"
 // TODO config
-const BINARY_SEARCH_EXCLUDE_SOURCES = [] // paraswap is rate limited and fails if selected as best source for binary search
+const BINARY_SEARCH_EXCLUDE_SOURCES: any = [] // paraswap is rate limited and fails if selected as best source for binary search
 
 type SourcesFilter =
   | Either<
@@ -234,7 +232,7 @@ export class StrategyBalmySDK {
         swapperMode: SwapperMode.EXACT_IN,
       }
 
-      quotes = [await this.#binarySearchOverswapQuote(innerSwapParams)]
+      quotes = await this.#binarySearchOverswapQuote(innerSwapParams)
     }
 
     if (!quotes) throw new Error("Quote not found")
@@ -296,17 +294,6 @@ export class StrategyBalmySDK {
   }
 
   async #binarySearchOverswapQuote(swapParams: SwapParams) {
-    const fetchQuote = async (
-      sp: SwapParams,
-      sourcesFilter?: SourcesFilter,
-    ) => {
-      const quote = (await this.#getAllQuotes(sp, sourcesFilter))[0]
-      return {
-        quote,
-        amountTo: quote.minBuyAmount.amount,
-      }
-    }
-
     let sourcesFilter
     if (this.config.sourcesFilter?.includeSources) {
       sourcesFilter = {
@@ -330,13 +317,14 @@ export class StrategyBalmySDK {
       receiver: swapParams.from,
       isRepay: false,
     }
-    const { amountTo: unitAmountTo } = await fetchQuote(
+    const unitQuotes = await this.#getAllQuotes(
       {
         ...swapParamsExactIn,
         amount: parseUnits("1", swapParams.tokenIn.decimals),
       },
       sourcesFilter,
     )
+    const unitAmountTo = unitQuotes[0].minBuyAmount.amount
 
     const estimatedAmountIn = calculateEstimatedAmountFrom(
       unitAmountTo,
@@ -354,29 +342,51 @@ export class StrategyBalmySDK {
       currentAmountTo < overSwapTarget ||
       (currentAmountTo * 1000n) / overSwapTarget > 1005n
 
-    let bestSourceId: string
+    // single run to preselect sources
+    const initialQuotes = await this.#getAllQuotes({
+      ...swapParams,
+      amount: estimatedAmountIn,
+    })
 
-    const quote = await binarySearchQuote(
-      swapParams,
-      async (swapParams: SwapParams) => {
-        let bestSourceConfig
-        if (bestSourceId) {
-          bestSourceConfig = { includeSources: [bestSourceId] }
-        }
-        const q = await fetchQuote(swapParams, bestSourceConfig) // preselect single source to avoid oscilations
-        if (!bestSourceId) bestSourceId = q.quote.source.id
-        return q
-      },
-      overSwapTarget,
-      estimatedAmountIn,
-      shouldContinue,
+    const allSettled = await Promise.allSettled(
+      initialQuotes.map(async (initialQuote) =>
+        promiseWithTimeout(async () => {
+          const quote = await binarySearchQuote(
+            swapParams,
+            async (swapParams: SwapParams) => {
+              const result = await this.#getAllQuotes(swapParams, {
+                includeSources: [initialQuote.source.id],
+              })
+              return {
+                quote: result[0],
+                amountTo: result[0].minBuyAmount.amount,
+              }
+            },
+            overSwapTarget,
+            estimatedAmountIn,
+            shouldContinue,
+            {
+              quote: initialQuote,
+              amountTo: initialQuote.minBuyAmount.amount,
+            },
+          )
+
+          const quoteWithTx = {
+            ...quote,
+            tx: await this.#getTxForQuote(quote),
+          }
+
+          return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
+        }, BINARY_SEARCH_TIMEOUT_SECONDS),
+      ),
     )
-    const quoteWithTx = {
-      ...quote,
-      tx: await this.#getTxForQuote(quote),
-    }
 
-    return this.#getSwapQuoteFromSDKQuoteWithTx(swapParams, quoteWithTx)
+    const bestQuotes = allSettled
+      .filter((q) => q.status === "fulfilled")
+      .map((q) => q.value)
+    if (bestQuotes.length === 0) throw new Error("Quotes not found")
+
+    return bestQuotes
   }
 
   //   async #binarySearchOverswapQuote(swapParams: SwapParams) {

@@ -134,7 +134,7 @@ export class StrategyERC4626Wrapper {
                 await this.exactInFromVaultToUnderlying(swapParams),
               ]
             } else {
-              result.quotes = [await this.exactInFromVaultToAny(swapParams)]
+              result.quotes = await this.exactInFromVaultToAny(swapParams)
             }
           } else {
             if (
@@ -143,11 +143,10 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.quotes = [
-                await this.exactInFromUnderlyingToVault(swapParams),
-              ]
+              result.quotes =
+                await this.exactInFromUnderlyingToVault(swapParams)
             } else {
-              result.quotes = [await this.exactInFromAnyToVault(swapParams)]
+              result.quotes = await this.exactInFromAnyToVault(swapParams)
             }
           }
           break
@@ -160,11 +159,10 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.quotes = [
-                await this.targetDebtFromVaultToUnderlying(swapParams),
-              ]
+              result.quotes =
+                await this.targetDebtFromVaultToUnderlying(swapParams)
             } else {
-              result.quotes = [await this.targetDebtFromVaultToAny(swapParams)]
+              result.quotes = await this.targetDebtFromVaultToAny(swapParams)
             }
           } else {
             if (
@@ -173,11 +171,10 @@ export class StrategyERC4626Wrapper {
                 underlying: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.quotes = [
-                await this.targetDebtFromUnderlyingToVault(swapParams),
-              ]
+              result.quotes =
+                await this.targetDebtFromUnderlyingToVault(swapParams)
             } else {
-              result.quotes = [await this.targetDebtFromAnyToVault(swapParams)]
+              result.quotes = await this.targetDebtFromAnyToVault(swapParams)
             }
           }
           break
@@ -243,7 +240,7 @@ export class StrategyERC4626Wrapper {
 
   async exactInFromVaultToAny(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const {
       swapMulticallItem: redeemMulticallItem,
       amountOut: redeemAmountOut,
@@ -264,45 +261,47 @@ export class StrategyERC4626Wrapper {
       amount: redeemAmountOut,
     }
 
-    const innerSwap = await runPipeline(innerSwapParams)
+    const innerSwaps = await runPipeline(innerSwapParams)
 
-    const intermediateDustDepositMulticallItem = encodeDepositMulticallItem(
-      vaultData.asset,
-      vaultData.assetDustEVault,
-      5n, // avoid zero shares
-      swapParams.accountOut,
-    )
+    return innerSwaps.map((innerSwap) => {
+      const intermediateDustDepositMulticallItem = encodeDepositMulticallItem(
+        vaultData.asset,
+        vaultData.assetDustEVault,
+        5n, // avoid zero shares
+        swapParams.accountOut,
+      )
 
-    const multicallItems = [
-      redeemMulticallItem,
-      ...innerSwap.swap.multicallItems,
-      intermediateDustDepositMulticallItem,
-    ]
+      const multicallItems = [
+        redeemMulticallItem,
+        ...innerSwap.swap.multicallItems,
+        intermediateDustDepositMulticallItem,
+      ]
 
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-    const verify = innerSwap.verify
+      const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+      const verify = innerSwap.verify
 
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: innerSwap.amountOut,
-      amountOutMin: innerSwap.amountOutMin,
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
-      swap,
-      verify,
-    }
+      return {
+        amountIn: String(swapParams.amount),
+        amountInMax: String(swapParams.amount),
+        amountOut: innerSwap.amountOut,
+        amountOutMin: innerSwap.amountOutMin,
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: swapParams.slippage,
+        route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
+        swap,
+        verify,
+      }
+    })
   }
 
   async exactInFromUnderlyingToVault(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
 
     const amountOut = await fetchPreviewDeposit(
@@ -330,27 +329,29 @@ export class StrategyERC4626Wrapper {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(swapParams.amount),
+        amountInMax: String(swapParams.amount),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOutMin),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: swapParams.slippage,
+        route: [{ providerName: vaultData.protocol }],
+        swap,
+        verify,
+      },
+    ]
   }
 
   async exactInFromAnyToVault(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
     const tokenOut = findToken(swapParams.chainId, vaultData.asset)
     if (!tokenOut) throw new Error("Inner token not found")
@@ -360,61 +361,65 @@ export class StrategyERC4626Wrapper {
       receiver: swapParams.from,
     }
 
-    const innerSwap = await runPipeline(innerSwapParams)
-    const amountOut = await fetchPreviewDeposit(
-      swapParams.chainId,
-      vaultData.vault,
-      BigInt(innerSwap.amountOut),
-    )
-    const amountOutMin = await fetchPreviewDeposit(
-      swapParams.chainId,
-      vaultData.vault,
-      BigInt(innerSwap.amountOutMin),
-    )
+    const innerSwaps = await runPipeline(innerSwapParams)
+    return await Promise.all(
+      innerSwaps.map(async (innerSwap) => {
+        const amountOut = await fetchPreviewDeposit(
+          swapParams.chainId,
+          vaultData.vault,
+          BigInt(innerSwap.amountOut),
+        )
+        const amountOutMin = await fetchPreviewDeposit(
+          swapParams.chainId,
+          vaultData.vault,
+          BigInt(innerSwap.amountOutMin),
+        )
 
-    // Swapper.deposit will deposit all of available balance into the wrapper, and move the wrapper straight to receiver, where it can be skimmed
-    const swapperDepositMulticallItem = encodeDepositMulticallItem(
-      vaultData.asset,
-      vaultData.vault,
-      0n,
-      swapParams.receiver,
+        // Swapper.deposit will deposit all of available balance into the wrapper, and move the wrapper straight to receiver, where it can be skimmed
+        const swapperDepositMulticallItem = encodeDepositMulticallItem(
+          vaultData.asset,
+          vaultData.vault,
+          0n,
+          swapParams.receiver,
+        )
+
+        const multicallItems = [
+          ...innerSwap.swap.multicallItems,
+          swapperDepositMulticallItem,
+        ]
+
+        const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+        const verify = buildApiResponseVerifySkimMin(
+          swapParams.chainId,
+          swapParams.receiver,
+          swapParams.accountOut,
+          amountOutMin,
+          swapParams.deadline,
+        )
+
+        return {
+          amountIn: String(swapParams.amount),
+          amountInMax: String(swapParams.amount),
+          amountOut: String(amountOut),
+          amountOutMin: String(amountOutMin),
+          vaultIn: swapParams.vaultIn,
+          receiver: swapParams.receiver,
+          accountIn: swapParams.accountIn,
+          accountOut: swapParams.accountOut,
+          tokenIn: swapParams.tokenIn,
+          tokenOut: swapParams.tokenOut,
+          slippage: swapParams.slippage,
+          route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
+          swap,
+          verify,
+        }
+      }),
     )
-
-    const multicallItems = [
-      ...innerSwap.swap.multicallItems,
-      swapperDepositMulticallItem,
-    ]
-
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-    const verify = buildApiResponseVerifySkimMin(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      amountOutMin,
-      swapParams.deadline,
-    )
-
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerSwap.route],
-      swap,
-      verify,
-    }
   }
 
   async targetDebtFromVaultToUnderlying(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     // TODO expects dust - add to dust list
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
     const withdrawAmount = adjustForInterest(swapParams.amount)
@@ -441,27 +446,29 @@ export class StrategyERC4626Wrapper {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(amountIn), // adjusted for accruing debt
-      amountInMax: String(amountIn),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOut),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: 0,
-      route: [{ providerName: vaultData.protocol }],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(amountIn), // adjusted for accruing debt
+        amountInMax: String(amountIn),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOut),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: 0,
+        route: [{ providerName: vaultData.protocol }],
+        swap,
+        verify,
+      },
+    ]
   }
 
   async targetDebtFromVaultToAny(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     // TODO expects dust out - add to dust list
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
     const tokenIn = findToken(swapParams.chainId, vaultData.asset)
@@ -473,59 +480,63 @@ export class StrategyERC4626Wrapper {
       onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
 
-    const innerQuote = await runPipeline(innerSwapParams)
+    const innerQuotes = await runPipeline(innerSwapParams)
 
-    const withdrawSwapParams = {
-      ...swapParams,
-      swapperMode: SwapperMode.EXACT_IN, // change to exact in, otherwise multicall item will be target debt and will attempt a repay
-    }
-    const {
-      swapMulticallItem: withdrawMulticallItem,
-      amountIn: withdrawAmountIn,
-    } = await encodeWithdraw(
-      withdrawSwapParams,
-      vaultData.vault,
-      BigInt(innerQuote.amountIn),
-      swapParams.from,
+    return await Promise.all(
+      innerQuotes.map(async (innerQuote) => {
+        const withdrawSwapParams = {
+          ...swapParams,
+          swapperMode: SwapperMode.EXACT_IN, // change to exact in, otherwise multicall item will be target debt and will attempt a repay
+        }
+        const {
+          swapMulticallItem: withdrawMulticallItem,
+          amountIn: withdrawAmountIn,
+        } = await encodeWithdraw(
+          withdrawSwapParams,
+          vaultData.vault,
+          BigInt(innerQuote.amountIn),
+          swapParams.from,
+        )
+
+        // repay or exact out will return unused input, which is the intermediate asset
+        const multicallItems = [
+          withdrawMulticallItem,
+          ...innerQuote.swap.multicallItems,
+        ]
+
+        const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+
+        const verify = buildApiResponseVerifyDebtMax(
+          swapParams.chainId,
+          swapParams.receiver,
+          swapParams.accountOut,
+          swapParams.targetDebt,
+          swapParams.deadline,
+        )
+
+        return {
+          amountIn: String(withdrawAmountIn),
+          amountInMax: String(withdrawAmountIn),
+          amountOut: String(innerQuote.amountOut),
+          amountOutMin: String(innerQuote.amountOutMin),
+          vaultIn: swapParams.vaultIn,
+          receiver: swapParams.receiver,
+          accountIn: swapParams.accountIn,
+          accountOut: swapParams.accountOut,
+          tokenIn: swapParams.tokenIn,
+          tokenOut: swapParams.tokenOut,
+          slippage: swapParams.slippage,
+          route: [{ providerName: vaultData.protocol }, ...innerQuote.route],
+          swap,
+          verify,
+        }
+      }),
     )
-
-    // repay or exact out will return unused input, which is the intermediate asset
-    const multicallItems = [
-      withdrawMulticallItem,
-      ...innerQuote.swap.multicallItems,
-    ]
-
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-
-    const verify = buildApiResponseVerifyDebtMax(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      swapParams.targetDebt,
-      swapParams.deadline,
-    )
-
-    return {
-      amountIn: String(withdrawAmountIn),
-      amountInMax: String(withdrawAmountIn),
-      amountOut: String(innerQuote.amountOut),
-      amountOutMin: String(innerQuote.amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [{ providerName: vaultData.protocol }, ...innerQuote.route],
-      swap,
-      verify,
-    }
   }
 
   async targetDebtFromUnderlyingToVault(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
 
     const mintAmount = adjustForInterest(swapParams.amount)
@@ -554,27 +565,29 @@ export class StrategyERC4626Wrapper {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(amountIn),
-      amountInMax: String(adjustForInterest(amountIn)), // compensate for intrinsic interest accrued in the vault (tokenIn)
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOut),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: 0,
-      route: [{ providerName: vaultData.protocol }],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(amountIn),
+        amountInMax: String(adjustForInterest(amountIn)), // compensate for intrinsic interest accrued in the vault (tokenIn)
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOut),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: 0,
+        route: [{ providerName: vaultData.protocol }],
+        swap,
+        verify,
+      },
+    ]
   }
 
   async targetDebtFromAnyToVault(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const vaultData = this.getSupportedVault(swapParams.tokenOut.addressInfo)
 
     const mintAmount = adjustForInterest(swapParams.amount)
@@ -607,49 +620,51 @@ export class StrategyERC4626Wrapper {
       onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
     }
 
-    const innerQuote = await runPipeline(innerSwapParams)
+    const innerQuotes = await runPipeline(innerSwapParams)
 
-    // re-encode inner swap from target debt to exact out so that repay is not executed before mint TODO fix with exact out support in all strategies
-    const innerSwapItems = innerQuote.swap.multicallItems.map((item) => {
-      if (item.functionName !== "swap") return item
+    return innerQuotes.map((innerQuote) => {
+      // re-encode inner swap from target debt to exact out so that repay is not executed before mint TODO fix with exact out support in all strategies
+      const innerSwapItems = innerQuote.swap.multicallItems.map((item) => {
+        if (item.functionName !== "swap") return item
 
-      const newItem = encodeSwapMulticallItem({
-        ...item.args[0],
-        mode: BigInt(SwapperMode.EXACT_OUT),
+        const newItem = encodeSwapMulticallItem({
+          ...item.args[0],
+          mode: BigInt(SwapperMode.EXACT_OUT),
+        })
+
+        return newItem
       })
 
-      return newItem
+      // repay is done through mint item, which will return unused input, which is the intermediate asset
+      const multicallItems = [...innerSwapItems, mintMulticallItem]
+
+      const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+
+      const verify = buildApiResponseVerifyDebtMax(
+        swapParams.chainId,
+        swapParams.receiver,
+        swapParams.accountOut,
+        swapParams.targetDebt,
+        swapParams.deadline,
+      )
+
+      return {
+        amountIn: String(innerQuote.amountIn),
+        amountInMax: String(innerQuote.amountInMax),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOut),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: swapParams.slippage,
+        route: [...innerQuote.route, { providerName: vaultData.protocol }],
+        swap,
+        verify,
+      }
     })
-
-    // repay is done through mint item, which will return unused input, which is the intermediate asset
-    const multicallItems = [...innerSwapItems, mintMulticallItem]
-
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-
-    const verify = buildApiResponseVerifyDebtMax(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      swapParams.targetDebt,
-      swapParams.deadline,
-    )
-
-    return {
-      amountIn: String(innerQuote.amountIn),
-      amountInMax: String(innerQuote.amountInMax),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOut),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [...innerQuote.route, { providerName: vaultData.protocol }],
-      swap,
-      verify,
-    }
   }
 
   isSupportedVault(vault: Address) {

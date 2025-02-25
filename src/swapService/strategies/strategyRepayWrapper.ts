@@ -43,50 +43,52 @@ export class StrategyRepayWrapper {
         receiver: swapParams.from,
       }
 
-      const innerSwap = await runPipeline(innerSwapParams)
+      const innerSwaps = await runPipeline(innerSwapParams)
 
-      const repayAndDepositMulticallItem = encodeRepayAndDepositMulticallItem(
-        swapParams.tokenOut.addressInfo,
-        swapParams.receiver,
-        maxUint256 - 1n, // this will set repay amount to available balance in the swapper. If it's more than debt, the tx will revert
-        swapParams.accountOut,
-      )
+      result.quotes = innerSwaps.map((innerSwap) => {
+        const repayAndDepositMulticallItem = encodeRepayAndDepositMulticallItem(
+          swapParams.tokenOut.addressInfo,
+          swapParams.receiver,
+          maxUint256 - 1n, // this will set repay amount to available balance in the swapper. If it's more than debt, the tx will revert
+          swapParams.accountOut,
+        )
 
-      const multicallItems = [
-        ...innerSwap.swap.multicallItems,
-        repayAndDepositMulticallItem,
-      ]
+        const multicallItems = [
+          ...innerSwap.swap.multicallItems,
+          repayAndDepositMulticallItem,
+        ]
 
-      const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+        const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
-      let debtMax = swapParams.currentDebt - BigInt(innerSwap.amountOutMin)
-      if (debtMax < 0n) debtMax = 0n
-      debtMax = adjustForInterest(debtMax)
+        let debtMax = swapParams.currentDebt - BigInt(innerSwap.amountOutMin)
+        if (debtMax < 0n) debtMax = 0n
+        debtMax = adjustForInterest(debtMax)
 
-      const verify = buildApiResponseVerifyDebtMax(
-        swapParams.chainId,
-        swapParams.receiver,
-        swapParams.accountOut,
-        debtMax,
-        swapParams.deadline,
-      )
+        const verify = buildApiResponseVerifyDebtMax(
+          swapParams.chainId,
+          swapParams.receiver,
+          swapParams.accountOut,
+          debtMax,
+          swapParams.deadline,
+        )
 
-      result.response = {
-        amountIn: String(swapParams.amount),
-        amountInMax: String(swapParams.amount),
-        amountOut: innerSwap.amountOut,
-        amountOutMin: innerSwap.amountOutMin,
-        vaultIn: swapParams.vaultIn,
-        receiver: swapParams.receiver,
-        accountIn: swapParams.accountIn,
-        accountOut: swapParams.accountOut,
-        tokenIn: swapParams.tokenIn,
-        tokenOut: swapParams.tokenOut,
-        slippage: swapParams.slippage,
-        route: innerSwap.route,
-        swap,
-        verify,
-      }
+        return {
+          amountIn: String(swapParams.amount),
+          amountInMax: String(swapParams.amount),
+          amountOut: innerSwap.amountOut,
+          amountOutMin: innerSwap.amountOutMin,
+          vaultIn: swapParams.vaultIn,
+          receiver: swapParams.receiver,
+          accountIn: swapParams.accountIn,
+          accountOut: swapParams.accountOut,
+          tokenIn: swapParams.tokenIn,
+          tokenOut: swapParams.tokenOut,
+          slippage: swapParams.slippage,
+          route: innerSwap.route,
+          swap,
+          verify,
+        }
+      })
     } catch (error) {
       result.error = error
     }
