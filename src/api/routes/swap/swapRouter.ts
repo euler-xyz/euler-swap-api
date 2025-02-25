@@ -56,7 +56,7 @@ swapRouter.get(
     } catch (error) {
       return handleServiceResponse(createFailureResponse(req, error), res)
     } finally {
-      console.log("===== END =====")
+      console.log("===== SWAP END =====")
     }
   },
 )
@@ -74,7 +74,7 @@ swapRouter.get(
     } catch (error) {
       return handleServiceResponse(createFailureResponse(req, error), res)
     } finally {
-      console.log("===== END =====")
+      console.log("===== SWAPS END =====")
     }
   },
 )
