@@ -99,11 +99,10 @@ export class StrategyIdleCDOTranche {
               underlying: swapParams.tokenIn.addressInfo,
             })
           ) {
-            result.quotes = [
-              await this.exactInFromUnderlyingToTranche(swapParams),
-            ]
+            result.quotes =
+              await this.exactInFromUnderlyingToTranche(swapParams)
           } else {
-            result.quotes = [await this.exactInFromAnyToTranche(swapParams)]
+            result.quotes = await this.exactInFromAnyToTranche(swapParams)
           }
           break
         }
@@ -121,7 +120,7 @@ export class StrategyIdleCDOTranche {
 
   async exactInFromUnderlyingToTranche(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const trancheData = this.getSupportedTranche(
       swapParams.tokenOut.addressInfo,
     )
@@ -151,27 +150,29 @@ export class StrategyIdleCDOTranche {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: 0,
-      route: [PROTOCOL],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(swapParams.amount),
+        amountInMax: String(swapParams.amount),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOutMin),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: 0,
+        route: [PROTOCOL],
+        swap,
+        verify,
+      },
+    ]
   }
 
   async exactInFromAnyToTranche(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const trancheData = this.getSupportedTranche(
       swapParams.tokenOut.addressInfo,
     )
@@ -182,50 +183,54 @@ export class StrategyIdleCDOTranche {
       tokenOut,
       receiver: swapParams.from,
     }
-    const innerSwap = await runPipeline(innerSwapParams)
+    const innerSwaps = await runPipeline(innerSwapParams)
 
-    const amountOut = await this.getDepositAmountOut(
-      swapParams.chainId,
-      trancheData.aaTranche,
-      BigInt(innerSwap.amountOut),
+    return Promise.all(
+      innerSwaps.map(async (innerSwap) => {
+        const amountOut = await this.getDepositAmountOut(
+          swapParams.chainId,
+          trancheData.aaTranche,
+          BigInt(innerSwap.amountOut),
+        )
+        const amountOutMin = applySlippage(amountOut, swapParams.slippage)
+
+        const swapHandlerMulticallItem =
+          await this.encodeSwapToTrancheSwapMulticallItem(
+            trancheData.aaTranche,
+            swapParams,
+            maxUint256, // this will deposit everything that was bought in the inner swapllol
+          )
+
+        const multicallItems = [
+          ...innerSwap.swap.multicallItems,
+          swapHandlerMulticallItem,
+        ]
+        const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+        const verify = buildApiResponseVerifySkimMin(
+          swapParams.chainId,
+          swapParams.receiver,
+          swapParams.accountOut,
+          amountOutMin,
+          swapParams.deadline,
+        )
+        return {
+          amountIn: String(swapParams.amount),
+          amountInMax: String(swapParams.amount),
+          amountOut: String(amountOut),
+          amountOutMin: String(amountOutMin),
+          vaultIn: swapParams.vaultIn,
+          receiver: swapParams.receiver,
+          accountIn: swapParams.accountIn,
+          accountOut: swapParams.accountOut,
+          tokenIn: swapParams.tokenIn,
+          tokenOut: swapParams.tokenOut,
+          slippage: swapParams.slippage,
+          route: [PROTOCOL, ...innerSwap.route],
+          swap,
+          verify,
+        }
+      }),
     )
-    const amountOutMin = applySlippage(amountOut, swapParams.slippage)
-
-    const swapHandlerMulticallItem =
-      await this.encodeSwapToTrancheSwapMulticallItem(
-        trancheData.aaTranche,
-        swapParams,
-        maxUint256, // this will deposit everything that was bought in the inner swapllol
-      )
-
-    const multicallItems = [
-      ...innerSwap.swap.multicallItems,
-      swapHandlerMulticallItem,
-    ]
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
-    const verify = buildApiResponseVerifySkimMin(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      amountOutMin,
-      swapParams.deadline,
-    )
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [PROTOCOL, ...innerSwap.route],
-      swap,
-      verify,
-    }
   }
 
   encodeSwapToTrancheSwapMulticallItem(

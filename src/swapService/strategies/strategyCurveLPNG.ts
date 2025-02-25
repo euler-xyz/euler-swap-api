@@ -95,7 +95,7 @@ export class StrategyCurveLPNG {
                 asset: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.quotes = [await this.exactInFromLPToAsset(swapParams)]
+              result.quotes = await this.exactInFromLPToAsset(swapParams)
             } else {
               throw new Error("Not supported")
             }
@@ -106,7 +106,7 @@ export class StrategyCurveLPNG {
                 asset: swapParams.tokenIn.addressInfo,
               })
             ) {
-              result.quotes = [await this.exactInFromAssetToLP(swapParams)]
+              result.quotes = await this.exactInFromAssetToLP(swapParams)
             } else {
               throw new Error("Not supported")
             }
@@ -121,7 +121,7 @@ export class StrategyCurveLPNG {
                 asset: swapParams.tokenOut.addressInfo,
               })
             ) {
-              result.response = await this.targetDebtFromLPToAsset(swapParams)
+              result.quotes = await this.targetDebtFromLPToAsset(swapParams)
             } else {
               throw new Error("Not supported")
             }
@@ -142,7 +142,9 @@ export class StrategyCurveLPNG {
     return result
   }
 
-  async exactInFromLPToAsset(swapParams: SwapParams): Promise<SwapApiResponse> {
+  async exactInFromLPToAsset(
+    swapParams: SwapParams,
+  ): Promise<SwapApiResponse[]> {
     const lpData = this.getSupportedLP(swapParams.tokenIn.addressInfo)
     const assetIndex = lpData.assets.findIndex((a) =>
       isAddressEqual(a, swapParams.tokenOut.addressInfo),
@@ -177,25 +179,29 @@ export class StrategyCurveLPNG {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: 0,
-      route: [PROTOCOL],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(swapParams.amount),
+        amountInMax: String(swapParams.amount),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOutMin),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: 0,
+        route: [PROTOCOL],
+        swap,
+        verify,
+      },
+    ]
   }
 
-  async exactInFromAssetToLP(swapParams: SwapParams): Promise<SwapApiResponse> {
+  async exactInFromAssetToLP(
+    swapParams: SwapParams,
+  ): Promise<SwapApiResponse[]> {
     const lpData = this.getSupportedLP(swapParams.tokenOut.addressInfo)
     const amounts = this.getAmounts(
       lpData,
@@ -224,27 +230,29 @@ export class StrategyCurveLPNG {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(swapParams.amount),
-      amountInMax: String(swapParams.amount),
-      amountOut: String(amountOut),
-      amountOutMin: String(amountOutMin),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: swapParams.slippage,
-      route: [PROTOCOL],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(swapParams.amount),
+        amountInMax: String(swapParams.amount),
+        amountOut: String(amountOut),
+        amountOutMin: String(amountOutMin),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: swapParams.slippage,
+        route: [PROTOCOL],
+        swap,
+        verify,
+      },
+    ]
   }
 
   async targetDebtFromLPToAsset(
     swapParams: SwapParams,
-  ): Promise<SwapApiResponse> {
+  ): Promise<SwapApiResponse[]> {
     const lpData = this.getSupportedLP(swapParams.tokenIn.addressInfo)
     const amountOut = adjustForInterest(swapParams.amount)
     const amounts = this.getAmounts(
@@ -281,22 +289,24 @@ export class StrategyCurveLPNG {
       swapParams.deadline,
     )
 
-    return {
-      amountIn: String(amountIn), // adjusted for accruing debt
-      amountInMax: String(amountIn),
-      amountOut: String(amountOut),
-      amountOutMin: String(swapParams.amount),
-      vaultIn: swapParams.vaultIn,
-      receiver: swapParams.receiver,
-      accountIn: swapParams.accountIn,
-      accountOut: swapParams.accountOut,
-      tokenIn: swapParams.tokenIn,
-      tokenOut: swapParams.tokenOut,
-      slippage: 0,
-      route: [PROTOCOL],
-      swap,
-      verify,
-    }
+    return [
+      {
+        amountIn: String(amountIn), // adjusted for accruing debt
+        amountInMax: String(amountIn),
+        amountOut: String(amountOut),
+        amountOutMin: String(swapParams.amount),
+        vaultIn: swapParams.vaultIn,
+        receiver: swapParams.receiver,
+        accountIn: swapParams.accountIn,
+        accountOut: swapParams.accountOut,
+        tokenIn: swapParams.tokenIn,
+        tokenOut: swapParams.tokenOut,
+        slippage: 0,
+        route: [PROTOCOL],
+        swap,
+        verify,
+      },
+    ]
   }
 
   isSupportedLP(lp: Address) {
