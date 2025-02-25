@@ -83,6 +83,15 @@ export function matchParams(
     )
       return false
   }
+  if (match.repayVaults) {
+    if (
+      !swapParams.isRepay ||
+      !match.repayVaults.some((vault: Hex) => {
+        return isAddressEqual(swapParams.receiver, vault)
+      })
+    )
+      return false
+  }
 
   return true
 }
@@ -351,6 +360,23 @@ export const encodeRepayAndDepositMulticallItem = (
     data: encodeFunctionData({
       abi: contractBook.swapper.abi,
       functionName: "repayAndDeposit",
+      args: [token, vault, repayAmount, account],
+    }),
+  }
+}
+
+export const encodeRepayMulticallItem = (
+  token: Address,
+  vault: Address,
+  repayAmount: bigint,
+  account: Address,
+): SwapApiResponseMulticallItem => {
+  return {
+    functionName: "repay",
+    args: [token, vault, String(repayAmount), account],
+    data: encodeFunctionData({
+      abi: contractBook.swapper.abi,
+      functionName: "repay",
       args: [token, vault, repayAmount, account],
     }),
   }

@@ -35,7 +35,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["odos", "open-ocean", "uniswap"],
+        includeSources: ["odos", "uniswap", "open-ocean"],
       },
     },
     match: {
@@ -56,6 +56,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
           "open-ocean",
           // "conveyor",
           "uniswap",
+          "magpie",
         ],
       },
     },

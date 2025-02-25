@@ -133,5 +133,23 @@
     "decimals": 18,
     "logoURI": "/tokens/146/SolvBTCBBN.webp",
     "meta": {}
+  },
+  {
+    "addressInfo": "0x455d5f11Fea33A8fa9D3e285930b478B6bF85265",
+    "chainId": 146,
+    "name": "stkscETH",
+    "symbol": "stkscETH",
+    "decimals": 18,
+    "logoURI": "",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x4D85bA8c3918359c78Ed09581E5bc7578ba932ba",
+    "chainId": 146,
+    "name": "stkscUSD",
+    "symbol": "stkscUSD",
+    "decimals": 6,
+    "logoURI": "",
+    "meta": {}
   }
 ]

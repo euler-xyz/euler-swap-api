@@ -1,7 +1,13 @@
 import { type ChainRoutingConfig, SwapperMode } from "../interface"
-import { StrategyBalmySDK, StrategyRepayWrapper } from "../strategies"
+import {
+  StrategyBalmySDK,
+  StrategyERC4626Wrapper,
+  StrategyRepayWrapper,
+} from "../strategies"
+const WSTKSCUSD_SONIC = "0x9fb76f7ce5FCeAA2C42887ff441D46095E494206"
+const WSTKSCETH_SONIC = "0xE8a41c62BB4d5863C6eadC96792cFE90A1f37C47"
 
-const defaultRoutingConfig: ChainRoutingConfig = [
+const sonicConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
     strategy: StrategyRepayWrapper.name(),
@@ -24,12 +30,19 @@ const defaultRoutingConfig: ChainRoutingConfig = [
           "open-ocean",
           "uniswap",
           "0x",
-          "oku",
+          "magpie",
         ],
       },
     },
     match: {},
   },
+  // FALLBACK
+  {
+    strategy: StrategyERC4626Wrapper.name(),
+    match: {
+      tokensInOrOut: [WSTKSCUSD_SONIC, WSTKSCETH_SONIC],
+    },
+  },
 ]
 
-export default defaultRoutingConfig
+export default sonicConfig

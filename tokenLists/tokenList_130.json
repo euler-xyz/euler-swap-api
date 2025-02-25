@@ -1,0 +1,20 @@
+[
+  {
+    "addressInfo": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+    "chainId": 130,
+    "name": "USDC",
+    "symbol": "USDC",
+    "decimals": 6,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x4200000000000000000000000000000000000006",
+    "chainId": 130,
+    "name": "WETH",
+    "symbol": "WETH",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+    "meta": {}
+  }
+]
