@@ -16,12 +16,6 @@ const sonicConfig: ChainRoutingConfig = [
       swapperModes: [SwapperMode.EXACT_IN],
     },
   },
-  {
-    strategy: StrategyERC4626Wrapper.name(),
-    match: {
-      tokensInOrOut: [WSTKSCUSD_SONIC, WSTKSCETH_SONIC],
-    },
-  },
   // DEFAULTS
   {
     strategy: StrategyBalmySDK.name(),
@@ -36,10 +30,18 @@ const sonicConfig: ChainRoutingConfig = [
           "open-ocean",
           "uniswap",
           "0x",
+          "magpie",
         ],
       },
     },
     match: {},
+  },
+  // FALLBACK
+  {
+    strategy: StrategyERC4626Wrapper.name(),
+    match: {
+      tokensInOrOut: [WSTKSCUSD_SONIC, WSTKSCETH_SONIC],
+    },
   },
 ]
 
