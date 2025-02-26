@@ -24,10 +24,20 @@ import {
   calculateAllowanceTarget,
   failed,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/utils"
-import { type Address as ViemAddress, formatUnits, parseUnits } from "viem"
+import type { Hex } from "@berachain-foundation/berancer-sdk"
+import {
+  type Address as ViemAddress,
+  encodeFunctionData,
+  formatUnits,
+  parseAbi,
+  parseUnits,
+} from "viem"
 
-const CHAINS: Record<ChainId, string> = {
-  [60808]: "bob",
+const CHAINS: Record<ChainId, Record<string, string>> = {
+  [60808]: {
+    key: "bob",
+    permit2Adapter: "0xcBF002A9eB906F35eA35aD0634CC5f3d85a10426",
+  },
 }
 
 const OKU_METADATA: QuoteSourceMetadata<OkuSupport> = {
@@ -68,7 +78,7 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
   getMetadata() {
     return {
       ...OKU_METADATA,
-      // name: `${OKU_METADATA.name} ${this.marketName}`,
+      name: `${OKU_METADATA.name} ${this.marketName}`,
       supports: {
         ...OKU_METADATA.supports,
         chains: this.chains || OKU_METADATA.supports.chains,
@@ -106,9 +116,11 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
       external.gasPrice.request(),
       external.tokenData.request(),
     ])
+
     const body = {
-      chain: CHAINS[chainId],
-      account: takeFrom,
+      chain: CHAINS[chainId].key,
+      account:
+        this.market === "usor" ? CHAINS[chainId].permit2Adapter : takeFrom,
       gasPrice: Number(eip1159ToLegacy(gasPrice)),
       isExactIn: order.type === "sell",
       inTokenAddress: mapToken(sellToken),
@@ -174,6 +186,28 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
   async buildTx({
     request,
   }: BuildTxParams<OkuConfig, OkuData>): Promise<SourceQuoteTransaction> {
+    if (this.market === "usor") {
+      const adapterAbi = parseAbi([
+        "function swap(address target, address token, uint256 amount, uint256 sweepAmountMin, bytes calldata data)",
+      ])
+      const calldata = encodeFunctionData({
+        abi: adapterAbi,
+        functionName: "swap",
+        args: [
+          request.customData.tx.to as Hex,
+          request.sellToken as Hex,
+          request.maxSellAmount,
+          5n,
+          request.customData.tx.calldata as Hex,
+        ],
+      })
+      return {
+        to: CHAINS[request.chainId].permit2Adapter,
+        calldata,
+        value: request.customData.tx.value,
+      }
+    }
+
     return request.customData.tx
   }
 }
