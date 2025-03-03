@@ -253,7 +253,7 @@ export class StrategyERC4626Wrapper {
 
     const vaultData = this.getSupportedVault(swapParams.tokenIn.addressInfo)
     const tokenIn = findToken(swapParams.chainId, vaultData.asset)
-    console.log("vaultData: ", vaultData)
+
     if (!tokenIn) throw new Error("Inner token not found")
     const innerSwapParams = {
       ...swapParams,

@@ -317,6 +317,7 @@ export class StrategyBalmySDK {
       receiver: swapParams.from,
       isRepay: false,
     }
+
     const unitQuotes = await this.#getAllQuotes(
       {
         ...swapParamsExactIn,
@@ -324,6 +325,7 @@ export class StrategyBalmySDK {
       },
       sourcesFilter,
     )
+
     const unitAmountTo = unitQuotes[0].minBuyAmount.amount
 
     const estimatedAmountIn = calculateEstimatedAmountFrom(
@@ -385,7 +387,6 @@ export class StrategyBalmySDK {
       .filter((q) => q.status === "fulfilled")
       .map((q) => q.value)
     if (bestQuotes.length === 0) throw new Error("Quotes not found")
-
     return bestQuotes
   }
 
