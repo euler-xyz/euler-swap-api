@@ -33,7 +33,7 @@ import {
 const CHAINS: Record<ChainId, Record<string, string>> = {
   [60808]: {
     key: "bob",
-    permit2Adapter: "0x7435E8351A54e75ebd7429008c74c810016123df",
+    permit2Adapter: "0x867c17C297083cD7d73B39C89e4602878C4Caa65",
   },
 }
 
@@ -185,7 +185,7 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
   }: BuildTxParams<OkuConfig, OkuData>): Promise<SourceQuoteTransaction> {
     if (this.market === "usor") {
       const adapterAbi = parseAbi([
-        "function swap(address target, address tokenIn, address tokenOut, uint256 amount, address receiver, bytes calldata data)",
+        "function swap(address target, address tokenIn, address tokenOut, uint256 amount, address receiver, uint256 sweepMinAmount, bytes calldata data)",
       ])
       const calldata = encodeFunctionData({
         abi: adapterAbi,
@@ -196,6 +196,7 @@ export class CustomOkuQuoteSource extends AlwaysValidConfigAndContextSource<
           request.buyToken as Hex,
           request.maxSellAmount,
           request.accounts.recipient as Hex,
+          5n,
           request.customData.tx.calldata as Hex,
         ],
       })
