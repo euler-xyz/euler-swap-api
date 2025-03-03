@@ -494,6 +494,7 @@ export async function binarySearchQuote(
   let cnt = 0
   let quote
   let amountTo
+  let prevAmountTo
 
   do {
     amountFrom = (amountFrom * percentageChange) / 10000n
@@ -503,6 +504,10 @@ export async function binarySearchQuote(
         ...swapParams,
         amount: amountFrom,
       })))
+
+    if (prevAmountTo && prevAmountTo === amountTo)
+      throw new Error("Binary search quote not improving")
+    prevAmountTo = amountTo
 
     if (amountTo === 0n || targetAmountTo === 0n)
       throw new Error("Quote not found")

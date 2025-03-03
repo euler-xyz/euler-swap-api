@@ -114,73 +114,76 @@ export class StrategyCombinedUniswap {
         shouldContinue,
       )) as SwapApiResponse[]
 
-      const uniswapSwapParams = {
-        ...swapParams,
-        amount: swapParams.amount - BigInt(exactInputQuotes[0].amountOut),
-        receiver: swapParams.from,
-      }
-      const {
-        protocol,
-        data: path,
-        amountIn: uniswapAmountIn, // assuming exact out trade
-      } = await fetchUniswapQuote(uniswapSwapParams)
+      result.quotes = await Promise.all(
+        exactInputQuotes.map(async (exactInputQuote) => {
+          const uniswapSwapParams = {
+            ...swapParams,
+            amount: swapParams.amount - BigInt(exactInputQuote.amountOutMin),
+            receiver: swapParams.from,
+          }
 
-      result.quotes = exactInputQuotes.map((exactInputQuote) => {
-        const uniswapSwapMulticallItem = encodeSwapMulticallItem({
-          handler:
-            protocol === "V2"
-              ? SWAPPER_HANDLER_UNISWAP_V2
-              : SWAPPER_HANDLER_UNISWAP_V3,
-          mode: BigInt(SwapperMode.TARGET_DEBT),
-          account: swapParams.accountOut,
-          tokenIn: swapParams.tokenIn.addressInfo,
-          tokenOut: swapParams.tokenOut.addressInfo,
-          vaultIn: swapParams.vaultIn,
-          accountIn: swapParams.accountIn,
-          receiver: swapParams.receiver,
-          amountOut: swapParams.targetDebt,
-          data: path as Hex,
-        })
+          const {
+            protocol,
+            data: path,
+            amountIn: uniswapAmountIn, // assuming exact out trade
+          } = await fetchUniswapQuote(uniswapSwapParams)
 
-        const combinedMulticallItems = [
-          ...exactInputQuote.swap.multicallItems,
-          uniswapSwapMulticallItem,
-        ]
+          const uniswapSwapMulticallItem = encodeSwapMulticallItem({
+            handler:
+              protocol === "V2"
+                ? SWAPPER_HANDLER_UNISWAP_V2
+                : SWAPPER_HANDLER_UNISWAP_V3,
+            mode: BigInt(SwapperMode.TARGET_DEBT),
+            account: swapParams.accountOut,
+            tokenIn: swapParams.tokenIn.addressInfo,
+            tokenOut: swapParams.tokenOut.addressInfo,
+            vaultIn: swapParams.vaultIn,
+            accountIn: swapParams.accountIn,
+            receiver: swapParams.receiver,
+            amountOut: swapParams.targetDebt,
+            data: path as Hex,
+          })
 
-        const swap = buildApiResponseSwap(
-          swapParams.from,
-          combinedMulticallItems,
-        )
+          const combinedMulticallItems = [
+            ...exactInputQuote.swap.multicallItems,
+            uniswapSwapMulticallItem,
+          ]
 
-        const verify = buildApiResponseVerifyDebtMax(
-          swapParams.chainId,
-          swapParams.receiver,
-          swapParams.accountOut,
-          swapParams.targetDebt,
-          swapParams.deadline,
-        )
+          const swap = buildApiResponseSwap(
+            swapParams.from,
+            combinedMulticallItems,
+          )
 
-        const amountIn =
-          BigInt(exactInputQuote.amountIn) + BigInt(uniswapAmountIn)
-        const amountInMax = applySlippage(amountIn, swapParams.slippage, true)
+          const verify = buildApiResponseVerifyDebtMax(
+            swapParams.chainId,
+            swapParams.receiver,
+            swapParams.accountOut,
+            swapParams.targetDebt,
+            swapParams.deadline,
+          )
 
-        return {
-          amountIn: String(amountIn),
-          amountInMax: String(amountInMax),
-          amountOut: String(swapParams.amount),
-          amountOutMin: String(swapParams.amount),
-          vaultIn: swapParams.vaultIn,
-          receiver: swapParams.receiver,
-          accountIn: swapParams.accountIn,
-          accountOut: swapParams.accountOut,
-          tokenIn: swapParams.tokenIn,
-          tokenOut: swapParams.tokenOut,
-          slippage: swapParams.slippage,
-          route: [...exactInputQuote.route, { providerName: "Uniswap" }],
-          swap,
-          verify,
-        }
-      })
+          const amountIn =
+            BigInt(exactInputQuote.amountIn) + BigInt(uniswapAmountIn)
+          const amountInMax = applySlippage(amountIn, swapParams.slippage, true)
+
+          return {
+            amountIn: String(amountIn),
+            amountInMax: String(amountInMax),
+            amountOut: String(swapParams.amount),
+            amountOutMin: String(swapParams.amount),
+            vaultIn: swapParams.vaultIn,
+            receiver: swapParams.receiver,
+            accountIn: swapParams.accountIn,
+            accountOut: swapParams.accountOut,
+            tokenIn: swapParams.tokenIn,
+            tokenOut: swapParams.tokenOut,
+            slippage: swapParams.slippage,
+            route: [...exactInputQuote.route, { providerName: "Uniswap" }],
+            swap,
+            verify,
+          }
+        }),
+      )
     } catch (error) {
       result.error = error
     }

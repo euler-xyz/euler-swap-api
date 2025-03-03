@@ -11,6 +11,7 @@ import type {
   QuoteParams,
   QuoteSourceMetadata,
   SourceQuoteResponse,
+  SourceQuoteTransaction,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/types"
 import {
   addQuoteSlippage,
