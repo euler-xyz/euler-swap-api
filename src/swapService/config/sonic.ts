@@ -27,7 +27,7 @@ const sonicConfig: ChainRoutingConfig = [
           "odos",
           "1inch",
           "li-fi",
-          "open-ocean",
+          // "open-ocean",
           "uniswap",
           "0x",
           "magpie",
