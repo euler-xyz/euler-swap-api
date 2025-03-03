@@ -15,7 +15,7 @@ import {
   failed,
 } from "@balmy/sdk/dist/services/quotes/quote-sources/utils"
 import qs from "qs"
-import { type Address, Hex, getAddress, isAddressEqual } from "viem"
+import { type Address, getAddress, isAddressEqual } from "viem"
 
 const soldOutCoolOff: Record<string, number> = {}
 

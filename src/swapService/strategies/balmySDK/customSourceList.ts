@@ -1,14 +1,15 @@
 import type { IFetchService, IProviderService } from "@balmy/sdk"
 import { LocalSourceList } from "@balmy/sdk/dist/services/quotes/source-lists/local-source-list"
-import { CustomLiFiQuoteSource } from "./lifiQuoteSource"
-import { CustomNeptuneQuoteSource } from "./neptuneQuoteSource"
-import { CustomOdosQuoteSource } from "./odosQuoteSource"
-import { CustomOkuQuoteSource } from "./okuQuoteSource"
-import { CustomOneInchQuoteSource } from "./oneInchQuoteSource"
-import { CustomOogaboogaQuoteSource } from "./oogaboogaQuoteSource"
-import { CustomOpenOceanQuoteSource } from "./openOceanQuoteSource"
-import { CustomPendleQuoteSource } from "./pendleQuoteSource"
-import { CustomUniswapQuoteSource } from "./uniswapQuoteSource"
+import { CustomLiFiQuoteSource } from "./sources/lifiQuoteSource"
+import { CustomMagpieQuoteSource } from "./sources/magpieQuoteSource"
+import { CustomNeptuneQuoteSource } from "./sources/neptuneQuoteSource"
+import { CustomOdosQuoteSource } from "./sources/odosQuoteSource"
+import { CustomOkuQuoteSource } from "./sources/okuQuoteSource"
+import { CustomOneInchQuoteSource } from "./sources/oneInchQuoteSource"
+import { CustomOogaboogaQuoteSource } from "./sources/oogaboogaQuoteSource"
+import { CustomOpenOceanQuoteSource } from "./sources/openOceanQuoteSource"
+import { CustomPendleQuoteSource } from "./sources/pendleQuoteSource"
+import { CustomUniswapQuoteSource } from "./sources/uniswapQuoteSource"
 
 type ConstructorParameters = {
   providerService: IProviderService
@@ -24,6 +25,7 @@ const customSources = {
   odos: new CustomOdosQuoteSource(),
   oogabooga: new CustomOogaboogaQuoteSource(),
   uniswap: new CustomUniswapQuoteSource(),
+  magpie: new CustomMagpieQuoteSource(),
   oku_bob_icecreamswap: new CustomOkuQuoteSource(
     "icecreamswap",
     "IceCreamSwap",

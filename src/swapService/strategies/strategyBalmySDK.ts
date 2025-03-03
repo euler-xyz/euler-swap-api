@@ -132,6 +132,9 @@ export class StrategyBalmySDK {
             "0x": {
               apiKey: String(process.env.OX_API_KEY),
             },
+            magpie: {
+              apiKey: String(process.env.MAGPIE_API_KEY),
+            },
           },
         },
       },
