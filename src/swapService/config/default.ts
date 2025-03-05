@@ -25,6 +25,7 @@ const defaultRoutingConfig: ChainRoutingConfig = [
           "uniswap",
           "0x",
           "oku",
+          "magpie",
         ],
       },
     },

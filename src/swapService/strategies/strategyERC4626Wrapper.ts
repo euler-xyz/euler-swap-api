@@ -76,6 +76,13 @@ const defaultConfig: {
       asset: "0x4D85bA8c3918359c78Ed09581E5bc7578ba932ba",
       assetDustEVault: "0x911Af5Bf5b7dd0F83869Ba857eDfDC3dea8254C2",
     },
+    {
+      chainId: 146,
+      protocol: "wOS",
+      vault: "0x9F0dF7799f6FDAd409300080cfF680f5A23df4b1",
+      asset: "0xb1e25689D55734FD3ffFc939c4C3Eb52DFf8A794",
+      assetDustEVault: "0x1E1482E7Bc32cD085d7aF61F29019Ba372B63277",
+    },
     // {
     //   chainId: 1,
     //   protocol: "sUSDS",
