@@ -56,7 +56,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
           "open-ocean",
           // "conveyor",
           "uniswap",
-          "magpie",
+          // "magpie",
         ],
       },
     },
