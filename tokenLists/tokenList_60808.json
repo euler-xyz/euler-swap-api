@@ -235,5 +235,16 @@
       "provider": "DEFILLAMA",
       "poolId": "e28e32b5-e356-41d9-8dc7-a376ece56619"
     }
+  },
+  {
+    "addressInfo": "0x9998e05030Aee3Af9AD3df35A34F5C51e1628779",
+    "chainId": 60808,
+    "decimals": 8,
+    "name": "Hybrid Bitcoin",
+    "symbol": "HybridBTC.pendle",
+    "logoURI": "/tokens/60808/hybridBTC.jpg",
+    "meta": {
+      "provider": "VEDA"
+    }
   }
 ]
