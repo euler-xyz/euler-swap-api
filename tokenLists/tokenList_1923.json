@@ -138,5 +138,23 @@
     "decimals": 18,
     "logoURI": "https://assets.coingecko.com/coins/images/28777/standard/swell1.png?1727899715",
     "meta": {}
+  },
+  {
+    "addressInfo": "0x80ccFBec4b8c82265abdc226Ad3Df84C0726E7A3",
+    "chainId": 1923,
+    "name": "EUL",
+    "symbol": "EUL",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x021694af083d67950Ac994E63e0a70C30D913836",
+    "chainId": 1923,
+    "name": "Reward EUL",
+    "symbol": "rEUL",
+    "decimals": 18,
+    "logoURI": "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    "meta": {}
   }
 ]

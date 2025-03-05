@@ -161,7 +161,7 @@
     "name": "Frax",
     "symbol": "FRAX",
     "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+    "logoURI": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
     "meta": {}
   },
   {
@@ -490,7 +490,7 @@
     "name": "Mantle",
     "symbol": "MNT",
     "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/30980/large/token-logo.png?1696529819",
+    "logoURI": "https://coin-images.coingecko.com/coins/images/30980/large/Mantle-Logo-mark.png?1739213200",
     "meta": {}
   },
   {
@@ -680,15 +680,6 @@
     }
   },
   {
-    "addressInfo": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-    "chainId": 1,
-    "name": "Wrapped USDM",
-    "symbol": "WUSDM",
-    "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
-    "meta": {}
-  },
-  {
     "addressInfo": "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
     "chainId": 1,
     "name": "Renzo Restaked LST",
@@ -738,10 +729,10 @@
   {
     "addressInfo": "0x866A2BF4E572CbcF37D5071A7a58503Bfb36be1b",
     "chainId": 1,
-    "name": "M",
+    "name": "M by M^0",
     "symbol": "M",
     "decimals": 6,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/40048/large/M_Symbol_256x256.png?1725445596",
+    "logoURI": "https://coin-images.coingecko.com/coins/images/40048/large/M_Symbol_256.png?1739323798",
     "meta": {}
   },
   {
@@ -761,18 +752,6 @@
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/39677/large/Icon___Dark.png?1723610897",
     "meta": {}
-  },
-  {
-    "addressInfo": "0xBEEF69Ac7870777598A04B2bd4771c71212E6aBc",
-    "chainId": 1,
-    "name": "Steakhouse Resteaking Vault",
-    "symbol": "STEAKLRT",
-    "decimals": 18,
-    "logoURI": "https://coin-images.coingecko.com/coins/images/39410/large/Steakhouse_logo-05.jpg?1722053893",
-    "meta": {
-      "provider": "DEFILLAMA",
-      "poolId": "747c1d2a-c668-4682-b9f9-296708a3dd90"
-    }
   },
   {
     "addressInfo": "0x09db87A538BD693E9d08544577d5cCfAA6373A48",
@@ -1027,6 +1006,15 @@
     "meta": {}
   },
   {
+    "addressInfo": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+    "chainId": 1,
+    "name": "Wrapped USDM",
+    "symbol": "WUSDM",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+    "meta": {}
+  },
+  {
     "addressInfo": "0x5C5b196aBE0d54485975D1Ec29617D42D9198326",
     "chainId": 1,
     "name": "Elixir Staked deUSD",
@@ -1045,6 +1033,28 @@
     "meta": {}
   },
   {
+    "addressInfo": "0xbB51E2a15A9158EBE2b0Ceb8678511e063AB7a55",
+    "chainId": 1,
+    "name": "Midas mEDGE",
+    "symbol": "MEDGE",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/54591/large/medge_logo.png?1740565725",
+    "meta": {
+      "provider": "MIDAS"
+    }
+  },
+  {
+    "addressInfo": "0x030b69280892c888670EDCDCD8B69Fd8026A0BF3",
+    "chainId": 1,
+    "name": "Midas mMEV",
+    "symbol": "MMEV",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/54592/large/mmev_logo.png?1740565795",
+    "meta": {
+      "provider": "MIDAS"
+    }
+  },
+  {
     "addressInfo": "0x62D0A8458eD7719FDAF978fe5929C6D342B0bFcE",
     "chainId": 1,
     "name": "Beam",
@@ -1061,8 +1071,7 @@
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/51880/large/USR_LOGO.png?1732098841",
     "meta": {
-      "provider": "DEFILLAMA",
-      "poolId": "0aedb3f6-9298-49de-8bb0-2f611a4df784"
+      "provider": "RESOLV"
     }
   },
   {
@@ -1092,7 +1101,7 @@
   {
     "addressInfo": "0x8238884Ec9668Ef77B90C6dfF4D1a9F4F4823BFe",
     "chainId": 1,
-    "name": "OpenEden Open Dollar",
+    "name": "OpenEden OpenDollar",
     "symbol": "USDO",
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/53750/large/USDO_LOGO-white.png?1737181887",
@@ -1101,7 +1110,7 @@
   {
     "addressInfo": "0xaD55aebc9b8c03FC43cd9f62260391c13c23e7c0",
     "chainId": 1,
-    "name": "Compounding Open Dollar",
+    "name": "Compounding OpenDollar",
     "symbol": "CUSDO",
     "decimals": 18,
     "logoURI": "https://coin-images.coingecko.com/coins/images/53751/large/cUSDO_logo_white.png?1737182014",
@@ -1243,6 +1252,18 @@
     "logoURI": "/tokens/1/0x4956b52aE2fF65D74CA2d61207523288e4528f96.webp",
     "meta": {
       "poolId": "2ad8497d-c855-4840-85ad-cdc536b92ced"
+    }
+  },
+  {
+    "addressInfo": "0xBEEF69Ac7870777598A04B2bd4771c71212E6aBc",
+    "chainId": 1,
+    "name": "Steakhouse Resteaking Vault",
+    "symbol": "STEAKLRT",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/39410/large/Steakhouse_logo-05.jpg?1722053893",
+    "meta": {
+      "provider": "DEFILLAMA",
+      "poolId": "747c1d2a-c668-4682-b9f9-296708a3dd90"
     }
   },
   {

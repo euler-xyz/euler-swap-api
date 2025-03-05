@@ -9,6 +9,15 @@
     "meta": {}
   },
   {
+    "addressInfo": "0xDD629E5241CbC5919847783e6C96B2De4754e438",
+    "chainId": 1,
+    "name": "Midas mTBILL",
+    "symbol": "MTBILL",
+    "decimals": 18,
+    "logoURI": "https://coin-images.coingecko.com/coins/images/37839/large/mTBILL_token.png?1728417279",
+    "meta": {}
+  },
+  {
     "addressInfo": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
     "chainId": 8453,
     "name": "Coinbase Wrapped Staked ETH",
@@ -194,6 +203,24 @@
     "symbol": "rEUL",
     "decimals": 18,
     "logoURI": "https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/src/assets/tokens/EUL.svg",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+    "chainId": 8453,
+    "name": "KelpDao Restaked ETH",
+    "symbol": "rsETH",
+    "decimals": 18,
+    "logoURI": "https://assets.coingecko.com/coins/images/33800/standard/Icon___Dark.png",
+    "meta": {}
+  },
+  {
+    "addressInfo": "0x04D5ddf5f3a8939889F11E97f8c4BB48317F1938",
+    "chainId": 8453,
+    "name": "USDz",
+    "symbol": "USDz",
+    "decimals": 18,
+    "logoURI": "https://assets.coingecko.com/coins/images/38039/standard/usdz-image-200x200.png",
     "meta": {}
   }
 ]
