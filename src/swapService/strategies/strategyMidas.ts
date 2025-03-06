@@ -82,6 +82,26 @@ const defaultConfig: Config = {
         paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
         priceOne: 100000000n,
       },
+      mEDGE: {
+        tokenContract: "0xbB51E2a15A9158EBE2b0Ceb8678511e063AB7a55",
+        redemptionInstantFeeBps: 50n,
+        depositorContract: "0xfE8de16F2663c61187C1e15Fb04D773E6ac668CC",
+        redeemerContract: "0x9B2C5E30E3B1F6369FC746A1C1E47277396aF15D",
+        oracleContract: "0x698dA5D987a71b68EbF30C1555cfd38F190406b7",
+        paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
+        priceOne: 100000000n,
+      },
+      mMEV: {
+        tokenContract: "0x030b69280892c888670EDCDCD8B69Fd8026A0BF3",
+        redemptionInstantFeeBps: 50n,
+        depositorContract: "0xE092737D412E0B290380F9c8548cB5A58174704f",
+        redeemerContract: "0xac14a14f578C143625Fc8F54218911e8F634184D",
+        oracleContract: "0x5f09Aff8B9b1f488B7d1bbaD4D89648579e55d61",
+        paymentToken: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
+        paymentTokenSweepVault: "0xb93d4928f39fbcd6c89a7dfbf0a867e6344561be", // eUSDC-1 escrow
+        priceOne: 100000000n,
+      },
     },
 
     [base.id]: {
