@@ -19,6 +19,7 @@ import {
   getAddress,
   isAddress,
   isAddressEqual,
+  maxUint256,
   parseAbiParameters,
   parseUnits,
 } from "viem"
@@ -34,7 +35,10 @@ import {
   buildApiResponseVerifyDebtMax,
   calculateEstimatedAmountFrom,
   encodeApproveMulticallItem,
+  encodeDepositMulticallItem,
+  encodeRepayMulticallItem,
   encodeSwapMulticallItem,
+  encodeTargetDebtAsExactInMulticall,
   isExactInRepay,
   matchParams,
   promiseWithTimeout,
@@ -66,8 +70,6 @@ export type BalmyStrategyConfig = {
   }
   timeout: string
   sourcesFilter: SourcesFilter
-  tryExactOut?: boolean
-  onlyExactOut?: boolean
 }
 
 export const defaultConfig: BalmyStrategyConfig = {
@@ -77,9 +79,6 @@ export const defaultConfig: BalmyStrategyConfig = {
   },
   timeout: DEFAULT_TIMEOUT,
   sourcesFilter: undefined,
-  tryExactOut: false, // tries buy order search through balmy before falling back to binary search.
-  // Use only if exact out behavior is known for source
-  onlyExactOut: false, // don't try overswapping when exact out not available
 }
 
 export class StrategyBalmySDK {
@@ -212,31 +211,13 @@ export class StrategyBalmySDK {
   }
 
   async targetDebt(swapParams: SwapParams) {
-    let quotes: SwapQuote[] | undefined = undefined
-    let innerSwapParams: SwapParams
-    if (this.config.tryExactOut && !swapParams.onlyFixedInputExactOut) {
-      try {
-        // into the swapper
-        innerSwapParams = {
-          ...swapParams,
-          receiver: swapParams.from,
-        }
-        const sdkQuotes = await this.#getAllQuotesWithTxs(innerSwapParams)
-        quotes = sdkQuotes.map((q) =>
-          this.#getSwapQuoteFromSDKQuoteWithTx(innerSwapParams, q),
-        )
-      } catch {}
+    const innerSwapParams = {
+      ...swapParams,
+      receiver: swapParams.from,
+      swapperMode: SwapperMode.EXACT_IN,
     }
 
-    if (!quotes && !this.config.onlyExactOut) {
-      innerSwapParams = {
-        ...swapParams,
-        receiver: swapParams.from,
-        swapperMode: SwapperMode.EXACT_IN,
-      }
-
-      quotes = await this.#binarySearchOverswapQuote(innerSwapParams)
-    }
+    const quotes = await this.#binarySearchOverswapQuote(innerSwapParams)
 
     if (!quotes) throw new Error("Quote not found")
 
@@ -252,19 +233,9 @@ export class StrategyBalmySDK {
         )
       }
 
+      // encode as exact in swap, repay and deposit, to redirect deposit to dust account
       multicallItems.push(
-        encodeSwapMulticallItem({
-          handler: SWAPPER_HANDLER_GENERIC,
-          mode: BigInt(SwapperMode.TARGET_DEBT),
-          account: swapParams.accountOut,
-          tokenIn: swapParams.tokenIn.addressInfo,
-          tokenOut: swapParams.tokenOut.addressInfo,
-          vaultIn: swapParams.vaultIn,
-          accountIn: swapParams.accountIn,
-          receiver: swapParams.receiver,
-          amountOut: swapParams.targetDebt,
-          data: quote.data,
-        }),
+        ...encodeTargetDebtAsExactInMulticall(swapParams, quote.data),
       )
 
       const swap = buildApiResponseSwap(swapParams.from, multicallItems)

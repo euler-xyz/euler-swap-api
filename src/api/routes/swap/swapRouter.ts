@@ -114,6 +114,7 @@ function parseRequest(request: Request): SwapParams {
 
     return {
       ...validatedParams,
+      dustAccount: validatedParams.dustAccount || validatedParams.accountOut,
       from: getSwapper(chainId),
       chainId,
       tokenIn,

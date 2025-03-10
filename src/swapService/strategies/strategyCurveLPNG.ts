@@ -8,7 +8,6 @@ import {
   publicActions,
 } from "viem"
 import { type SwapApiResponse, SwapperMode } from "../interface"
-import { runPipeline } from "../runner"
 import type { StrategyResult, SwapParams } from "../types"
 import {
   SWAPPER_HANDLER_GENERIC,

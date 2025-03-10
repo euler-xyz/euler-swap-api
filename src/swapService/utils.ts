@@ -265,7 +265,7 @@ export function addInOutDeposits(
       swapParams.tokenOut.addressInfo,
       swapParams.receiver,
       5n, // avoid zero shares error
-      swapParams.accountOut,
+      swapParams.dustAccount,
     ),
   ]
   response.swap = buildApiResponseSwap(swapParams.from, multicallItems)
@@ -483,6 +483,59 @@ export function encodeERC20TransferMulticallItem(
   })
 
   return swapMulticallItem
+}
+
+export function encodeTargetDebtAsExactInMulticall(
+  swapParams: SwapParams,
+  data: Hex,
+) {
+  const multicallItems = []
+  multicallItems.push(
+    encodeSwapMulticallItem({
+      handler: SWAPPER_HANDLER_GENERIC,
+      mode: BigInt(SwapperMode.EXACT_IN),
+      account: swapParams.accountOut,
+      tokenIn: swapParams.tokenIn.addressInfo,
+      tokenOut: swapParams.tokenOut.addressInfo,
+      vaultIn: swapParams.vaultIn,
+      accountIn: swapParams.accountIn,
+      receiver: swapParams.receiver,
+      amountOut: swapParams.targetDebt,
+      data,
+    }),
+  )
+
+  if (!swapParams.encodeExactOut) {
+    // FIXME - workaround for composite repay ERC4626 / over-swap
+    const repayAmount =
+      swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
+
+    multicallItems.push(
+      encodeRepayMulticallItem(
+        swapParams.tokenOut.addressInfo,
+        swapParams.receiver,
+        repayAmount,
+        swapParams.accountOut,
+      ),
+      encodeDepositMulticallItem(
+        swapParams.tokenOut.addressInfo,
+        swapParams.receiver,
+        5n,
+        swapParams.dustAccount,
+      ),
+    )
+  }
+
+  multicallItems.push(
+    encodeDepositMulticallItem(
+      swapParams.tokenIn.addressInfo,
+      swapParams.vaultIn,
+      5n,
+      swapParams.accountIn,
+    ),
+  )
+
+  return multicallItems
 }
 
 export type BinarySearchInternalQuote = {

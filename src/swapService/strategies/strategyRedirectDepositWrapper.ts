@@ -95,16 +95,11 @@ export class StrategyRedirectDepositWrapper {
                 mode: SwapperMode.EXACT_IN,
               }
 
-              console.log()
-
               const swapItem = encodeSwapMulticallItem(exactInSwapItemArgs)
               // if target debt is 0, encode repay(max) to repay all debt, otherwise use all of the available Swapper balance
               const repayAmount =
                 swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
-              console.log(
-                "swapParams.targetDebt === 0n: ",
-                swapParams.targetDebt === 0n,
-              )
+
               const repayItem = encodeRepayMulticallItem(
                 vaultData.asset,
                 swapParams.receiver,

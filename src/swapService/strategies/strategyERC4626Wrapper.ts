@@ -19,6 +19,7 @@ import {
   buildApiResponseVerifySkimMin,
   encodeDepositMulticallItem,
   encodeSwapMulticallItem,
+  encodeTargetDebtAsExactInMulticall,
   findToken,
   isExactInRepay,
   matchParams,
@@ -83,13 +84,13 @@ const defaultConfig: {
       asset: "0xb1e25689D55734FD3ffFc939c4C3Eb52DFf8A794",
       assetDustEVault: "0x1E1482E7Bc32cD085d7aF61F29019Ba372B63277",
     },
-    // {
-    //   chainId: 1,
-    //   protocol: "sUSDS",
-    //   vault: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-    //   asset: "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
-    //   assetDustEVault: "0x98238Ee86f2c571AD06B0913bef21793dA745F57",
-    // },
+    {
+      chainId: 1,
+      protocol: "sUSDS",
+      vault: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+      asset: "0xdc035d45d973e3ec169d2276ddab16f1e407384f",
+      assetDustEVault: "0x98238Ee86f2c571AD06B0913bef21793dA745F57",
+    },
   ],
 }
 
@@ -275,7 +276,7 @@ export class StrategyERC4626Wrapper {
         vaultData.asset,
         vaultData.assetDustEVault,
         5n, // avoid zero shares
-        swapParams.accountOut,
+        swapParams.dustAccount,
       )
 
       const multicallItems = [
@@ -484,6 +485,7 @@ export class StrategyERC4626Wrapper {
       ...swapParams,
       tokenIn,
       vaultIn: vaultData.assetDustEVault,
+      accountIn: swapParams.dustAccount,
       onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
 
@@ -604,10 +606,12 @@ export class StrategyERC4626Wrapper {
       ...swapParams,
       tokenIn,
       vaultIn: vaultData.assetDustEVault,
+      accountIn: swapParams.dustAccount,
+      mode: SwapperMode.EXACT_IN,
     }
 
     const {
-      swapMulticallItem: mintMulticallItem,
+      data: mintData,
       amountIn: mintAmountIn,
       amountOut,
     } = await encodeMint(
@@ -615,6 +619,11 @@ export class StrategyERC4626Wrapper {
       vaultData.vault,
       mintAmount,
       swapParams.from,
+    )
+
+    const mintMulticallItems = encodeTargetDebtAsExactInMulticall(
+      mintSwapParams,
+      mintData,
     )
 
     const tokenOut = findToken(swapParams.chainId, vaultData.asset)
@@ -625,25 +634,16 @@ export class StrategyERC4626Wrapper {
       tokenOut,
       receiver: swapParams.from,
       onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
+      encodeExactOut: true,
     }
 
     const innerQuotes = await runPipeline(innerSwapParams)
 
     return innerQuotes.map((innerQuote) => {
-      // re-encode inner swap from target debt to exact out so that repay is not executed before mint TODO fix with exact out support in all strategies
-      const innerSwapItems = innerQuote.swap.multicallItems.map((item) => {
-        if (item.functionName !== "swap") return item
-
-        const newItem = encodeSwapMulticallItem({
-          ...item.args[0],
-          mode: BigInt(SwapperMode.EXACT_OUT),
-        })
-
-        return newItem
-      })
-
-      // repay is done through mint item, which will return unused input, which is the intermediate asset
-      const multicallItems = [...innerSwapItems, mintMulticallItem]
+      const multicallItems = [
+        ...innerQuote.swap.multicallItems,
+        ...mintMulticallItems,
+      ]
 
       const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -872,6 +872,7 @@ export async function encodeMint(
     amountIn,
     amountOut,
     swapMulticallItem,
+    data: swapData,
   }
 }
 

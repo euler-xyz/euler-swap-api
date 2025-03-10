@@ -16,6 +16,7 @@ export interface SwapApiRequest {
   targetDebt: bigint // ignored if not in target debt mode
   currentDebt: bigint // needed in exact input or output and with `isRepay` set
   deadline: number // timestamp in seconds
+  dustAccount?: Address // dust will be deposited for this account or to `accountOut` if not provided
   routingOverride?: RoutingConfig
 }
 

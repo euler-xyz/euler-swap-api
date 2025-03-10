@@ -445,7 +445,7 @@ export class StrategyMidas {
           mToken.paymentToken,
           mToken.paymentTokenSweepVault,
           1n,
-          swapParams.accountOut,
+          swapParams.dustAccount,
         )
 
         const multicallItems = [
@@ -547,6 +547,7 @@ export class StrategyMidas {
         mToken.paymentToken,
       ) as TokenListItem,
       vaultIn: mToken.paymentTokenSweepVault,
+      accountIn: swapParams.dustAccount,
       onlyFixedInputExactOut: true, // eliminate dust in the intermediate asset (vault underlying)
     }
 
@@ -668,6 +669,7 @@ export class StrategyMidas {
         mToken.paymentToken,
       ) as TokenListItem,
       vaultIn: mToken.paymentTokenSweepVault,
+      accountIn: swapParams.dustAccount,
     }
     const {
       swapMulticallItem: depositInstantMulticallItem,
