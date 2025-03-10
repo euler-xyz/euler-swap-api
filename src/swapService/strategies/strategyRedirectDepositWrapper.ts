@@ -80,65 +80,72 @@ export class StrategyRedirectDepositWrapper {
         routingOverride: routing,
       }
 
-      const innerSwap = await runPipeline(innerSwapParams)
+      const innerSwaps = await runPipeline(innerSwapParams)
 
       // split target debt repay into swap to Swapper, repay and deposit into escrow vault
+      result.quotes = innerSwaps.map((innerSwap) => {
+        const newMulticallItems = innerSwap.swap.multicallItems.flatMap(
+          (item) => {
+            if (
+              item.functionName === "swap" &&
+              item.args[0].mode === String(SwapperMode.TARGET_DEBT)
+            ) {
+              const exactInSwapItemArgs = {
+                ...item.args[0],
+                mode: SwapperMode.EXACT_IN,
+              }
 
-      const newMulticallItems = innerSwap.swap.multicallItems.flatMap(
-        (item) => {
-          if (
-            item.functionName === "swap" &&
-            item.args[0].mode === String(SwapperMode.TARGET_DEBT)
-          ) {
-            const exactInSwapItemArgs = {
-              ...item.args[0],
-              mode: SwapperMode.EXACT_IN,
+              console.log()
+
+              const swapItem = encodeSwapMulticallItem(exactInSwapItemArgs)
+              // if target debt is 0, encode repay(max) to repay all debt, otherwise use all of the available Swapper balance
+              const repayAmount =
+                swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
+              console.log(
+                "swapParams.targetDebt === 0n: ",
+                swapParams.targetDebt === 0n,
+              )
+              const repayItem = encodeRepayMulticallItem(
+                vaultData.asset,
+                swapParams.receiver,
+                repayAmount,
+                swapParams.accountOut,
+              )
+              const depositItem = encodeDepositMulticallItem(
+                vaultData.asset,
+                vaultData.assetDustEVault,
+                5n,
+                swapParams.accountOut,
+              )
+
+              return [swapItem, repayItem, depositItem]
             }
+            return item
+          },
+        )
 
-            const swapItem = encodeSwapMulticallItem(exactInSwapItemArgs)
-            // if target debt is 0, encode repay(max) to repay all debt, otherwise use all of the available Swapper balance
-            const repayAmount =
-              swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
-            const repayItem = encodeRepayMulticallItem(
-              vaultData.asset,
-              swapParams.receiver,
-              repayAmount,
-              swapParams.accountOut,
-            )
-            const depositItem = encodeDepositMulticallItem(
-              vaultData.asset,
-              vaultData.assetDustEVault,
-              5n,
-              swapParams.accountOut,
-            )
+        // reencode everything
 
-            return [swapItem, repayItem, depositItem]
-          }
-          return item
-        },
-      )
+        const swap = buildApiResponseSwap(swapParams.from, newMulticallItems)
 
-      // reencode everything
+        let debtMax = swapParams.currentDebt - BigInt(innerSwap.amountOutMin)
+        if (debtMax < 0n) debtMax = 0n
+        debtMax = adjustForInterest(debtMax)
 
-      const swap = buildApiResponseSwap(swapParams.from, newMulticallItems)
+        const verify = buildApiResponseVerifyDebtMax(
+          swapParams.chainId,
+          swapParams.receiver,
+          swapParams.accountOut,
+          debtMax,
+          swapParams.deadline,
+        )
 
-      let debtMax = swapParams.currentDebt - BigInt(innerSwap.amountOutMin)
-      if (debtMax < 0n) debtMax = 0n
-      debtMax = adjustForInterest(debtMax)
-
-      const verify = buildApiResponseVerifyDebtMax(
-        swapParams.chainId,
-        swapParams.receiver,
-        swapParams.accountOut,
-        debtMax,
-        swapParams.deadline,
-      )
-
-      result.response = {
-        ...innerSwap,
-        swap,
-        verify,
-      }
+        return {
+          ...innerSwap,
+          swap,
+          verify,
+        }
+      })
     } catch (error) {
       result.error = error
     }
