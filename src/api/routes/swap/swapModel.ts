@@ -255,6 +255,13 @@ const getSwapSchema = z.object({
         },
         example: "false",
       }),
+    dustAccount: addressSchema.optional().openapi({
+      param: {
+        description:
+          "Account to receive dust deposits. Defaults to `accountOut`",
+      },
+      example: "0x8A54C278D117854486db0F6460D901a180Fff5aa",
+    }),
     routingOverride: z
       .string()
       .transform((s) => JSON.parse(s))

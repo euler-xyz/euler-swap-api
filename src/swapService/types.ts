@@ -23,8 +23,10 @@ export interface SwapParams {
   slippage: number
   deadline: number
   isRepay: boolean
+  dustAccount: Address
   routingOverride?: ChainRoutingConfig
   onlyFixedInputExactOut?: boolean // only fetch quotes where amountIn is fixed and not subject to slippage
+  encodeExactOut?: boolean // FIXME workaround for composite repays (ERC4626 strategy / overswap)
 }
 
 export interface SwapQuote {
