@@ -26,7 +26,7 @@ export interface SwapParams {
   dustAccount: Address
   routingOverride?: ChainRoutingConfig
   onlyFixedInputExactOut?: boolean // only fetch quotes where amountIn is fixed and not subject to slippage
-  encodeExactOut?: boolean // FIXME workaround for composite repays (ERC4626 strategy / overswap)
+  noRepayEncoding?: boolean // FIXME workaround for composite repays (ERC4626 strategy / overswap)
 }
 
 export interface SwapQuote {

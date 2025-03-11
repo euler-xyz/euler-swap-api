@@ -498,7 +498,7 @@ export function encodeTargetDebtAsExactInMulticall(
     }),
   )
 
-  if (!swapParams.encodeExactOut) {
+  if (!swapParams.noRepayEncoding) {
     // FIXME - workaround for composite repay ERC4626 / over-swap
     const repayAmount =
       swapParams.targetDebt === 0n ? maxUint256 : maxUint256 - 1n
