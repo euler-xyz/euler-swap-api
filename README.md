@@ -1,4 +1,4 @@
-# Euler Swap API
+# Euler Orderflow Router API
 
 API for fetching swap quotes and payloads from multiple DEX aggregators for use with Euler V2.
 
