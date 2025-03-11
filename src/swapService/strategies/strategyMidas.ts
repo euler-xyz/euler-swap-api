@@ -24,6 +24,7 @@ import {
   encodeDepositMulticallItem,
   encodeERC20TransferMulticallItem,
   encodeSwapMulticallItem,
+  encodeTargetDebtAsExactInMulticall,
   findToken,
   isExactInRepay,
   matchParams,
@@ -493,7 +494,7 @@ export class StrategyMidas {
     const redeemAmount = (swapParams.amount * 100_001n) / 100_000n // a bit extra for accrued interest
 
     const {
-      swapMulticallItem: redeemInstantMulticallItem,
+      data: redeemData,
       amountIn,
       amountOut,
     } = await this.encodeMTBILLRedeemInstant(
@@ -503,7 +504,10 @@ export class StrategyMidas {
       mToken.paymentToken,
     )
 
-    const multicallItems = [redeemInstantMulticallItem]
+    const multicallItems = encodeTargetDebtAsExactInMulticall(
+      swapParams,
+      redeemData,
+    )
 
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -605,141 +609,140 @@ export class StrategyMidas {
   }
 
   async targetDebtFromPaymentTokenToMToken(
-    swapParams: SwapParams,
+    _swapParams: SwapParams,
   ): Promise<SwapApiResponse[]> {
-    const mToken = this.getMToken(swapParams)
-
-    const depositInstantAmount = adjustForInterest(swapParams.amount)
-
-    const {
-      swapMulticallItem: depositInstantMulticallItem,
-      amountIn,
-      amountOut,
-    } = await this.encodeMTBILLDepositInstant(
-      swapParams,
-      depositInstantAmount,
-      true,
-      mToken.paymentToken,
+    throw new Error(
+      "Untested dust account update after making mTokens non-borrowable",
     )
+    // const mToken = this.getMToken(swapParams)
 
-    // deposit instant is encoded in target debt mode, so repay will happen automatically
-    const multicallItems = [depositInstantMulticallItem]
+    // const depositInstantAmount = adjustForInterest(swapParams.amount)
 
-    const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+    // const {
+    //   data: depositData,
+    //   amountIn,
+    //   amountOut,
+    // } = await this.encodeMTBILLDepositInstant(
+    //   swapParams,
+    //   depositInstantAmount,
+    //   true,
+    //   mToken.paymentToken,
+    // )
 
-    const verify = buildApiResponseVerifyDebtMax(
-      swapParams.chainId,
-      swapParams.receiver,
-      swapParams.accountOut,
-      swapParams.targetDebt,
-      swapParams.deadline,
-    )
+    // const multicallItems = encodeTargetDebtAsExactInMulticall(swapParams, depositData)
 
-    return [
-      {
-        amountIn: String(amountIn),
-        amountInMax: String(amountIn),
-        amountOut: String(amountOut),
-        amountOutMin: String(amountOut),
-        vaultIn: swapParams.vaultIn,
-        receiver: swapParams.receiver,
-        accountIn: swapParams.accountIn,
-        accountOut: swapParams.accountOut,
-        tokenIn: swapParams.tokenIn,
-        tokenOut: swapParams.tokenOut,
-        slippage: swapParams.slippage,
-        route: [MIDAS_ROUTE],
-        swap,
-        verify,
-      },
-    ]
+    // const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+
+    // const verify = buildApiResponseVerifyDebtMax(
+    //   swapParams.chainId,
+    //   swapParams.receiver,
+    //   swapParams.accountOut,
+    //   swapParams.targetDebt,
+    //   swapParams.deadline,
+    // )
+
+    // return [
+    //   {
+    //     amountIn: String(amountIn),
+    //     amountInMax: String(amountIn),
+    //     amountOut: String(amountOut),
+    //     amountOutMin: String(amountOut),
+    //     vaultIn: swapParams.vaultIn,
+    //     receiver: swapParams.receiver,
+    //     accountIn: swapParams.accountIn,
+    //     accountOut: swapParams.accountOut,
+    //     tokenIn: swapParams.tokenIn,
+    //     tokenOut: swapParams.tokenOut,
+    //     slippage: swapParams.slippage,
+    //     route: [MIDAS_ROUTE],
+    //     swap,
+    //     verify,
+    //   },
+    // ]
   }
 
   async targetDebtFromAnyToMToken(
-    swapParams: SwapParams,
+    _swapParams: SwapParams,
   ): Promise<SwapApiResponse[]> {
-    const mToken = this.getMToken(swapParams)
-
-    const targetDeposit = adjustForInterest(swapParams.amount)
-
-    const depositSwapParams = {
-      ...swapParams,
-      tokenIn: findToken(
-        swapParams.chainId,
-        mToken.paymentToken,
-      ) as TokenListItem,
-      vaultIn: mToken.paymentTokenSweepVault,
-      accountIn: swapParams.dustAccount,
-    }
-    const {
-      swapMulticallItem: depositInstantMulticallItem,
-      amountIn: depositInstantAmountIn,
-      amountOut,
-    } = await this.encodeMTBILLDepositInstant(
-      depositSwapParams,
-      targetDeposit,
-      true,
-      mToken.paymentToken,
+    throw new Error(
+      "Untested dust account update after making mTokens non-borrowable",
     )
+    // const mToken = this.getMToken(swapParams)
 
-    const innerSwapParams = {
-      ...swapParams,
-      amount: depositInstantAmountIn,
-      tokenOut: findToken(
-        swapParams.chainId,
-        mToken.paymentToken,
-      ) as TokenListItem,
-      receiver: swapParams.from,
-      onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
-    }
+    // const targetDeposit = adjustForInterest(swapParams.amount)
 
-    const innerQuotes = await runPipeline(innerSwapParams)
+    // const depositSwapParams = {
+    //   ...swapParams,
+    //   tokenIn: findToken(
+    //     swapParams.chainId,
+    //     mToken.paymentToken,
+    //   ) as TokenListItem,
+    //   vaultIn: mToken.paymentTokenSweepVault,
+    //   accountIn: swapParams.dustAccount,
+    // }
+    // const {
+    //   data: depositData,
+    //   amountIn: depositInstantAmountIn,
+    //   amountOut,
+    // } = await this.encodeMTBILLDepositInstant(
+    //   depositSwapParams,
+    //   targetDeposit,
+    //   true,
+    //   mToken.paymentToken,
+    // )
 
-    return Promise.all(
-      innerQuotes.map(async (innerQuote) => {
-        // re-encode inner swap from target debt to exact out so that repay is not executed before mint TODO fix with exact out support in all strategies
-        const innerSwapItems = innerQuote.swap.multicallItems.map((item) => {
-          if (item.functionName !== "swap") return item
+    // const depositMulticallItems = encodeTargetDebtAsExactInMulticall(
+    //   depositSwapParams,
+    //   depositData,
+    // )
 
-          const newItem = encodeSwapMulticallItem({
-            ...item.args[0],
-            mode: BigInt(SwapperMode.EXACT_OUT),
-          })
+    // const innerSwapParams = {
+    //   ...swapParams,
+    //   amount: depositInstantAmountIn,
+    //   tokenOut: findToken(
+    //     swapParams.chainId,
+    //     mToken.paymentToken,
+    //   ) as TokenListItem,
+    //   receiver: swapParams.from,
+    //   onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
+    //   noRepayEncoding: true,
+    // }
 
-          return newItem
-        })
+    // const innerQuotes = await runPipeline(innerSwapParams)
 
-        // repay is done through deposit item, which will return unused input, which is the intermediate asset
-        const multicallItems = [...innerSwapItems, depositInstantMulticallItem]
+    // return Promise.all(
+    //   innerQuotes.map(async (innerQuote) => {
+    //     // repay is done through deposit item, which will return unused input, which is the intermediate asset
+    //     const multicallItems = [...innerQuote.swap.multicallItems, ...depositMulticallItems]
 
-        const swap = buildApiResponseSwap(swapParams.from, multicallItems)
+    //     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
-        const verify = buildApiResponseVerifyDebtMax(
-          swapParams.chainId,
-          swapParams.receiver,
-          swapParams.accountOut,
-          swapParams.targetDebt,
-          swapParams.deadline,
-        )
+    //     const verify = buildApiResponseVerifyDebtMax(
+    //       swapParams.chainId,
+    //       swapParams.receiver,
+    //       swapParams.accountOut,
+    //       swapParams.targetDebt,
+    //       swapParams.deadline,
+    //     )
 
-        return {
-          amountIn: String(innerQuote.amountIn),
-          amountInMax: String(innerQuote.amountInMax),
-          amountOut: String(amountOut),
-          amountOutMin: String(amountOut),
-          vaultIn: swapParams.vaultIn,
-          receiver: swapParams.receiver,
-          accountIn: swapParams.accountIn,
-          accountOut: swapParams.accountOut,
-          tokenIn: swapParams.tokenIn,
-          tokenOut: swapParams.tokenOut,
-          slippage: swapParams.slippage,
-          route: [...innerQuote.route, MIDAS_ROUTE],
-          swap,
-          verify,
-        }
-      }),
-    )
+    //     return {
+    //       amountIn: String(innerQuote.amountIn),
+    //       amountInMax: String(innerQuote.amountInMax),
+    //       amountOut: String(amountOut),
+    //       amountOutMin: String(amountOut),
+    //       vaultIn: swapParams.vaultIn,
+    //       receiver: swapParams.receiver,
+    //       accountIn: swapParams.accountIn,
+    //       accountOut: swapParams.accountOut,
+    //       tokenIn: swapParams.tokenIn,
+    //       tokenOut: swapParams.tokenOut,
+    //       slippage: swapParams.slippage,
+    //       route: [...innerQuote.route, MIDAS_ROUTE],
+    //       swap,
+    //       verify,
+    //     }
+    //   }),
+    // )
   }
 
   async encodeMTBILLRedeemInstant(
@@ -824,6 +827,7 @@ export class StrategyMidas {
       amountIn,
       amountOut,
       swapMulticallItem,
+      data: swapData,
     }
   }
 
@@ -908,6 +912,7 @@ export class StrategyMidas {
       amountOut,
       amountIn,
       swapMulticallItem,
+      data: swapData,
     }
   }
 

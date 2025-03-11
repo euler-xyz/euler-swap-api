@@ -433,7 +433,7 @@ export class StrategyERC4626Wrapper {
     const withdrawAmount = adjustForInterest(swapParams.amount)
 
     const {
-      swapMulticallItem: withdrawMulticallItem,
+      data: withdrawData,
       amountIn,
       amountOut,
     } = await encodeWithdraw(
@@ -443,7 +443,10 @@ export class StrategyERC4626Wrapper {
       swapParams.from,
     )
 
-    const multicallItems = [withdrawMulticallItem]
+    const multicallItems = encodeTargetDebtAsExactInMulticall(
+      swapParams,
+      withdrawData,
+    )
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
     const verify = buildApiResponseVerifyDebtMax(
@@ -551,7 +554,7 @@ export class StrategyERC4626Wrapper {
     const mintAmount = adjustForInterest(swapParams.amount)
 
     const {
-      swapMulticallItem: mintMulticallItem,
+      data: mintData,
       amountIn,
       amountOut,
     } = await encodeMint(
@@ -560,9 +563,12 @@ export class StrategyERC4626Wrapper {
       mintAmount,
       swapParams.from,
     )
+    const multicallItems = encodeTargetDebtAsExactInMulticall(
+      swapParams,
+      mintData,
+    )
 
     // mint is encoded in target debt mode, so repay will happen automatically
-    const multicallItems = [mintMulticallItem]
 
     const swap = buildApiResponseSwap(swapParams.from, multicallItems)
 
@@ -634,7 +640,7 @@ export class StrategyERC4626Wrapper {
       tokenOut,
       receiver: swapParams.from,
       onlyFixedInputExactOut: true, // this option will overswap, which should cover growing exchange rate
-      encodeExactOut: true,
+      noRepayEncoding: true,
     }
 
     const innerQuotes = await runPipeline(innerSwapParams)
@@ -817,6 +823,7 @@ export async function encodeWithdraw(
     amountIn,
     amountOut,
     swapMulticallItem,
+    data: swapData,
   }
 }
 

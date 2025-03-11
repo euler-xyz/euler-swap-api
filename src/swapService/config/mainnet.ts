@@ -51,6 +51,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyERC4626Wrapper.name(),
     match: {
       tokensInOrOut: [
+        SUSDS_MAINNET,
         WSTUSR_MAINNET,
         PT_WSTUSR1740182579,
         YNETH_MAINNET,
