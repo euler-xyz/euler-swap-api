@@ -35,6 +35,7 @@ const SUPPORTED_CHAINS: Record<ChainId, string> = {
   [Chains.METIS_ANDROMEDA.chainId]: "metis",
   [Chains.FANTOM.chainId]: "fantom",
   [Chains.SONIC.chainId]: "sonic",
+  80094: "berachain",
 }
 
 const MAGPIE_METADATA: QuoteSourceMetadata<MagpieSupport> = {

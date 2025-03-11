@@ -15,7 +15,7 @@ const beraRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyBalmySDK.name(),
     config: {
       sourcesFilter: {
-        includeSources: ["oogabooga"],
+        includeSources: ["oogabooga", "li-fi", "magpie", "open-ocean"],
       },
     },
     match: {},
