@@ -177,5 +177,29 @@
     "decimals": 18,
     "logoURI": "https://sonicscan.org/token/images/beetsstksceth_32.png",
     "meta": {}
+  },
+  {
+    "addressInfo": "0xBe27993204Ec64238F71A527B4c4D5F4949034C3",
+    "chainId": 146,
+    "name": "PT Wrapped stkscUSD 29MAY2025",
+    "symbol": "PT-wstkscUSD-29MAY2025",
+    "decimals": 6,
+    "logoURI": "/tokens/146/scUSD.png",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0x6e4e95fab7db1f0524b4b0a05f0b9c96380b7dfa"
+    }
+  },
+  {
+    "addressInfo": "0xa2161E75EDf50d70544e6588788A5732A3105c00",
+    "chainId": 146,
+    "name": "PT Wrapped stkscETH 29MAY2025",
+    "symbol": "PT-wstkscETH-29MAY2025",
+    "decimals": 18,
+    "logoURI": "/tokens/146/wstkscETH.png",
+    "meta": {
+      "isPendlePT": true,
+      "pendleMarket": "0xd14117baf6ec5d12be68cd06e763a4b82c9b6d1d"
+    }
   }
 ]
