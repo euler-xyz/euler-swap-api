@@ -32,6 +32,7 @@ const sonicConfig: ChainRoutingConfig = [
           "uniswap",
           "0x",
           "magpie",
+          "pendle",
         ],
       },
     },

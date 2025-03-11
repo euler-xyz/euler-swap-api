@@ -32,6 +32,7 @@ export const PENDLE_METADATA: QuoteSourceMetadata<PendleSupport> = {
       Chains.MANTLE.chainId,
       Chains.BASE.chainId,
       Chains.ARBITRUM.chainId,
+      146,
     ],
     swapAndTransfer: true,
     buyOrders: false,
@@ -203,7 +204,7 @@ export class CustomPendleQuoteSource
         (await response.text()) || `Failed with status ${response.status}`
 
       if (response.status === 400) {
-        console.log("[PENDLE ERROR]", msg, swapParams.receiver, url)
+        console.log("[PENDLE ERROR]", msg, recipient, url)
         if (msg.includes("SY limit exceeded")) {
           soldOutCoolOff[`${buyToken}${chainId}`] = Date.now()
         }
