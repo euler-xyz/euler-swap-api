@@ -32,7 +32,7 @@ pnpm run start
 ## Lint
 ```
 pnpm run lint       # check
-pnpm run lint:fix   # fix
+pnpm run lint:fix   # fix 
 ```
 
 ## Swagger API docs
