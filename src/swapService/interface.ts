@@ -69,6 +69,7 @@ export interface StrategyMatchConfig {
   swapperModes?: SwapperMode[]
   isRepay?: boolean
   isPendlePT?: boolean
+  notPendlePT?: boolean
   tokensInOrOut?: Address[]
   excludeTokensInOrOut?: Address[]
   repayVaults?: Address[]

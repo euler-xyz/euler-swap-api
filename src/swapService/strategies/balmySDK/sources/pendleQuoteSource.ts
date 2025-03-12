@@ -116,7 +116,9 @@ export class CustomPendleQuoteSource
     const tokenIn = findToken(chainId, getAddress(sellToken))
     const tokenOut = findToken(chainId, getAddress(buyToken))
     if (!tokenIn || !tokenOut) throw new Error("Missing token in or out")
-
+    if (!tokenIn.meta?.isPendlePT && !tokenOut.meta?.isPendlePT) {
+      failed(PENDLE_METADATA, chainId, sellToken, buyToken, "Not PT tokens")
+    }
     let url
     if (tokenIn.meta?.isPendlePT && tokenOut.meta?.isPendlePT) {
       // rollover

@@ -59,15 +59,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
       excludeTokensInOrOut: [PT_WSTUSR_27MAR2025_MAINNET],
     },
   },
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["pendle", "li-fi", "open-ocean"],
-      },
-    },
-    match: { isPendlePT: true },
-  },
   // WUSDL with paraswap
   {
     strategy: StrategyBalmySDK.name(),
@@ -80,7 +71,6 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          "uniswap",
           "magpie",
           "0x",
         ],
@@ -114,10 +104,10 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          "uniswap",
           "magpie",
           "0x",
           "enso",
+          "pendle",
         ],
       },
     },
@@ -130,6 +120,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
     match: {
       swapperModes: [SwapperMode.TARGET_DEBT],
       excludeTokensInOrOut: [RLP_MAINNET, SUSDS_MAINNET, WUSDL_MAINNET],
+      notPendlePT: true,
     },
   },
   // FALLBACKS
@@ -152,9 +143,10 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          "uniswap",
           "magpie",
           "0x",
+          "enso",
+          "pendle",
         ],
       },
     },

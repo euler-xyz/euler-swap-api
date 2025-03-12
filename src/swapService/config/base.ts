@@ -5,8 +5,6 @@ import {
   StrategyRepayWrapper,
 } from "../strategies"
 
-const CBBTC_BASE = "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
-
 const baseRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
@@ -21,27 +19,6 @@ const baseRoutingConfig: ChainRoutingConfig = [
     strategy: StrategyMidas.name(),
     match: {}, // supports function will match mTokens
   },
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["pendle", "li-fi", "open-ocean"],
-      },
-    },
-    match: { isPendlePT: true },
-  },
-  // avoid 1inch because of InvalidatedOrder error. Kyberswap and li.fi also route through 1inch
-  {
-    strategy: StrategyBalmySDK.name(),
-    config: {
-      sourcesFilter: {
-        includeSources: ["odos", "uniswap", "open-ocean"],
-      },
-    },
-    match: {
-      tokensInOrOut: [CBBTC_BASE],
-    },
-  },
   // DEFAULTS
   {
     strategy: StrategyBalmySDK.name(),
@@ -54,10 +31,9 @@ const baseRoutingConfig: ChainRoutingConfig = [
           "1inch",
           "li-fi",
           "open-ocean",
-          // "conveyor",
           "uniswap",
           "magpie",
-          "enso",
+          "pendle",
         ],
       },
     },

@@ -83,6 +83,13 @@ export function matchParams(
     )
       return false
   }
+  if (match.notPendlePT) {
+    if (
+      swapParams.tokenIn.meta?.isPendlePT ||
+      swapParams.tokenOut.meta?.isPendlePT
+    )
+      return false
+  }
   if (match.repayVaults) {
     if (
       !swapParams.isRepay ||
@@ -495,6 +502,7 @@ export async function binarySearchQuote(
   let quote
   let amountTo
   let prevAmountTo
+  const initialAmountFrom = amountFrom
 
   do {
     amountFrom = (amountFrom * percentageChange) / 10000n
@@ -524,6 +532,11 @@ export async function binarySearchQuote(
 
     if (cnt++ === 15)
       throw new Error("Binary search not completed in 15 iterations")
+    if (amountFrom > 2n * initialAmountFrom)
+      // TODO fix, this is assuming estimated amount is provided
+      throw new Error(
+        "Amount from already 2x estimated, probably no liquidity to reach target",
+      )
   } while (shouldContinue(amountTo))
 
   return quote
