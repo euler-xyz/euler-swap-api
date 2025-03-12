@@ -117,6 +117,7 @@ const mainnetRoutingConfig: ChainRoutingConfig = [
           "uniswap",
           "magpie",
           "0x",
+          "enso",
         ],
       },
     },

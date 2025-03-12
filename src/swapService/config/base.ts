@@ -57,6 +57,7 @@ const baseRoutingConfig: ChainRoutingConfig = [
           // "conveyor",
           "uniswap",
           "magpie",
+          "enso",
         ],
       },
     },

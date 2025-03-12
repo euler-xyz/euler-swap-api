@@ -138,6 +138,9 @@ export class StrategyBalmySDK {
             magpie: {
               apiKey: String(process.env.MAGPIE_API_KEY),
             },
+            enso: {
+              apiKey: String(process.env.ENSO_API_KEY),
+            },
           },
         },
       },
