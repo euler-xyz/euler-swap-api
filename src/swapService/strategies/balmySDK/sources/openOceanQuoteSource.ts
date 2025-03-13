@@ -155,7 +155,7 @@ export class CustomOpenOceanQuoteSource extends AlwaysValidConfigAndContextSourc
       )
     }
     const {
-      data: { outAmount, estimatedGas, minOutAmount, to, value, data },
+      data: { outAmount, minOutAmount, to, value, data /* estimatedGas */ },
     } = await response.json()
 
     return {
@@ -164,7 +164,7 @@ export class CustomOpenOceanQuoteSource extends AlwaysValidConfigAndContextSourc
       buyAmount: BigInt(outAmount),
       minBuyAmount: BigInt(minOutAmount),
       type: "sell",
-      estimatedGas: BigInt(estimatedGas),
+      // estimatedGas: BigInt(estimatedGas), // TODO fix unknown chains handling in SDK
       allowanceTarget: calculateAllowanceTarget(sellToken, to),
       customData: {
         tx: {

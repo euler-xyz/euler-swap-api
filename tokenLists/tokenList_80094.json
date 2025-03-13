@@ -10,47 +10,11 @@
   },
   {
     "chainId": 80094,
-    "addressInfo": "0x656b95E550C07a9ffe548bd4085c72418Ceb1dba",
-    "symbol": "BGT",
-    "name": "Bera Governance Token",
+    "addressInfo": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+    "symbol": "WETH",
+    "name": "WETH",
     "decimals": 18,
-    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/bgt.png",
-    "meta": {}
-  },
-  {
-    "chainId": 80094,
-    "addressInfo": "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce",
-    "symbol": "HONEY",
-    "name": "Honey",
-    "decimals": 18,
-    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/honey.png",
-    "meta": {}
-  },
-  {
-    "chainId": 80094,
-    "addressInfo": "0x688e72142674041f8f6Af4c808a4045cA1D6aC82",
-    "symbol": "BYUSD",
-    "name": "BYUSD",
-    "logoURI": "https://res.cloudinary.com/duv0g402y/image/upload/v1738732576/tokens/y6wa21vehnappbe2cruf.png",
-    "decimals": 6,
-    "meta": {}
-  },
-  {
-    "chainId": 80094,
-    "addressInfo": "0x549943e04f40284185054145c6E4e9568C1D3241",
-    "symbol": "USDC.e",
-    "name": "Bridged USDC (Stargate)",
-    "decimals": 6,
-    "logoURI": "https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389",
-    "meta": {}
-  },
-  {
-    "chainId": 80094,
-    "addressInfo": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
-    "symbol": "USDT0",
-    "name": "Tether USD Coin",
-    "decimals": 6,
-    "logoURI": "https://assets.coingecko.com/coins/images/325/small/Tether.png?1696501661",
+    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/eth.png",
     "meta": {}
   },
   {
@@ -64,11 +28,59 @@
   },
   {
     "chainId": 80094,
-    "addressInfo": "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
-    "symbol": "WETH",
-    "name": "WETH",
+    "addressInfo": "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce",
+    "symbol": "HONEY",
+    "name": "Honey",
     "decimals": 18,
-    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/eth.png",
+    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/honey.png",
+    "meta": {}
+  },
+  {
+    "chainId": 80094,
+    "addressInfo": "0x549943e04f40284185054145c6E4e9568C1D3241",
+    "symbol": "USDC.e",
+    "name": "Bridged USDC (Stargate)",
+    "decimals": 6,
+    "logoURI": "https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389",
+    "meta": {}
+  },
+  {
+    "chainId": 80094,
+    "addressInfo": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+    "decimals": 18,
+    "name": "StakeStone Ether",
+    "symbol": "STONE",
+    "logoURI": "/tokens/80094/stone.svg",
+    "meta": {
+      "provider": "DEFILLAMA",
+      "poolId": "e28e32b5-e356-41d9-8dc7-a376ece56619"
+    }
+  },
+  {
+    "chainId": 80094,
+    "addressInfo": "0x688e72142674041f8f6Af4c808a4045cA1D6aC82",
+    "symbol": "BYUSD",
+    "name": "BYUSD",
+    "logoURI": "https://res.cloudinary.com/duv0g402y/image/upload/v1738732576/tokens/y6wa21vehnappbe2cruf.png",
+    "decimals": 6,
+    "meta": {}
+  },
+  {
+    "chainId": 80094,
+    "addressInfo": "0x656b95E550C07a9ffe548bd4085c72418Ceb1dba",
+    "symbol": "BGT",
+    "name": "Bera Governance Token",
+    "decimals": 18,
+    "logoURI": "https://res.cloudinary.com/duv0g402y/raw/upload/v1717773645/src/assets/bgt.png",
+    "meta": {}
+  },
+  {
+    "chainId": 80094,
+    "addressInfo": "0x779Ded0c9e1022225f8E0630b35a9b54bE713736",
+    "symbol": "USDT0",
+    "name": "Tether USD Coin",
+    "decimals": 6,
+    "logoURI": "https://assets.coingecko.com/coins/images/325/small/Tether.png?1696501661",
     "meta": {}
   },
   {

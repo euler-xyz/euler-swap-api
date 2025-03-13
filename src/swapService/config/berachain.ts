@@ -1,7 +1,7 @@
 import { type ChainRoutingConfig, SwapperMode } from "../interface"
 import { StrategyBalmySDK, StrategyRepayWrapper } from "../strategies"
 
-const beraRoutingConfig: ChainRoutingConfig = [
+const berachainRoutingConfig: ChainRoutingConfig = [
   // WRAPPERS
   {
     strategy: StrategyRepayWrapper.name(),
@@ -22,4 +22,4 @@ const beraRoutingConfig: ChainRoutingConfig = [
   },
 ]
 
-export default beraRoutingConfig
+export default berachainRoutingConfig
